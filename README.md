@@ -26,7 +26,7 @@
 
 ---
 
-**English**: PostForge is an open-source, zero-config Markdown typesetting engine for Chinese content platforms (WeChat Official Account, Zhihu, Juejin, CSDN, Xiaohongshu). Write once in Markdown, publish everywhere with beautifully inlined styles — no login, no SaaS, no lock-in.
+**English**: Full English docs at [**README.en.md**](README.en.md). PostForge is an open-source, zero-config Markdown typesetting engine for Chinese content platforms (WeChat Official Account, Zhihu, Juejin, CSDN, Xiaohongshu). Write once in Markdown, publish everywhere with beautifully inlined styles — no login, no SaaS, no lock-in.
 
 **PostForge（帖工坊）** 面向中文内容创作者：同一篇 Markdown，一键排版成 **微信公众号 / 知乎 / 掘金 / CSDN / 小红书** 的富文本。它把平台互不兼容的排版差异收敛成一个命令行工具，开箱即用、零配置、无需登录任何平台、不依赖任何在线服务。
 
