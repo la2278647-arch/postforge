@@ -18,8 +18,18 @@
     "start": "node src/cli.js",
     "mcp": "node src/mcp/server.js",
     "demo": "node src/cli.js build examples/demo.md -p wechat -o examples/demo-wechat.html && node src/cli.js build examples/demo.md -p xiaohongshu -o examples/demo-xiaohongshu.txt",
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "prepublishOnly": "npm test"
   },
+  "files": [
+    "src/",
+    "LICENSE",
+    "README.md",
+    "docs/wechat-images.md",
+    "docs/case/tech-deep.md",
+    "docs/diagram/postforge.dataflow.json"
+  ],
+  "homepage": "https://github.com/la2278647-arch/postforge#readme",
   "keywords": [
     "markdown",
     "wechat",
