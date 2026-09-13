@@ -10,3 +10,5 @@ build/
 .DS_Store
 Thumbs.db
 _probe.js
+# CI workflow ? workflow scope ????????? _tools/ci.yml.bak?
+.github/workflows/
