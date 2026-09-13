@@ -129,6 +129,27 @@ test('dark 主题卡片配色不同于 clean', () => {
   assert.match(dark.html, /#60a5fa/);
 });
 
+test('quote 卡片无标题时渲染装饰性左引号', () => {
+  const { html } = build(':::quote\n纸上得来终觉浅，绝知此事要躬行。\n:::');
+  assert.match(html, /border-left-color:#6f42c1/);
+  assert.match(html, /<span style="[^"]*">“<\/span>/);
+});
+
+test('quote 卡片带标题时不渲染装饰引号', () => {
+  const { html } = build(':::quote 金句\n生活不止眼前的苟且。\n:::');
+  assert.match(html, />金句</);
+  assert.doesNotMatch(html, /<span style="[^"]*">“<\/span>/);
+});
+
+test('quote 卡片三主题配色独立', () => {
+  const clean = build(':::quote q\nx\n:::');
+  const paper = build(':::quote q\nx\n:::', { theme: 'paper' });
+  const dark = build(':::quote q\nx\n:::', { theme: 'dark' });
+  assert.match(clean.html, /#6f42c1/);
+  assert.match(paper.html, /#7c6a4f/);
+  assert.match(dark.html, /#c084fc/);
+});
+
 test('平台与主题注册表完整', () => {
   assert.ok(Object.keys(PLATFORMS).length >= 6);
   assert.ok(Object.keys(THEMES).length >= 3);

@@ -9,10 +9,23 @@ import hljs from 'highlight.js';
 import { applyTokenStyles } from './highlight.js';
 import { getTheme } from './themes.js';
 import { getPlatform } from './platforms.js';
-import { postforgeCardExtension, setCardTheme, cardToText } from './cards.js';
+import { createCardExtension, cardToText } from './cards.js';
 
-// 注册排版模板扩展（提示卡片等）
-marked.use({ extensions: [postforgeCardExtension] });
+/**
+ * 把卡片扩展转成 marked v18 内部结构（extensions.block / startBlock / renderers），
+ * 直接传给本次 build 的 Lexer 与 Parser。
+ *
+ * marked v18 的 options.extensions 只认转换后的结构，且 lexer 忽略旧式对象数组；
+ * 这里不经过全局 marked.use() 注册，避免模块级状态在多主题渲染时串色。
+ */
+function toMarkedExtensions(theme) {
+  const ext = createCardExtension(theme);
+  return {
+    block: [ext.tokenizer],
+    startBlock: [ext.start],
+    renderers: { [ext.name]: ext.renderer },
+  };
+}
 
 function esc(s) {
   return String(s)
@@ -292,8 +305,9 @@ function extractText(tokens) {
 export function build(markdown, options = {}) {
   const platform = getPlatform(options.platform || 'wechat');
   const theme = getTheme(options.theme || platform.defaultTheme);
-  setCardTheme(theme);
-  const tokens = marked.lexer(markdown, { gfm: true, breaks: false, extensions: marked.defaults.extensions });
+  // 每个 build 调用构造绑定当前主题的扩展结构，无全局注册、多主题安全
+  const lexerOptions = { gfm: true, breaks: false, extensions: toMarkedExtensions(theme) };
+  const tokens = marked.lexer(markdown, lexerOptions);
 
   if (platform.mode === 'text') {
     const { text, images, hashtags } = extractText(tokens);
@@ -301,12 +315,7 @@ export function build(markdown, options = {}) {
   }
 
   const renderer = new PostRenderer(theme, platform, options);
-  const parser = new Parser({
-    renderer,
-    gfm: true,
-    breaks: false,
-    extensions: marked.defaults.extensions,
-  });
+  const parser = new Parser({ renderer, ...lexerOptions });
   const body = parser.parse(tokens);
 
   let content = body;
