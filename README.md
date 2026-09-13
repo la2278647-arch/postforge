@@ -12,7 +12,6 @@
   <img alt="License" src="https://img.shields.io/github/license/la2278647-arch/postforge" />
   <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" />
   <img alt="Version" src="https://img.shields.io/github/package-json/v/la2278647-arch/postforge" />
-  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/la2278647-arch/postforge/ci.yml" />
   <img alt="Platforms" src="https://img.shields.io/badge/platforms-6-blue" />
   <img alt="MCP" src="https://img.shields.io/badge/MCP-Server-7c3aed" />
 </p>
@@ -298,7 +297,7 @@ docs/           公众号图片专题、多平台发布案例与宣传文案
 .github/        CI 与 Issue/PR 模板
 ```
 
-技术栈：Node.js >= 18 ESM；运行时依赖 `marked` + `highlight.js` + `@modelcontextprotocol/sdk`；单元测试 `node:test`；GitHub Actions CI（Node 18/20/22/24 矩阵）。
+技术栈：Node.js >= 18 ESM；运行时依赖 `marked` + `highlight.js` + `@modelcontextprotocol/sdk`；单元测试 `node:test`；CI 工作流见 [`_tools/ci.yml.bak`](_tools/ci.yml.bak)（Node 18/20/22/24 矩阵；推送至 `.github/workflows/` 需 workflow scope，获得后恢复启用）。
 
 ## 🤝 贡献
 
