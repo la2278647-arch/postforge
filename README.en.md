@@ -13,7 +13,7 @@
   <img alt="License" src="https://img.shields.io/github/license/la2278647-arch/postforge" />
   <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" />
   <img alt="Version" src="https://img.shields.io/github/package-json/v/la2278647-arch/postforge" />
-  <img alt="Platforms" src="https://img.shields.io/badge/platforms-9-blue" />
+  <img alt="Platforms" src="https://img.shields.io/badge/platforms-11-blue" />
   <img alt="MCP" src="https://img.shields.io/badge/MCP-Server-7c3aed" />
 </p>
 
@@ -23,7 +23,7 @@
 
 ## Features
 
-- 🖥️ **9 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, Xiaohongshu (plain-text mode), generic web page
+- 🖥️ **11 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text mode), generic web page
 - 🎨 **6 themes**: clean / paper / nord / coffee / dark / midnight — extendable via `makeTheme`
 - 🧩 **Fully inline styles**: paste-and-go, no `<style>` or external CSS required
 - 🔆 **Code highlighting**: GitHub-palette highlight.js tokens mapped to inline colors
@@ -70,6 +70,8 @@ postforge build post.md -p zhihu -o zhihu.html
 | Yuque | `-p yuque` | HTML fragment |
 | Jianshu | `-p jianshu` | HTML fragment |
 | CNBlogs | `-p cnblogs` | HTML fragment |
+| SegmentFault | `-p sf` | HTML fragment |
+| InfoQ CN | `-p infoq` | HTML fragment |
 | Xiaohongshu | `-p xiaohongshu` | plain text + images + hashtags |
 | Generic | `-p generic` | full HTML document |
 

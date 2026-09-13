@@ -12,7 +12,7 @@
   <img alt="License" src="https://img.shields.io/github/license/la2278647-arch/postforge" />
   <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" />
   <img alt="Version" src="https://img.shields.io/github/package-json/v/la2278647-arch/postforge" />
-  <img alt="Platforms" src="https://img.shields.io/badge/platforms-9-blue" />
+  <img alt="Platforms" src="https://img.shields.io/badge/platforms-11-blue" />
   <img alt="MCP" src="https://img.shields.io/badge/MCP-Server-7c3aed" />
 </p>
 
@@ -34,7 +34,7 @@
 
 ## ✨ 特性
 
-- 🖥️ **9 个平台**：微信公众号、知乎、掘金、CSDN、语雀、简书、博客园、小红书、通用网页
+- 🖥️ **11 个平台**：微信公众号、知乎、掘金、CSDN、语雀、简书、博客园、思否、InfoQ、小红书、通用网页
 - 🎨 **6 套主题**：Clean 简洁 / Paper 纸感 / Nord 冷调 / Coffee 咖啡 / Dark 深色 / Midnight 深夜，可自定义
 - 🧩 **全内联样式**：粘贴即用，不依赖 `<style>` 与外部 CSS
 - 🔆 **代码高亮**：内置 GitHub 风格高亮，全部转为内联样式
@@ -128,6 +128,8 @@ const hello = 'world';
 | 语雀 | `-p yuque` | HTML 片段 | 粘贴进语雀（知识库 / 文档） |
 | 简书 | `-p jianshu` | HTML 片段 | 粘贴进简书编辑器 |
 | 博客园 | `-p cnblogs` | HTML 片段 | 粘贴进博客园编辑器 |
+| 思否 | `-p sf` | HTML 片段 | 粘贴进思否（SegmentFault）编辑器 |
+| InfoQ 中文 | `-p infoq` | HTML 片段 | 粘贴进 InfoQ 中文编辑器 |
 | 小红书 | `-p xiaohongshu` | 纯文本 .txt | 正文 + 图片清单 + 建议话题标签 |
 | 通用网页 | `-p generic` | 完整 HTML | 本地预览 / 自建博客 / 打印 |
 
@@ -368,7 +370,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 ## 🗺 路线图
 
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
-- [x] 9 平台适配 + 6 套主题 + 目录生成
+- [x] 11 平台适配 + 6 套主题 + 目录生成
 - [x] MCP Server 集成（AI 直接排版输出）
 - [x] 排版模板（:::tip / :::warning / :::note / :::danger / :::quote）
 - [x] 公众号图片处理（docs/wechat-images.md 专题 + --inline-images）

@@ -58,6 +58,20 @@ export const PLATFORMS = {
     mode: 'html',
     defaultTheme: 'clean',
   },
+  sf: {
+    id: 'sf',
+    name: '思否 SegmentFault',
+    desc: '内联样式富文本，粘贴进思否（SegmentFault）编辑器',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
+  infoq: {
+    id: 'infoq',
+    name: 'InfoQ 中文',
+    desc: '内联样式富文本，粘贴进 InfoQ 中文编辑器',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
   xiaohongshu: {
     id: 'xiaohongshu',
     name: '小红书',

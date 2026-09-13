@@ -18,7 +18,7 @@
 
 现有工具（wechat-format 之流）大多只支持公众号，还年久失修。于是我做了 **PostForge**：
 
-- 一条命令 `postforge build post.md -p wechat`，Markdown → 9 平台富文本（公众号/知乎/掘金/CSDN/语雀/简书/博客园/小红书/通用网页）
+- 一条命令 `postforge build post.md -p wechat`，Markdown → 11 平台富文本（公众号/知乎/掘金/CSDN/语雀/简书/博客园/思否/InfoQ/小红书/通用网页）
 - 全内联样式，粘贴即用，代码高亮（GitHub 配色）也全部内联化
 - 支持 6 套主题（clean/paper/nord/coffee/dark/midnight）、GFM 任务清单、表格斑马纹、目录生成（--toc）
 - **排版模板**：`:::tip/warning/note/danger/quote` 彩色提示卡片，内容支持任意 Markdown
