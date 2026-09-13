@@ -3,6 +3,45 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [0.5.2] - 2026-09-14
+
+### 新增
+
+- 模板库 7 → 8 篇：`reading-notes.md`（读书笔记：核心观点卡 / 行动清单 / 摘抄 / 荐读人群）
+
+### 修复
+
+- `doctor` 依赖检查适配三种安装布局（包内 / 上层 node_modules / 全局扁平），npm 全局安装不再误报
+
+### 演练
+
+- 发布前最终演练通过：npm pack → 干净安装 → bin/库 API/doctor 全绿 → 11 平台渲染回归
+
+## [0.5.1] - 2026-09-14
+
+### 新增
+
+- `--numbered-headings`：h1/h2/h3 自动编号（1. / 1.1 / 1.1.1），目录同步编号
+- MCP `build_post` 支持 `numberedHeadings`
+
+### 修复
+
+- heading 读取 `userOptions`（marked Parser 构造会覆盖 renderer.options，用户选项需独立存储）
+
+### 测试
+
+- 61 → 63
+
+## [0.5.0] - 2026-09-14
+
+### 新增
+
+- `postforge doctor`：环境诊断（Node 版本 / 依赖完整性 / 平台·主题注册表 / 渲染自检）
+
+### 测试
+
+- 60 → 61
+
 ## [0.4.6] - 2026-09-14
 
 ### 新增
@@ -168,6 +207,9 @@
 
 - 13 个单元测试全绿
 
+[0.5.2]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.2
+[0.5.1]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.1
+[0.5.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.0
 [0.4.6]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.6
 [0.4.5]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.5
 [0.4.4]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.4
