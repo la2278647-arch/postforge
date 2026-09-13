@@ -47,32 +47,42 @@ postforge build post.md -p generic --toc -o preview.html
 - 3 套主题：clean / paper / dark，可自定义
 - GFM 任务清单（☑ ☐）、表格斑马纹、引用块、图片自适应
 - `--toc` 目录生成（带锚点，h1-h3）
+- 排版模板：`:::tip / :::warning / :::note / :::danger / :::quote` 彩色提示卡片
+- 发布前检查：`postforge check` 校验卡片配对与本地图片引用
+- 图片内联：`--inline-images` 本地图片转 base64，公众号粘贴自动转存素材
+- MCP Server：Claude / Cursor 可直接调用 `build_post` / `check_post` 工具
 - 可作库使用：`build(markdown, { platform: 'wechat' })`
 
 ### 技术栈
 
 - Node.js >= 18，ESM
-- 仅两个运行时依赖：`marked`（解析）+ `highlight.js`（高亮）
-- 单元测试：`node:test`，13 个用例全绿
+- 仅 3 个运行时依赖：`marked`（解析）+ `highlight.js`（高亮）+ `@modelcontextprotocol/sdk`（仅 MCP 模式）
+- 单元测试：`node:test`，36 个用例全绿（渲染 + CLI 集成）
 
 ### 项目结构
 
 ```text
 src/
-  cli.js        命令行入口
+  cli.js        命令行入口（build / check / mcp / list）
   renderer.js   核心渲染引擎（marked 自定义 Renderer）
   themes.js     排版主题
   platforms.js  平台适配配置
+  cards.js      排版模板扩展（提示卡片）
+  check.js      静态检查（卡片配对 / 本地图片引用）
   highlight.js  代码高亮 → 内联样式映射
+  mcp/server.js MCP Server
   index.js      公开 API
 examples/       示例文章与生成结果
-test/           单元测试
+test/           单元测试（renderer + cli）
+docs/           公众号图片专题、多平台案例与宣传文案
 ```
 
 ### 下一步
 
-- [ ] 排版模板（代码卡片 / 提示框 / 分割线）
-- [ ] MCP Server 集成，让 AI 直接产出平台文稿
+- [x] 排版模板（5 种提示卡片）
+- [x] MCP Server 集成（build_post / check_post）
+- [x] 静态检查 postforge check
+- [ ] 公众号图片一键上传（素材库 API 自动化）
 - [ ] 更多主题与平台
 
 ### 地址

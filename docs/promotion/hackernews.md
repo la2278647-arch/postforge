@@ -26,12 +26,15 @@ I built an open-source CLI that renders one Markdown file into publisher-ready r
 - Custom marked Renderer — every element gets inline styles
 - Code highlighting via highlight.js, with its token classes mapped to inline colors (GitHub palette) so WeChat shows highlighting too
 - GFM task lists (☑ ☐), zebra-striped tables, blockquotes, responsive images
+- **Themed callout cards**: `:::tip / :::warning / :::note / :::danger / :::quote` — arbitrary Markdown inside, per-theme colors (quote gets a decorative quote mark)
+- **Pre-publish lint**: `postforge check` validates card syntax pairing and local image references, with line numbers
+- **`--inline-images`**: local images inlined as base64; WeChat auto-saves them to its CDN on paste (no more broken images)
 - 3 themes (clean / paper / dark), extendable in `src/themes.js`
 - Node >= 18, ESM, zero SaaS — runs entirely locally. Only 3 runtime deps (`marked`, `highlight.js`, MCP SDK)
-- **MCP server included** — Claude/Cursor can call `build_post` directly to get platform-ready rich text
+- **MCP server included** — Claude/Cursor can call `build_post` (plus `check_post` for linting) directly
 - Usable as a library: `build(md, { platform: 'wechat' })`
-- 13 unit tests passing (node:test)
+- 36 unit tests passing (node:test), incl. CLI integration tests
 
 Repo with example outputs: https://github.com/la2278647-arch/postforge
 
-MIT. Happy to chat about design choices or roadmap (MCP server integration is on the list).
+MIT. Roadmap: one-click WeChat image upload via the asset-library API, more platforms/themes. Happy to chat about design choices.

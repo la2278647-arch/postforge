@@ -13,6 +13,7 @@ I open-sourced **PostForge** — a zero-config Markdown typesetting engine:
 ▸ One command: `postforge build post.md -p wechat`
 ▸ Fully inlined styles (WeChat requires inline CSS — no <style> allowed)
 ▸ Code highlighting, tables, task lists, auto TOC
+▸ Themed callout cards (`:::tip`…`:::quote`) + pre-publish lint (`postforge check`)
 ▸ Pure-text mode with hashtag suggestions for Xiaohongshu
 ▸ Runs 100% locally, 3 deps, ships an MCP server for Claude/Cursor
 
@@ -32,7 +33,7 @@ https://github.com/la2278647-arch/postforge
 
 1/ The problem: WeChat only accepts inline styles, Zhihu strips most custom CSS, Xiaohongshu only takes plain text. Existing tools mostly cover WeChat only — and many are abandoned.
 
-2/ The fix: a single CLI that renders your Markdown to each platform's rich text. Fully inlined styles, GitHub-style code highlighting, TOC, task lists. Xiaohongshu gets plain text + image list + hashtag suggestions.
+2/ The fix: a single CLI that renders your Markdown to each platform's rich text. Fully inlined styles, GitHub-style code highlighting, TOC, task lists. Themed callout cards (`:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote`) and a pre-publish lint command (`postforge check`) catch mistakes before you paste. Xiaohongshu gets plain text + image list + hashtag suggestions.
 
 3/ Zero SaaS, zero lock-in: runs locally, only `marked` + `highlight.js` as deps. Also usable as a library: `build(md, { platform: 'wechat' })`.
 

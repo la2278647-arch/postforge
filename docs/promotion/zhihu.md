@@ -6,7 +6,7 @@
 
 ## 想法（短）
 
-中文创作者终于有开源的多平台排版工具了：PostForge 可以把同一篇 Markdown 一键排版成公众号/知乎/掘金/CSDN/小红书的富文本，全内联样式粘贴即用，还带代码高亮和目录。本地运行、零配置、不传数据。
+中文创作者终于有开源的多平台排版工具了：PostForge 可以把同一篇 Markdown 一键排版成公众号/知乎/掘金/CSDN/小红书的富文本，全内联样式粘贴即用，还带代码高亮、目录、彩色提示卡片和发布前检查。本地运行、零配置、不传数据。
 
 GitHub：https://github.com/la2278647-arch/postforge
 
@@ -33,6 +33,8 @@ GitHub：https://github.com/la2278647-arch/postforge
    - 小红书 → 纯文本 + 图片清单 + 自动生成话题标签（小红书不支持富文本）；
    - 通用网页 → 完整 HTML 文档，适合预览/打印/自建博客。
 4. **主题化**。内置 clean/paper/dark 三套主题，改 `src/themes.js` 就能自己定制。
+5. **排版模板**。`:::tip / :::warning / :::note / :::danger / :::quote` 彩色提示卡片，内容支持任意 Markdown，配色自动跟随主题。
+6. **发布前检查与图片内联**。`postforge check` 校验卡片语法配对与本地图片引用（带行号）；`--inline-images` 把本地图片转 base64，粘贴公众号时微信自动转存素材，图片不再裂图。
 
 用法：
 
