@@ -24,7 +24,7 @@
 ## Features
 
 - 🖥️ **11 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text mode), generic web page
-- 🎨 **6 themes**: clean / paper / nord / coffee / dark / midnight — extendable via `makeTheme`
+- 🎨 **8 themes**: clean / paper / nord / coffee / solarized / dark / midnight / one-dark — extendable via `makeTheme` or `--theme-file`
 - 🧩 **Fully inline styles**: paste-and-go, no `<style>` or external CSS required
 - 🔆 **Code highlighting**: GitHub-palette highlight.js tokens mapped to inline colors
 - 🧱 **Templates**: `:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote` callout cards + `:::divider` section separators
@@ -79,6 +79,7 @@ postforge build post.md -p zhihu -o zhihu.html
 
 ```text
 postforge build <input.md> [options]
+postforge batch <directory> [options]
 postforge check <input.md>
 postforge info <input.md>
 postforge mcp
@@ -109,7 +110,7 @@ Callout cards follow the theme's colors; `:::divider` renders a section separato
 npm run mcp    # or: postforge mcp
 ```
 
-Exposes `list_platforms`, `list_themes`, `build_post`, `check_post`. Example (Claude Code):
+Exposes `list_platforms`, `list_themes`, `build_post`, `check_post`, `get_post_stats`. Example (Claude Code):
 
 ```bash
 claude mcp add --scope project postforge -- node C:/path/to/postforge/src/mcp/server.js

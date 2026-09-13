@@ -3,6 +3,73 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [0.4.6] - 2026-09-14
+
+### 新增
+
+- 2 套新主题：`one-dark`（Atom 编辑器深色）/ `solarized`（经典护眼浅色），共 8 套
+
+### 修复
+
+- CLI `build --theme` 失效回归（v0.4.3 引入：themeObj 三元写反，未用 theme-file 时 theme 传 undefined → 默认 clean）
+
+### 测试
+
+- 59 → 60（--theme 生效回归用例）
+
+## [0.4.5] - 2026-09-14
+
+### 新增
+
+- 模板库 5 → 7 篇：`meeting-notes.md`（会议纪要）/ `faq.md`（FAQ 文档）
+- MCP Server 工具 `get_post_stats`（字数 / 图片 / 代码块 / 标题 / 阅读时长）
+
+## [0.4.4] - 2026-09-14
+
+### 新增
+
+- `postforge batch <目录>`：批量排版目录下所有 .md（check 通过才生成、下划线草稿跳过、失败列出原因）
+
+### 测试
+
+- 57 → 59（batch 成功 / 目录不存在）
+
+## [0.4.3] - 2026-09-14
+
+### 新增
+
+- `--theme-file <json>`：加载自定义主题（深合并到基础主题，无需改源码）
+- `build()` 支持 `themeObj`；`deepMerge` / `makeTheme` 导出；`src/index.d.ts` TypeScript 类型声明
+- 示例主题 `examples/themes/brand-blue.json`
+
+### 测试
+
+- 55 → 57（themeObj 继承 / 卡片深合并）
+
+## [0.4.2] - 2026-09-14
+
+### 新增
+
+- 图片尺寸语法：`![alt](url =WxH)` / `=W`（inline 扩展 postforgeImage，公众号控图）
+
+### 测试
+
+- 51 → 55（尺寸语法 4 用例）
+
+## [0.4.1] - 2026-09-14
+
+### 修复
+
+- `postforge check` 兼容 CRLF 换行（Windows）文件：ECMAScript 正则 `.` 不匹配 `\r`，CRLF 卡片开启行此前被误判
+
+### 新增
+
+- `scripts/benchmark.mjs` 性能基准（5K 字 2.7ms / 50K 19.6ms / 200K 68.1ms）
+
+### 测试
+
+- 49 → 51（CRLF 2 用例）
+
 ## [0.4.0] - 2026-09-14
 
 ### 新增
@@ -101,6 +168,12 @@
 
 - 13 个单元测试全绿
 
+[0.4.6]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.6
+[0.4.5]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.5
+[0.4.4]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.4
+[0.4.3]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.3
+[0.4.2]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.2
+[0.4.1]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.1
 [0.4.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.4.0
 [0.3.1]: https://github.com/la2278647-arch/postforge/releases/tag/v0.3.1
 [0.3.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.3.0
