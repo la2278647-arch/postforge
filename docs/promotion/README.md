@@ -1,7 +1,10 @@
 # PostForge 宣传发布指引
 
 本目录为各平台就绪的宣传文案，复制即发。发布后请把对应链接回填到
-`docs/promotion/links.md`（新建），方便归档与互相引流。
+`docs/promotion/links.md`（已建好归档表，直接补链接即可），方便归档与互相引流。
+
+当前版本：**v0.2.0**（提示卡片 / postforge check / --inline-images / MCP check_post），
+发布前用 `postforge check` 校验文案 Markdown。
 
 ## 覆盖的平台
 
