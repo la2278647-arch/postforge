@@ -356,6 +356,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`product-launch.md`](examples/templates/product-launch.md) | 产品发布 | 亮点卡 / 升级指南 / 版本信息 / 路线图 |
 | [`meeting-notes.md`](examples/templates/meeting-notes.md) | 会议纪要 | 议题结论 / 行动项表格 / 待确认事项 / 下次会议 |
 | [`faq.md`](examples/templates/faq.md) | FAQ 文档 | 分主题问答 / 排查步骤 / 使用技巧 / 更新说明 |
+| [`reading-notes.md`](examples/templates/reading-notes.md) | 读书笔记 | 核心观点卡 / 行动清单 / 摘抄 / 荐读人群 |
 
 发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 

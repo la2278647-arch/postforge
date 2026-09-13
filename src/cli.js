@@ -124,8 +124,14 @@ function main() {
     );
     const deps = ['marked', 'highlight.js', '@modelcontextprotocol/sdk'];
     for (const d of deps) {
+      // 覆盖三种安装布局：包内子目录 / 上层 node_modules（开发）/ 全局扁平（npm i -g）
+      const candidates = [
+        join(__dirname, '..', 'node_modules', d),
+        join(__dirname, '..', '..', 'node_modules', d),
+        join(__dirname, '..', '..', d),
+      ];
       checks.push(
-        existsSync(join(__dirname, '..', 'node_modules', d))
+        candidates.some(existsSync)
           ? `✓ 依赖 ${d} 已安装`
           : `✗ 依赖 ${d} 未安装（请运行 npm install）`,
       );
