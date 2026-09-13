@@ -78,6 +78,45 @@ postforge build post.md -p zhihu -o zhihu.html
 # 或 mdx build post.md -p csdn
 ```
 
+## 🎬 效果演示
+
+同一篇 Markdown，三种形态的输出：
+
+**输入（Markdown）**：
+
+````markdown
+:::tip 小贴士
+PostForge 支持排版模板与代码高亮。
+:::
+
+| 平台 | 命令 |
+| ---- | ---- |
+| 公众号 | `-p wechat` |
+
+```js
+const hello = 'world';
+```
+````
+
+**公众号输出**（全内联样式，粘贴即用）：
+
+```html
+<div style="border-left:4px solid #16a34a;border-radius:8px;padding:14px 16px;...">
+  <strong style="color:#16a34a">小贴士</strong>
+  <p style="margin-bottom:16px">PostForge 支持排版模板与代码高亮。</p>
+</div>
+<table style="border-collapse:collapse;...">...</table>
+<pre style="background-color:#f6f8fa;..."><code><span style="color:#d73a49">const</span> hello = <span style="color:#032f62">'world'</span>;</code></pre>
+```
+
+**小红书输出**（纯文本 + 图片清单 + 话题标签）：
+
+```text
+【小贴士】PostForge 支持排版模板与代码高亮。
+```
+
+更多完整案例见 [📁 模板库](#-模板库) 与 [✨ 自举案例](#-自举案例)。
+
 ## 📱 支持的平台
 
 | 平台 | 命令 | 输出 | 说明 |
