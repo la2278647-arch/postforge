@@ -358,6 +358,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 ```bash
 npm test                 # 运行单元测试（node:test）
 npm run demo             # 生成示例输出到 examples/
+node scripts/benchmark.mjs   # 渲染性能基准（5K/50K/200K 字文档最快耗时）
 ```
 
 项目结构：

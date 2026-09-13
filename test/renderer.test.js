@@ -182,6 +182,19 @@ test('quote 卡片三主题配色独立', () => {
   assert.match(dark.html, /#c084fc/);
 });
 
+test('checkDocument 兼容 CRLF 换行（Windows 文件）', async () => {
+  const { checkDocument } = await import('../src/check.js');
+  const crlf = ':::tip 标题\r\n内容\r\n:::\r\n\r\n正文\r\n:::divider 分隔\r\n';
+  const r = checkDocument(crlf, process.cwd());
+  assert.deepEqual(r.errors, [], 'CRLF 文件卡片配对不应误报');
+});
+
+test('checkDocument 兼容 CRLF 且含未闭合卡片仍报错', async () => {
+  const { checkDocument } = await import('../src/check.js');
+  const r = checkDocument(':::warning 未闭合\r\n内容\r\n', process.cwd());
+  assert.ok(r.errors.some((e) => e.includes('未闭合')), '未闭合卡片仍应报错');
+});
+
 test('divider 分隔条：带文字渲染上下边框夹文字', () => {
   const { html } = build('正文一\n\n:::divider 第三章\n\n正文二');
   assert.match(html, /border-top:1px solid #e5e5e5/);

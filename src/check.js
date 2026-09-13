@@ -29,7 +29,8 @@ const IMAGE_RE = /!\[[^\]]*\]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g;
 export function checkDocument(markdown, baseDir = process.cwd()) {
   const errors = [];
   const warnings = [];
-  const lines = markdown.split('\n');
+  // CRLF 兼容：行尾 \r 会导致逐行正则（ECMAScript `.` 不匹配 \r）误判，先剥离
+  const lines = markdown.split('\n').map((l) => l.replace(/\r$/, ''));
   const kindSet = new Set(CARD_KINDS);
   const stack = [];
 
