@@ -48,6 +48,14 @@
 - 🤖 **MCP Server**：Claude / Cursor 等 AI 可直接调用排版工具
 - 🚫 **零在线依赖**：本地渲染，不传数据到任何服务器
 
+## 📐 架构
+
+[打开交互式架构图](docs/diagram/dataflow-postforge.html)（可缩放 · 深浅主题 · 聚焦视图 · 关系追踪）
+
+<img src="docs/diagram/dataflow-postforge.visual-check.1440x900.light.png" alt="PostForge 排版流水线" width="720" />
+
+> 流水线：Markdown 单源 → Lexer 解析（含 `:::` 卡片扩展）→ PostRenderer 全内联样式渲染 → 六平台输出 → 粘贴发布 / AI 消费。
+
 ## 🚀 快速开始
 
 ```bash

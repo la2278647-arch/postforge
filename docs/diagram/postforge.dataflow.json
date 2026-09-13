@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "PostForge 排版流水线",
+    "output": "dataflow-postforge.html",
+    "viewBox": [1200, 640],
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "main-path",
+        "label": "主流水线",
+        "focus": ["md", "lexer", "render", "rich", "pub"],
+        "note": "一篇 Markdown 如何变成可直接粘贴的富文本。"
+      },
+      {
+        "id": "platforms",
+        "label": "平台输出",
+        "focus": ["rich", "text", "doc", "pub"],
+        "note": "同一内核产出富文本、纯文本与完整网页三种形态。"
+      },
+      {
+        "id": "ai-integration",
+        "label": "AI 集成",
+        "focus": ["cli", "ai"],
+        "note": "CLI、库与 MCP 三种调用方式，AI 可直接取得平台文稿。"
+      }
+    ]
+  },
+  "stages": [
+    { "label": "编写输入" },
+    { "label": "解析" },
+    { "label": "渲染" },
+    { "label": "平台输出" },
+    { "label": "发布消费" }
+  ],
+  "nodes": [
+    { "id": "md", "type": "frontend", "label": "Markdown", "sublabel": "post.md 单源写作", "stage": 0, "row": 0, "tag": "输入", "height": 64 },
+    { "id": "cli", "type": "frontend", "label": "CLI / 库 / MCP", "sublabel": "build_post 工具调用", "stage": 0, "row": 2, "tag": "入口", "height": 64 },
+    { "id": "lexer", "type": "backend", "label": "marked Lexer", "sublabel": "块级与行内 token 流", "stage": 1, "row": 1, "tag": "解析", "height": 64 },
+    { "id": "cards", "type": "backend", "label": "模板扩展", "sublabel": "::: 提示卡片", "stage": 1, "row": 2, "tag": "解析", "height": 64 },
+    { "id": "render", "type": "backend", "label": "PostRenderer", "sublabel": "内联样式 + 高亮 + 主题", "stage": 2, "row": 0, "tag": "内核", "height": 64 },
+    { "id": "rich", "type": "backend", "label": "富文本 HTML", "sublabel": "公众号 / 知乎 / 掘金 / CSDN", "stage": 3, "row": 1, "tag": "输出", "height": 64 },
+    { "id": "text", "type": "backend", "label": "纯文本", "sublabel": "小红书 + 图片清单", "stage": 3, "row": 2, "tag": "输出", "height": 64 },
+    { "id": "doc", "type": "backend", "label": "完整网页", "sublabel": "generic 文档 · 打印", "stage": 3, "row": 3, "tag": "输出", "height": 64 },
+    { "id": "pub", "type": "frontend", "label": "粘贴发布", "sublabel": "平台编辑器直接粘贴", "stage": 4, "row": 3, "tag": "发布", "height": 64 },
+    { "id": "ai", "type": "frontend", "label": "AI 消费", "sublabel": "Claude / Cursor 直取", "stage": 4, "row": 0, "tag": "发布", "height": 64 }
+  ],
+  "flows": [
+    { "id": "md-body", "from": "md", "to": "lexer", "label": "正文与结构", "variant": "emphasis" },
+    { "id": "cli-req", "from": "cli", "to": "lexer", "label": "构建请求", "variant": "default" },
+    { "id": "token-stream", "from": "lexer", "to": "render", "label": "token 流", "variant": "emphasis", "labelDx": -34 },
+    { "id": "card-tokens", "from": "cards", "to": "render", "label": "卡片 token", "variant": "default", "fromSide": "top", "toSide": "bottom", "labelDx": 40 },
+    { "id": "out-rich", "from": "render", "to": "rich", "label": "内联样式 HTML", "variant": "emphasis", "labelAt": [594, 206] },
+    { "id": "out-text", "from": "render", "to": "text", "label": "纯文本提取", "variant": "default", "labelDx": -44 },
+    { "id": "out-doc", "from": "render", "to": "doc", "label": "完整文档", "variant": "default", "labelDx": -32 },
+    { "id": "paste-rich", "from": "rich", "to": "pub", "label": "粘贴富文本", "variant": "emphasis" },
+    { "id": "copy-text", "from": "text", "to": "pub", "label": "复制正文", "variant": "default", "labelDx": -36 },
+    { "id": "mcp-return", "from": "rich", "to": "ai", "label": "MCP 返回", "variant": "default", "labelDx": -36 }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "一次编写",
+      "items": [
+        "Markdown 单源写作，零平台差异心智负担",
+        "CLI / 库 / MCP 三种入口共用同一内核",
+        "排版模板与代码高亮内联化，开箱即用"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "六大平台",
+      "items": [
+        "富文本：公众号 / 知乎 / 掘金 / CSDN",
+        "纯文本：小红书（含图片清单与话题标签）",
+        "完整网页：generic 文档，可预览可打印"
+      ]
+    },
+    {
+      "dot": "orange",
+      "title": "本地优先",
+      "items": [
+        "零在线依赖，不上传任何内容",
+        "仅 marked + highlight.js + MCP SDK 三个依赖",
+        "生成结果可直接粘贴，也可由 AI 消费"
+      ]
+    }
+  ]
+}
