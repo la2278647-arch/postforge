@@ -19,8 +19,10 @@ postforge build post.md -p generic --toc -o preview.html
 • **全内联样式**：粘贴即用，不依赖 `<style>` 与外部 CSS
 • **3 套主题**：Clean 简洁 / Paper 纸感 / Dark 深色
 • **代码高亮**、表格斑马纹、GFM 任务清单、目录生成
-• **排版模板**：`:::note` `:::tip` `:::warning` `:::danger` 彩色提示卡片
-• **MCP Server**：Claude / Cursor 可以直接调用排版工具
+• **排版模板**：`:::tip` `:::warning` `:::note` `:::danger` `:::quote` 彩色提示卡片，内容支持任意 Markdown
+• **发布前检查**：`postforge check` 校验卡片语法配对与本地图片引用（带行号）
+• **图片内联**：`--inline-images` 把本地图片转 base64，粘贴公众号时微信自动转存素材
+• **MCP Server**：Claude / Cursor 可以直接调用 `build_post` / `check_post`
 • **零在线依赖**：本地渲染，不传数据到任何服务器，只有 3 个运行时依赖
 【支持的平台】
 平台 | 命令 | 输出
@@ -34,9 +36,11 @@ CSDN 博客 | -p csdn | HTML 片段
 • 核心渲染引擎（marked + 内联样式 + 代码高亮）
 • 6 平台适配 + 3 套主题
 • MCP Server 集成
-• 微信公众号图片自动上传配置说明
-• 更多排版模板与主题
-【使用提示】公众号不允许外链图片：请先把图片上传到公众号素材库，再替换 HTML 中的图片地址。
+• 排版模板（5 种提示卡片）+ 静态检查（postforge check）
+• 公众号图片处理专题（docs/wechat-images.md + --inline-images）
+• 公众号图片一键上传（素材库 API 自动化）
+• 更多主题与平台（欢迎社区贡献）
+【图片怎么处理】公众号不支持外链图片：本地图片用 --inline-images 一键内联，粘贴时微信自动转存素材；外链图先下载再走素材库替换，详见 docs/wechat-images.md。
 【写在最后】
 PostForge 是一个纯粹的本地工具：不登录、不上传、不锁定。写一次 Markdown，随处发布。
 仓库地址：https://github.com/la2278647-arch/postforge

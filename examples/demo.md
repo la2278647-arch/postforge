@@ -77,12 +77,28 @@ platforms.forEach((p) => console.log(`支持平台: ${p}`));
 ### 提示卡片
 
 :::tip 小贴士
-PostForge 的排版模板：用 `:::tip` / `:::warning` / `:::note` / `:::danger` 插入彩色提示卡片，内容支持任意 Markdown。
+PostForge 的排版模板：用 `:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote` 插入彩色提示卡片，内容支持任意 Markdown。
 :::
 
 :::warning 注意
 公众号粘贴前请先保存草稿——图片需上传至公众号素材库后替换地址。
 :::
+
+:::danger 高风险
+忘记闭合卡片会导致整段内容被当成普通段落，发布前记得跑 `postforge check`。
+:::
+
+:::quote
+纸上得来终觉浅，绝知此事要躬行。
+:::
+
+### 发布前检查
+
+```bash
+postforge check post.md
+```
+
+`postforge check` 会校验卡片语法配对与本地图片引用（带行号定位）。配合 `--inline-images` 还可以把本地图片转成 base64 内联，粘贴公众号时微信自动转存素材。
 
 ### 图片
 
@@ -90,7 +106,9 @@ PostForge 的排版模板：用 `:::tip` / `:::warning` / `:::note` / `:::danger
 
 ## 常见问题
 
-**公众号图片怎么处理？** 公众号不允许外链图片，需要先把图片上传到公众号素材库，然后替换 HTML 中的图片地址。
+**公众号图片怎么处理？** 公众号不允许外链图片。两种解法：`--inline-images` 把本地图片转 base64 内联，粘贴时微信自动转存素材；或按 [`docs/wechat-images.md`](../docs/wechat-images.md) 用素材库手动替换。
+
+**写完怎么自检？** 发布前跑 `postforge check post.md`，卡片配对与本地图片引用问题会带行号列出来。
 
 **为什么选择 PostForge？** 现有工具大多只支持公众号且年久失修，PostForge 统一了多个平台的排版逻辑，支持主题定制，欢迎社区贡献。
 
