@@ -16,7 +16,7 @@ The pain: WeChat Official Account only accepts inline styles (no `<style>` tags,
 
 The fix: `postforge build post.md -p wechat` outputs fully inline-styled HTML you paste straight into the editor. `-p xiaohongshu` gives plain text + image list + hashtag suggestions. `-p generic --toc` gives a standalone HTML document.
 
-Tech: Node >= 18 ESM, custom marked Renderer, highlight.js tokens mapped to inline colors, 3 themes, themed callout cards (`:::tip`/`:::warning`/`:::note`/`:::danger`/`:::quote`), a pre-publish lint command (`postforge check`), local images can be inlined as base64 (`--inline-images`) so WeChat saves them to its CDN on paste, 3 runtime deps, runs 100% locally. Also usable as a library (`build(md, { platform })`) and ships an MCP server so Claude/Cursor can call `build_post` / `check_post` directly. 36 unit tests green (incl. CLI integration).
+Tech: Node >= 18 ESM, custom marked Renderer, highlight.js tokens mapped to inline colors, 6 themes, themed callout cards (`:::tip`/`:::warning`/`:::note`/`:::danger`/`:::quote`), a pre-publish lint command (`postforge check`), local images can be inlined as base64 (`--inline-images`) so WeChat saves them to its CDN on paste, 3 runtime deps, runs 100% locally. Also usable as a library (`build(md, { platform })`) and ships an MCP server so Claude/Cursor can call `build_post` / `check_post` directly. 38 unit tests green (incl. CLI integration).
 
 Repo: https://github.com/la2278647-arch/postforge (MIT)
 

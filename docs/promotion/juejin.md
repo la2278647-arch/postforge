@@ -43,8 +43,8 @@ postforge build post.md -p generic --toc -o preview.html
 
 支持的特性：
 
-- 6 个平台：公众号 / 知乎 / 掘金 / CSDN / 小红书 / 通用网页
-- 3 套主题：clean / paper / dark，可自定义
+- 9 个平台：公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 小红书 / 通用网页
+- 6 套主题：clean / paper / nord / coffee / dark / midnight，可自定义
 - GFM 任务清单（☑ ☐）、表格斑马纹、引用块、图片自适应
 - `--toc` 目录生成（带锚点，h1-h3）
 - 排版模板：`:::tip / :::warning / :::note / :::danger / :::quote` 彩色提示卡片

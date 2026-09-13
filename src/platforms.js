@@ -37,6 +37,27 @@ export const PLATFORMS = {
     mode: 'html',
     defaultTheme: 'clean',
   },
+  yuque: {
+    id: 'yuque',
+    name: '语雀',
+    desc: '内联样式富文本，粘贴进语雀编辑器（知识库 / 文档）',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
+  jianshu: {
+    id: 'jianshu',
+    name: '简书',
+    desc: '内联样式富文本，粘贴进简书编辑器',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
+  cnblogs: {
+    id: 'cnblogs',
+    name: '博客园',
+    desc: '内联样式富文本，粘贴进博客园编辑器',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
   xiaohongshu: {
     id: 'xiaohongshu',
     name: '小红书',

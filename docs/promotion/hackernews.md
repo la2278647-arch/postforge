@@ -29,7 +29,7 @@ I built an open-source CLI that renders one Markdown file into publisher-ready r
 - **Themed callout cards**: `:::tip / :::warning / :::note / :::danger / :::quote` — arbitrary Markdown inside, per-theme colors (quote gets a decorative quote mark)
 - **Pre-publish lint**: `postforge check` validates card syntax pairing and local image references, with line numbers
 - **`--inline-images`**: local images inlined as base64; WeChat auto-saves them to its CDN on paste (no more broken images)
-- 3 themes (clean / paper / dark), extendable in `src/themes.js`
+- 6 themes (clean / paper / nord / coffee / dark / midnight), extendable in `src/themes.js`
 - Node >= 18, ESM, zero SaaS — runs entirely locally. Only 3 runtime deps (`marked`, `highlight.js`, MCP SDK)
 - **MCP server included** — Claude/Cursor can call `build_post` (plus `check_post` for linting) directly
 - Usable as a library: `build(md, { platform: 'wechat' })`
