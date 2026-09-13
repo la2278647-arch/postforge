@@ -332,13 +332,15 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`announce-wechat.html`](docs/case/announce-wechat.html) | 公众号富文本，粘贴进编辑器即可 |
 | [`announce-xiaohongshu.txt`](docs/case/announce-xiaohongshu.txt) | 小红书纯文本 + 图片清单 + 话题标签 |
 
-**技术深挖**：[`tech-deep.md`](docs/case/tech-deep.md) 是一篇 PostForge 实现剖析（讲清楚内联样式渲染、marked 扩展、代码高亮内联化与踩过的坑），同样用项目自身排版：
+**技术深挖**：[`tech-deep.md`](docs/case/tech-deep.md)（中文）与 [`tech-deep.en.md`](docs/case/tech-deep.en.md)（English）是 PostForge 实现剖析（讲清楚内联样式渲染、marked 扩展、代码高亮内联化与踩过的坑），同样用项目自身排版：
 
 | 输出 | 说明 |
 | ---- | ---- |
-| [`tech-deep-generic.html`](docs/case/tech-deep-generic.html) | 完整网页（含目录） |
-| [`tech-deep-juejin.html`](docs/case/tech-deep-juejin.html) | 掘金富文本 |
-| [`tech-deep-wechat.html`](docs/case/tech-deep-wechat.html) | 公众号富文本 |
+| [`tech-deep-generic.html`](docs/case/tech-deep-generic.html) | 中文完整网页（含目录） |
+| [`tech-deep-juejin.html`](docs/case/tech-deep-juejin.html) | 中文掘金富文本 |
+| [`tech-deep-wechat.html`](docs/case/tech-deep-wechat.html) | 中文公众号富文本 |
+| [`tech-deep-en-generic.html`](docs/case/tech-deep-en-generic.html) | **English** 完整网页（含目录） |
+| [`tech-deep-en-wechat.html`](docs/case/tech-deep-en-wechat.html) | **English** 公众号富文本 |
 
 ## 🗺 路线图
 
