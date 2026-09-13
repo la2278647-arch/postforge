@@ -317,6 +317,8 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`tech-tutorial.md`](examples/templates/tech-tutorial.md) | 技术教程 | 收获卡片 / 步骤 / 避坑卡 / 原理说明 / 行动清单 |
 | [`wechat-article.md`](examples/templates/wechat-article.md) | 公众号文章 | 金句卡 / 对比表格 / 划重点 / 行动号召 |
 | [`xiaohongshu-draft.md`](examples/templates/xiaohongshu-draft.md) | 小红书笔记 | 卖点卡 / 步骤 / 效果对比 / 图片清单 / 话题标签 |
+| [`weekly-report.md`](examples/templates/weekly-report.md) | 周报 | 概览卡 / 完成清单 / 数据表格 / 风险提示 / 下周计划 |
+| [`product-launch.md`](examples/templates/product-launch.md) | 产品发布 | 亮点卡 / 升级指南 / 版本信息 / 路线图 |
 
 发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 

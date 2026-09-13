@@ -27,7 +27,8 @@
     "README.md",
     "docs/wechat-images.md",
     "docs/case/tech-deep.md",
-    "docs/diagram/postforge.dataflow.json"
+    "docs/diagram/postforge.dataflow.json",
+    "examples/templates/"
   ],
   "homepage": "https://github.com/la2278647-arch/postforge#readme",
   "keywords": [
