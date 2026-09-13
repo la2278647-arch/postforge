@@ -3,6 +3,6 @@
  * 公开 API：build(markdown, options)
  */
 
-export { build, PostRenderer } from './renderer.js';
+export { build, PostRenderer, deepMerge } from './renderer.js';
 export { PLATFORMS, getPlatform } from './platforms.js';
-export { THEMES, getTheme } from './themes.js';
+export { THEMES, getTheme, makeTheme } from './themes.js';
