@@ -196,6 +196,8 @@ npm run mcp          # 或 postforge mcp
 | `list_platforms` | 列出支持的平台 |
 | `list_themes` | 列出排版主题 |
 | `build_post` | 把 Markdown 排版为目标平台富文本（`markdown` / `platform` / `theme` / `toc` / `maxWidth`） |
+| `check_post` | 发布前静态检查（卡片配对 / 图片引用） |
+| `get_post_stats` | 文章统计（字数 / 图片 / 代码块 / 标题 / 阅读时长） |
 
 ### 在 Claude Code 中配置
 
@@ -348,6 +350,8 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`xiaohongshu-draft.md`](examples/templates/xiaohongshu-draft.md) | 小红书笔记 | 卖点卡 / 步骤 / 效果对比 / 图片清单 / 话题标签 |
 | [`weekly-report.md`](examples/templates/weekly-report.md) | 周报 | 概览卡 / 完成清单 / 数据表格 / 风险提示 / 下周计划 |
 | [`product-launch.md`](examples/templates/product-launch.md) | 产品发布 | 亮点卡 / 升级指南 / 版本信息 / 路线图 |
+| [`meeting-notes.md`](examples/templates/meeting-notes.md) | 会议纪要 | 议题结论 / 行动项表格 / 待确认事项 / 下次会议 |
+| [`faq.md`](examples/templates/faq.md) | FAQ 文档 | 分主题问答 / 排查步骤 / 使用技巧 / 更新说明 |
 
 发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 

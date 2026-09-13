@@ -16,6 +16,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { build } from '../index.js';
+import { analyze } from '../info.js';
 import { checkDocument } from '../check.js';
 import { PLATFORMS } from '../platforms.js';
 import { THEMES } from '../themes.js';
@@ -152,6 +153,41 @@ server.registerTool(
       return {
         isError: true,
         content: [{ type: 'text', text: `检查失败: ${err.message}` }],
+      };
+    }
+  },
+);
+
+server.registerTool(
+  'get_post_stats',
+  {
+    title: '文章统计',
+    description:
+      '统计 Markdown 的字数（中文/英文）、图片数、代码块数、标题数、模板卡片数与预计阅读时长。适合排版前评估文章体量。',
+    inputSchema: z.object({
+      markdown: z.string().describe('要统计的 Markdown 原文'),
+    }),
+  },
+  async (args) => {
+    try {
+      const s = analyze(args.markdown);
+      const cardLine = Object.entries(s.cards).length
+        ? Object.entries(s.cards).map(([k, n]) => `${k}×${n}`).join(' ')
+        : '无';
+      return textResult(
+        [
+          `字数：${s.cn + s.enWords}（中文 ${s.cn} · 英文 ${s.enWords} 词）`,
+          `图片：${s.images} 张`,
+          `代码块：${s.codeBlocks} 个`,
+          `标题：${s.headings} 个`,
+          `模板卡片：${cardLine}`,
+          `预计阅读：约 ${s.minutes} 分钟`,
+        ].join('\n'),
+      );
+    } catch (err) {
+      return {
+        isError: true,
+        content: [{ type: 'text', text: `统计失败: ${err.message}` }],
       };
     }
   },
