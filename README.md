@@ -287,6 +287,17 @@ const { html } = build(markdown, {
 标题可省略：`:::note\n内容\n:::`。卡片配色跟随主题（6 套主题各自适配），实现见 `src/cards.js`。
 忘记闭合或写错类型？发布前跑 `postforge check post.md` 会精确定位错误行。
 
+## 📷 图片尺寸语法
+
+在图片链接后追加 `=WxH`（宽×高）或 `=W`（仅宽）控制显示尺寸——公众号排版控制配图大小刚需：
+
+```markdown
+![架构图](images/arch.png =600x400)   <!-- 固定 600×400 -->
+![封面](https://a.com/cover.png =500) <!-- 仅限宽 500 -->
+```
+
+显式尺寸会覆盖主题的 `max-width:100%` 限制；本地图片配 `--inline-images` 时尺寸语法同样生效。
+
 ## ✅ 发布前检查
 
 ```bash

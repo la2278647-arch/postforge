@@ -104,6 +104,14 @@ postforge check post.md
 
 ![PostForge Logo](https://avatars.githubusercontent.com/u/190791720?v=4)
 
+本地图片（配 `--inline-images` 自动内联为 base64，粘贴公众号可自动转存）：
+
+![本地图片示例](images/pixel.png)
+
+指定尺寸（`=WxH` / `=W`，公众号控图）：
+
+![宽度 120 的图](images/pixel.png =120)
+
 ## 常见问题
 
 **公众号图片怎么处理？** 公众号不允许外链图片。两种解法：`--inline-images` 把本地图片转 base64 内联，粘贴时微信自动转存素材；或按 [`docs/wechat-images.md`](../docs/wechat-images.md) 用素材库手动替换。

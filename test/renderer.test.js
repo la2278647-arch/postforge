@@ -195,6 +195,36 @@ test('checkDocument 兼容 CRLF 且含未闭合卡片仍报错', async () => {
   assert.ok(r.errors.some((e) => e.includes('未闭合')), '未闭合卡片仍应报错');
 });
 
+test('图片尺寸语法：=WxH 输出 width 与 height', () => {
+  const { html } = build('![图](https://a.com/x.png =300x200)');
+  assert.match(html, /src="https:\/\/a.com\/x.png"/);
+  assert.match(html, /width:300px/);
+  assert.match(html, /height:200px/);
+  assert.doesNotMatch(html, /=300x200/, '尺寸后缀不进入 src');
+});
+
+test('图片尺寸语法：=W 仅宽度，移除 max-width 限制', () => {
+  const { html } = build('![图](https://a.com/y.png =400)');
+  assert.match(html, /<img[^>]*width:400px/);
+  assert.doesNotMatch(html, /<img[^>]*height:/, 'img 不应含 height');
+  assert.doesNotMatch(html, /<img[^>]*max-width/, '显式尺寸时不再限制 max-width');
+});
+
+test('图片尺寸语法：无尺寸时保持原样', () => {
+  const { html } = build('![图](https://a.com/z.png)');
+  assert.doesNotMatch(html, /<img[^>]*\bwidth:\d+px/, '无尺寸时 img 无固定宽度');
+  assert.match(html, /<img[^>]*max-width:100%/);
+});
+
+test('图片尺寸语法：本地图片 + --inline-images 时尺寸仍然生效', () => {
+  const { html } = build('![图](images/pixel.png =120)', {
+    inlineImages: true,
+    baseDir: 'examples',
+  });
+  assert.match(html, /data:image\/png;base64/);
+  assert.match(html, /<img[^>]*width:120px/);
+});
+
 test('divider 分隔条：带文字渲染上下边框夹文字', () => {
   const { html } = build('正文一\n\n:::divider 第三章\n\n正文二');
   assert.match(html, /border-top:1px solid #e5e5e5/);

@@ -35,7 +35,7 @@ export function analyze(markdown, options = {}) {
 
   const walk = (toks) => {
     for (const t of toks || []) {
-      if (t.type === 'image') {
+      if (t.type === 'image' || t.type === 'postforgeImage') {
         stats.images++;
         continue;
       }

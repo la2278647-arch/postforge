@@ -14,6 +14,35 @@ import { getPlatform } from './platforms.js';
 import { createCardExtension, cardToText } from './cards.js';
 
 /**
+ * 图片尺寸语法 inline 扩展：![alt](url =WxH 或 =W)
+ * 优先于 marked 默认 image tokenizer；不匹配（如带 title）时返回 undefined 回退默认。
+ */
+const imageSizeExtension = {
+  name: 'postforgeImage',
+  level: 'inline',
+  start(src) {
+    return src.indexOf('![');
+  },
+  tokenizer(src) {
+    const rule = /^!\[([^\]]*)\]\(([^)\s]*)(?:\s+=\s*(\d+)(?:x(\d+))?)?\)/;
+    const m = rule.exec(src);
+    if (!m) return undefined;
+    return {
+      type: 'postforgeImage',
+      raw: m[0],
+      text: m[1],
+      href: m[2],
+      width: m[3] ? Number(m[3]) : null,
+      height: m[4] ? Number(m[4]) : null,
+    };
+  },
+  renderer(token) {
+    // 复用 PostRenderer.image（解析 src、注入尺寸样式）
+    return this.parser.renderer.image(token);
+  },
+};
+
+/**
  * 把卡片扩展转成 marked v18 内部结构（extensions.block / startBlock / renderers），
  * 直接传给本次 build 的 Lexer 与 Parser。
  *
@@ -26,7 +55,9 @@ export function toMarkedExtensions(theme) {
   return {
     block: [ext.tokenizer],
     startBlock: [ext.start],
-    renderers: { [ext.name]: ext.renderer },
+    inline: [imageSizeExtension.tokenizer],
+    startInline: [imageSizeExtension.start],
+    renderers: { [ext.name]: ext.renderer, postforgeImage: imageSizeExtension.renderer },
   };
 }
 
@@ -186,8 +217,15 @@ class PostRenderer extends Renderer {
   image(token) {
     const alt = token.text ? ` alt="${esc(token.text)}"` : '';
     const title = token.title ? ` title="${esc(token.title)}"` : '';
+    // 尺寸来自 postforgeImage 扩展 tokenizer（=WxH 语法）；默认 image token 无尺寸
+    const width = token.width ?? null;
+    const height = token.height ?? null;
     const src = this.resolveImageSrc(token.href);
-    return `<img src="${esc(src)}"${alt}${title} style="${toCss(this.theme.img)}" loading="lazy" referrerpolicy="no-referrer">`;
+    const style = { ...this.theme.img };
+    if (width) style.width = `${width}px`;
+    if (height) style.height = `${height}px`;
+    if (width || height) delete style['max-width']; // 显式尺寸时不再限制最大宽度
+    return `<img src="${esc(src)}"${alt}${title} style="${toCss(style)}" loading="lazy" referrerpolicy="no-referrer">`;
   }
 
   /**
@@ -263,14 +301,14 @@ function extractText(tokens) {
         if (t.type === 'link' || t.type === 'strong' || t.type === 'em' || t.type === 'del') {
           return inlineText(t.tokens);
         }
-        if (t.type === 'image') return '[图片]';
+        if (t.type === 'image' || t.type === 'postforgeImage') return '[图片]';
         return '';
       })
       .join('');
 
   const collectImages = (toks) => {
     for (const it of toks || []) {
-      if (it.type === 'image') images.push(it.href);
+      if (it.type === 'image' || it.type === 'postforgeImage') images.push(it.href);
       else if (it.tokens) collectImages(it.tokens);
     }
   };

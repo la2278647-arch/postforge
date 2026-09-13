@@ -62,6 +62,10 @@ postforge check post.md
 postforge check 会校验卡片语法配对与本地图片引用（带行号定位）。配合 --inline-images 还可以把本地图片转成 base64 内联，粘贴公众号时微信自动转存素材。
 【图片】
 [图片]
+本地图片（配 --inline-images 自动内联为 base64，粘贴公众号可自动转存）：
+[图片]
+指定尺寸（=WxH / =W，公众号控图）：
+[图片]
 【常见问题】
 公众号图片怎么处理？ 公众号不允许外链图片。两种解法：--inline-images 把本地图片转 base64 内联，粘贴时微信自动转存素材；或按 docs/wechat-images.md 用素材库手动替换。
 写完怎么自检？ 发布前跑 postforge check post.md，卡片配对与本地图片引用问题会带行号列出来。
@@ -71,6 +75,8 @@ postforge check 会校验卡片语法配对与本地图片引用（带行号定�
 
 —— 图片清单（按顺序插入正文）——
 https://avatars.githubusercontent.com/u/190791720?v=4
+images/pixel.png
+images/pixel.png
 
 —— 建议话题标签 ——
 #PostForge使用指南# #快速开始# #支持的元素# #文字样式# #列表# #表格# #代码高亮# #提示卡片# #发布前检查# #图片# #常见问题#
