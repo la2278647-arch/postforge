@@ -25,6 +25,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
 
 用法:
   postforge build <input.md> [选项]    把 Markdown 排版为平台富文本
+  postforge mcp                        启动 MCP stdio server（供 AI 调用）
   postforge list                      列出支持的平台与主题
   postforge -v | --version            显示版本
   postforge -h | --help               显示帮助
@@ -105,6 +106,15 @@ function main() {
     for (const t of Object.values(THEMES)) {
       console.log(`  ${t.id.padEnd(12)} ${t.name}`);
     }
+    return;
+  }
+
+  if (command === 'mcp') {
+    // 启动 MCP stdio server（供 Claude/Cursor 等 AI 调用）
+    import('./mcp/server.js').catch((err) => {
+      console.error(`错误: MCP server 启动失败: ${err.message}`);
+      process.exit(1);
+    });
     return;
   }
 

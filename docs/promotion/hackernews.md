@@ -27,7 +27,8 @@ I built an open-source CLI that renders one Markdown file into publisher-ready r
 - Code highlighting via highlight.js, with its token classes mapped to inline colors (GitHub palette) so WeChat shows highlighting too
 - GFM task lists (☑ ☐), zebra-striped tables, blockquotes, responsive images
 - 3 themes (clean / paper / dark), extendable in `src/themes.js`
-- Node >= 18, ESM, zero SaaS — runs entirely locally. Only 2 runtime deps: `marked` and `highlight.js`
+- Node >= 18, ESM, zero SaaS — runs entirely locally. Only 3 runtime deps (`marked`, `highlight.js`, MCP SDK)
+- **MCP server included** — Claude/Cursor can call `build_post` directly to get platform-ready rich text
 - Usable as a library: `build(md, { platform: 'wechat' })`
 - 13 unit tests passing (node:test)
 

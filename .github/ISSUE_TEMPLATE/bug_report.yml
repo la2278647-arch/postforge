@@ -1,0 +1,26 @@
+---
+name: Bug report
+about: 报告一个 Bug 以帮助我们改进
+title: '[Bug] '
+labels: bug
+assignees: ''
+---
+
+**描述问题**
+清晰简洁地描述这个 Bug 是什么。
+
+**复现步骤**
+1. 使用的命令（如 `postforge build post.md -p wechat`）
+2. 复现用的 Markdown（可粘贴小段）
+3. 实际输出/报错信息
+
+**期望行为**
+你期望发生什么？
+
+**环境信息**
+- Node 版本：
+- 操作系统：
+- PostForge 版本（`postforge --version`）：
+
+**附加信息**
+截图 / 相关输出片段等。

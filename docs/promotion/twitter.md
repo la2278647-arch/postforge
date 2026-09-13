@@ -14,7 +14,7 @@ I open-sourced **PostForge** — a zero-config Markdown typesetting engine:
 ▸ Fully inlined styles (WeChat requires inline CSS — no <style> allowed)
 ▸ Code highlighting, tables, task lists, auto TOC
 ▸ Pure-text mode with hashtag suggestions for Xiaohongshu
-▸ Runs 100% locally, just 2 deps (marked + highlight.js)
+▸ Runs 100% locally, 3 deps, ships an MCP server for Claude/Cursor
 
 https://github.com/la2278647-arch/postforge
 

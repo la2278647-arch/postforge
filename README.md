@@ -12,7 +12,9 @@
   <img alt="License" src="https://img.shields.io/github/license/la2278647-arch/postforge" />
   <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" />
   <img alt="Version" src="https://img.shields.io/github/package-json/v/la2278647-arch/postforge" />
+  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/la2278647-arch/postforge/ci.yml" />
   <img alt="Platforms" src="https://img.shields.io/badge/platforms-6-blue" />
+  <img alt="MCP" src="https://img.shields.io/badge/MCP-Server-7c3aed" />
 </p>
 
 <p align="center">
@@ -41,6 +43,7 @@
 - ☑️ **任务清单**：GFM 任务列表渲染为 ☑ / ☐
 - 📄 **表格 / 引用 / 图片 / 列表**：完整支持，响应式适配
 - 📦 **可用作库**：`build(markdown, options)` 直接集成到你的工作流
+- 🤖 **MCP Server**：Claude / Cursor 等 AI 可直接调用排版工具
 - 🚫 **零在线依赖**：本地渲染，不传数据到任何服务器
 
 ## 🚀 快速开始
@@ -50,7 +53,7 @@
 git clone https://github.com/la2278647-arch/postforge.git
 cd postforge
 
-# 2. 安装依赖（仅 marked + highlight.js 两个运行时依赖）
+# 2. 安装依赖（marked + highlight.js + MCP SDK）
 npm install
 
 # 3. 排版你的文章
@@ -109,6 +112,46 @@ postforge build post.md -p generic --toc --theme dark -o preview.html
 cat post.md | postforge build - -p zhihu
 ```
 
+## 🤖 MCP Server（AI 直接排版）
+
+PostForge 自带一个 [Model Context Protocol](https://modelcontextprotocol.io) 服务器，让 Claude、Cursor 等支持 MCP 的 AI 直接调用排版能力：你只需用自然语言描述，AI 就调用工具返回目标平台的富文本。
+
+```bash
+# 启动（stdio 传输）
+npm run mcp          # 或 postforge mcp
+```
+
+暴露的工具：
+
+| 工具 | 说明 |
+| ---- | ---- |
+| `list_platforms` | 列出支持的平台 |
+| `list_themes` | 列出排版主题 |
+| `build_post` | 把 Markdown 排版为目标平台富文本（`markdown` / `platform` / `theme` / `toc` / `maxWidth`） |
+
+### 在 Claude Code 中配置
+
+```bash
+claude mcp add --scope project postforge -- node C:/path/to/postforge/src/mcp/server.js
+```
+
+### 在 Cursor 中配置
+
+`.cursor/mcp.json`：
+
+```json
+{
+  "mcpServers": {
+    "postforge": {
+      "command": "node",
+      "args": ["C:/path/to/postforge/src/mcp/server.js"]
+    }
+  }
+}
+```
+
+之后直接对 AI 说：「把下面这篇文章排版成公众号格式」即可拿到可粘贴的富文本。
+
 ## 📦 作为库使用
 
 ```js
@@ -143,9 +186,9 @@ const { html } = build(markdown, {
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
 - [x] 6 平台适配（微信公众号 / 知乎 / 掘金 / CSDN / 小红书 / 通用网页）
 - [x] 3 套主题与目录生成
+- [x] MCP Server 集成（AI 直接排版输出）
 - [ ] 微信公众号图片自动上传配置说明页
 - [ ] 常用排版模板（代码卡片 / 分割线卡片 / 提示框）
-- [ ] MCP Server 集成（让 AI 直接输出平台文稿）
 - [ ] 更多主题与平台（欢迎社区贡献）
 
 ## 🧪 开发与测试
@@ -164,10 +207,14 @@ src/
   themes.js     排版主题
   platforms.js  平台适配配置
   highlight.js  代码高亮 → 内联样式映射
+  mcp/server.js MCP Server（AI 调用入口）
   index.js      公开 API
 examples/       示例文章与生成结果
 test/           单元测试
+.github/        CI 与 Issue/PR 模板
 ```
+
+技术栈：Node.js >= 18 ESM；运行时依赖 `marked` + `highlight.js` + `@modelcontextprotocol/sdk`；单元测试 `node:test`；GitHub Actions CI（Node 18/20/22/24 矩阵）。
 
 ## 🤝 贡献
 

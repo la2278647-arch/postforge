@@ -16,6 +16,7 @@
   },
   "scripts": {
     "start": "node src/cli.js",
+    "mcp": "node src/mcp/server.js",
     "demo": "node src/cli.js build examples/demo.md -p wechat -o examples/demo-wechat.html && node src/cli.js build examples/demo.md -p xiaohongshu -o examples/demo-xiaohongshu.txt",
     "test": "node --test test/*.test.js"
   },
@@ -38,6 +39,7 @@
     "url": "https://github.com/la2278647-arch/postforge.git"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "highlight.js": "^11.12.0",
     "marked": "^18.0.13"
   }
