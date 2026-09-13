@@ -281,6 +281,23 @@ test('小红书模式：divider 渲染为分隔线文本', () => {
   assert.match(r.text, /── 第二章 ──/);
 });
 
+test('--numbered-headings 给 h1/h2/h3 自动编号', () => {
+  const md = '# 第一章\n\n## 第一节\n\n### 细节点\n\n## 第二节';
+  const { html, toc } = build(md, { numberedHeadings: true });
+  assert.match(html, /<h1[^>]*>1 第一章<\/h1>/);
+  assert.match(html, /<h2[^>]*>1\.1 第一节<\/h2>/);
+  assert.match(html, /<h3[^>]*>1\.1\.1 细节点<\/h3>/);
+  assert.match(html, /<h2[^>]*>1\.2 第二节<\/h2>/);
+  // 目录文本也带编号
+  assert.match(JSON.stringify(toc), /1\.1 第一节/);
+});
+
+test('默认不编号（numberedHeadings=false）', () => {
+  const { html } = build('# 标题\n\n## 小节');
+  assert.doesNotMatch(html, /<h1[^>]*>1 标题/);
+  assert.match(html, /<h1[^>]*>标题<\/h1>/);
+});
+
 test('平台与主题注册表完整', () => {
   assert.ok(Object.keys(PLATFORMS).length >= 6);
   assert.ok(Object.keys(THEMES).length >= 3);

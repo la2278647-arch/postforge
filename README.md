@@ -151,6 +151,7 @@ postforge -h | --help
   -o, --output <file>    输出到文件（默认输出到 stdout）
   -t, --theme <id>       排版主题（clean / paper / nord / coffee / dark / midnight）
       --toc              在文章开头生成目录
+      --numbered-headings  给 h1/h2/h3 自动加编号（如 1. / 1.1 / 1.1.1）
       --max-width <px>   内容最大宽度
       --title <t>        文档标题（generic 平台使用）
       --inline-images    本地图片内联为 base64（粘贴公众号自动转存）

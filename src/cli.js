@@ -45,6 +45,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
       --title <t>        文档标题 (generic 平台使用)
       --inline-images    把本地图片内联为 base64 data URI（粘贴公众号可自动转存）
       --theme-file <json> 加载自定义主题 JSON（深合并到 -t 指定的基础主题）
+      --numbered-headings  给 h1/h2/h3 自动加编号（如 1. / 1.1）
 
 示例:
   postforge build post.md -p wechat -o wechat.html
@@ -62,6 +63,7 @@ function parseArgs(argv) {
     '-o': 'output', '--output': 'output',
     '-t': 'theme', '--theme': 'theme',
     '--theme-file': 'themeFile',
+    '--numbered-headings': 'numberedHeadings',
     '--toc': 'toc',
     '--max-width': 'maxWidth',
     '--title': 'title',
@@ -75,6 +77,7 @@ function parseArgs(argv) {
       const key = flagMap[a];
       if (key === 'toc') opts.toc = true;
       else if (key === 'inlineImages') opts.inlineImages = true;
+      else if (key === 'numberedHeadings') opts.numberedHeadings = true;
       else if (key === 'version') opts.version = true;
       else if (key === 'help') opts.help = true;
       else {
@@ -301,6 +304,7 @@ function main() {
     theme: baseTheme,
     themeObj,
     toc: opts.toc,
+    numberedHeadings: opts.numberedHeadings,
     maxWidth: opts.maxWidth ? Number(opts.maxWidth) : undefined,
     title: opts.title,
     inlineImages: opts.inlineImages,

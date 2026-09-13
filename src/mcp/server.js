@@ -89,6 +89,7 @@ server.registerTool(
         .describe(`目标平台，可选：${platformIds.join(' / ')}`),
       theme: z.enum(themeIds).optional().describe(`排版主题，可选：${themeIds.join(' / ')}`),
       toc: z.boolean().optional().describe('是否在文章开头生成目录（默认 false）'),
+      numberedHeadings: z.boolean().optional().describe('是否给 h1/h2/h3 自动加编号（默认 false）'),
       maxWidth: z.number().optional().describe('内容最大宽度 px（默认不限制）'),
       inlineImages: z
         .boolean()
@@ -102,6 +103,7 @@ server.registerTool(
         platform: args.platform || 'wechat',
         theme: args.theme,
         toc: args.toc,
+        numberedHeadings: args.numberedHeadings,
         maxWidth: args.maxWidth,
         inlineImages: args.inlineImages,
       });

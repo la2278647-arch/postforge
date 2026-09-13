@@ -134,14 +134,31 @@ class PostRenderer extends Renderer {
   heading(token) {
     const inline = this.parser.parseInline(token.tokens);
     const plain = inline.replace(/<[^>]*>/g, '');
+    // 可选标题自动编号：--numbered-headings（h1/h2/h3 计数器）
+    let prefix = '';
+    if (this.userOptions.numberedHeadings && token.depth <= 3) {
+      if (token.depth === 1) {
+        this._h1 = (this._h1 || 0) + 1;
+        this._h2 = 0;
+        this._h3 = 0;
+        prefix = `${this._h1} `;
+      } else if (token.depth === 2) {
+        this._h2 = (this._h2 || 0) + 1;
+        this._h3 = 0;
+        prefix = `${this._h1 || 1}.${this._h2} `;
+      } else {
+        this._h3 = (this._h3 || 0) + 1;
+        prefix = `${this._h1 || 1}.${this._h2 || 1}.${this._h3} `;
+      }
+    }
     const base = slugify(plain) || 'heading';
     const count = this.idCounters.get(base) || 0;
     this.idCounters.set(base, count + 1);
     const id = count === 0 ? base : `${base}-${count}`;
-    this.headings.push({ depth: token.depth, id, text: plain });
+    this.headings.push({ depth: token.depth, id, text: prefix + plain });
     const h = this.theme.heading;
     const size = this.theme[`h${token.depth}`] || {};
-    return `<h${token.depth} id="${esc(id)}" style="${toCss({ ...h, ...size })}">${inline}</h${token.depth}>`;
+    return `<h${token.depth} id="${esc(id)}" style="${toCss({ ...h, ...size })}">${prefix}${inline}</h${token.depth}>`;
   }
 
   paragraph(token) {
