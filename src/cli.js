@@ -11,7 +11,7 @@
  * 输入文件为 "-" 时从 stdin 读取。
  */
 
-import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
 import { build } from './index.js';
 import { checkDocument } from './check.js';
 import { analyze, formatAnalysis } from './info.js';
@@ -32,6 +32,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
   postforge info <input.md>            文章统计：字数 / 图片 / 阅读时长
   postforge mcp                        启动 MCP stdio server（供 AI 调用）
   postforge list                       列出支持的平台与主题
+  postforge doctor                     环境诊断（版本 / 依赖 / 注册表 / 渲染自检）
   postforge -v | --version            显示版本
   postforge -h | --help               显示帮助
 
@@ -108,6 +109,39 @@ function main() {
   }
 
   const [command, ...rest] = opts._;
+
+  if (command === 'doctor') {
+    // 环境诊断：Node 版本 / 依赖完整性 / 注册表 / 渲染自检
+    const checks = [];
+    const nodeMajor = Number(process.versions.node.split('.')[0]);
+    checks.push(
+      nodeMajor >= 18
+        ? `✓ Node.js ${process.versions.node}（要求 >=18）`
+        : `✗ Node.js ${process.versions.node} 过旧，要求 >=18`,
+    );
+    const deps = ['marked', 'highlight.js', '@modelcontextprotocol/sdk'];
+    for (const d of deps) {
+      checks.push(
+        existsSync(join(__dirname, '..', 'node_modules', d))
+          ? `✓ 依赖 ${d} 已安装`
+          : `✗ 依赖 ${d} 未安装（请运行 npm install）`,
+      );
+    }
+    checks.push(`✓ 平台注册表：${Object.keys(PLATFORMS).length} 个`);
+    checks.push(`✓ 主题注册表：${Object.keys(THEMES).length} 套`);
+    try {
+      build('# 自检\n\n:::tip t\nx\n:::', { platform: 'wechat' });
+      checks.push('✓ 渲染自检通过（含模板卡片）');
+    } catch (err) {
+      checks.push(`✗ 渲染自检失败: ${err.message}`);
+    }
+    const failed = checks.filter((c) => c.startsWith('✗')).length;
+    console.log(`PostForge ${pkg.version} 环境诊断：`);
+    for (const c of checks) console.log(`  ${c}`);
+    console.log(failed === 0 ? '✓ 全部检查通过' : `✗ ${failed} 项异常`);
+    if (failed > 0) process.exit(1);
+    return;
+  }
 
   if (command === 'list') {
     console.log('支持的平台:');

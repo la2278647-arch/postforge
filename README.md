@@ -142,6 +142,7 @@ postforge check <input.md>
 postforge info <input.md>
 postforge mcp
 postforge list
+postforge doctor
 postforge -v | --version
 postforge -h | --help
 

@@ -189,6 +189,14 @@ test('version 输出 semver', () => {
   assert.match(r.stdout.trim(), /^0\.\d+\.\d+$/);
 });
 
+test('doctor 环境诊断通过', () => {
+  const r = run(['doctor'], process.cwd());
+  assert.equal(r.status, 0);
+  assert.match(r.stdout, /全部检查通过/);
+  assert.match(r.stdout, /平台注册表：11 个/);
+  assert.match(r.stdout, /渲染自检通过/);
+});
+
 test('batch 批量排版目录，跳过下划线草稿', () => {
   const t = tmpDir('pf-batch-');
   try {
