@@ -6,6 +6,8 @@
 
 import { marked, Renderer, Parser } from 'marked';
 import hljs from 'highlight.js';
+import { readFileSync } from 'node:fs';
+import { resolve, extname, isAbsolute } from 'node:path';
 import { applyTokenStyles } from './highlight.js';
 import { getTheme } from './themes.js';
 import { getPlatform } from './platforms.js';
@@ -41,6 +43,23 @@ function toCss(obj) {
     .join(';');
 }
 
+/** 常见图片 MIME 映射（inlineImages 用） */
+const IMAGE_MIME = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.webp': 'image/webp',
+  '.svg': 'image/svg+xml',
+  '.bmp': 'image/bmp',
+  '.ico': 'image/x-icon',
+};
+
+/** 不需要（也无法）内联的 src：远程、协议相对、锚点、data URI */
+function isRemoteOrSpecial(href) {
+  return /^(https?:|data:|#|\/\/)/i.test(href);
+}
+
 /** 生成稳定的中文/英文锚点 id */
 function slugify(text) {
   return text
@@ -55,6 +74,9 @@ class PostRenderer extends Renderer {
     super();
     this.theme = theme;
     this.platform = platform;
+    // marked 的 Parser 构造时会用 parser options 覆盖 renderer.options，
+    // 因此把用户 options 存到独立字段，避免丢失（如 inlineImages / baseDir）
+    this.userOptions = options || {};
     this.options = options || {};
     this.headings = [];
     this.idCounters = new Map();
@@ -163,7 +185,27 @@ class PostRenderer extends Renderer {
   image(token) {
     const alt = token.text ? ` alt="${esc(token.text)}"` : '';
     const title = token.title ? ` title="${esc(token.title)}"` : '';
-    return `<img src="${esc(token.href)}"${alt}${title} style="${toCss(this.theme.img)}" loading="lazy" referrerpolicy="no-referrer">`;
+    const src = this.resolveImageSrc(token.href);
+    return `<img src="${esc(src)}"${alt}${title} style="${toCss(this.theme.img)}" loading="lazy" referrerpolicy="no-referrer">`;
+  }
+
+  /**
+   * 解析 <img> 的 src。
+   * 开启 options.inlineImages 时，把本地图片读取为 base64 data URI 内联，
+   * 粘贴进公众号编辑器可被微信自动转存为素材 CDN 地址。
+   */
+  resolveImageSrc(href) {
+    const opts = this.userOptions || {};
+    if (!opts.inlineImages || isRemoteOrSpecial(href)) return href;
+    const base = opts.baseDir || process.cwd();
+    const abs = isAbsolute(href) ? href : resolve(base, href);
+    try {
+      const data = readFileSync(abs);
+      const mime = IMAGE_MIME[extname(href).toLowerCase()] || 'application/octet-stream';
+      return `data:${mime};base64,${data.toString('base64')}`;
+    } catch {
+      return href; // 本地文件不存在/不可读时保持原样
+    }
   }
 
   hr() {

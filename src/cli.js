@@ -13,10 +13,11 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { build } from './index.js';
+import { checkDocument } from './check.js';
 import { PLATFORMS } from './platforms.js';
 import { THEMES } from './themes.js';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'));
@@ -25,8 +26,9 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
 
 用法:
   postforge build <input.md> [选项]    把 Markdown 排版为平台富文本
+  postforge check <input.md>           静态检查：卡片语法配对 / 本地图片引用
   postforge mcp                        启动 MCP stdio server（供 AI 调用）
-  postforge list                      列出支持的平台与主题
+  postforge list                       列出支持的平台与主题
   postforge -v | --version            显示版本
   postforge -h | --help               显示帮助
 
@@ -37,11 +39,14 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
       --toc              在文章开头生成目录
       --max-width <px>   内容最大宽度 (仅 generic 平台有意义)
       --title <t>        文档标题 (generic 平台使用)
+      --inline-images    把本地图片内联为 base64 data URI（粘贴公众号可自动转存）
 
 示例:
   postforge build post.md -p wechat -o wechat.html
   postforge build post.md -p xiaohongshu -o xiaohongshu.txt
   postforge build post.md -p generic --toc -o preview.html
+  postforge build post.md -p wechat --inline-images -o wechat.html
+  postforge check post.md
   cat post.md | postforge build - -p zhihu
 `;
 
@@ -54,6 +59,7 @@ function parseArgs(argv) {
     '--toc': 'toc',
     '--max-width': 'maxWidth',
     '--title': 'title',
+    '--inline-images': 'inlineImages',
     '-v': 'version', '--version': 'version',
     '-h': 'help', '--help': 'help',
   };
@@ -62,6 +68,7 @@ function parseArgs(argv) {
     if (flagMap[a]) {
       const key = flagMap[a];
       if (key === 'toc') opts.toc = true;
+      else if (key === 'inlineImages') opts.inlineImages = true;
       else if (key === 'version') opts.version = true;
       else if (key === 'help') opts.help = true;
       else {
@@ -105,6 +112,29 @@ function main() {
     console.log('\n支持的排版主题:');
     for (const t of Object.values(THEMES)) {
       console.log(`  ${t.id.padEnd(12)} ${t.name}`);
+    }
+    return;
+  }
+
+  if (command === 'check') {
+    const input = rest[0];
+    if (!input) {
+      console.error('错误: 缺少输入文件，用法: postforge check <input.md>');
+      process.exit(1);
+    }
+    const markdown = input === '-' ? readFileSync(0, 'utf8') : readFileSync(input, 'utf8');
+    const baseDir = input === '-' ? process.cwd() : dirname(resolve(input));
+    const { errors, warnings } = checkDocument(markdown, baseDir);
+    for (const w of warnings) console.log(`  [警告] ${w}`);
+    for (const e of errors) console.log(`  [错误] ${e}`);
+    if (errors.length === 0) {
+      const total = markdown.split('\n').length;
+      console.log(
+        `✓ 检查通过：${total} 行，0 错误${warnings.length ? `，${warnings.length} 个警告` : ''}`,
+      );
+    } else {
+      console.log(`✗ 检查未通过：${errors.length} 个错误`);
+      process.exit(1);
     }
     return;
   }
@@ -153,6 +183,8 @@ function main() {
     toc: opts.toc,
     maxWidth: opts.maxWidth ? Number(opts.maxWidth) : undefined,
     title: opts.title,
+    inlineImages: opts.inlineImages,
+    baseDir: input === '-' ? undefined : dirname(resolve(input)),
   });
 
   if (result.platform.mode === 'text') {

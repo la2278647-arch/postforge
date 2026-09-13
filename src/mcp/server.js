@@ -16,6 +16,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { build } from '../index.js';
+import { checkDocument } from '../check.js';
 import { PLATFORMS } from '../platforms.js';
 import { THEMES } from '../themes.js';
 import { readFileSync } from 'node:fs';
@@ -88,6 +89,10 @@ server.registerTool(
       theme: z.enum(themeIds).optional().describe(`排版主题，可选：${themeIds.join(' / ')}`),
       toc: z.boolean().optional().describe('是否在文章开头生成目录（默认 false）'),
       maxWidth: z.number().optional().describe('内容最大宽度 px（默认不限制）'),
+      inlineImages: z
+        .boolean()
+        .optional()
+        .describe('本地图片内联为 base64（默认 false；粘贴公众号可自动转存素材）'),
     }),
   },
   async (args) => {
@@ -97,6 +102,7 @@ server.registerTool(
         theme: args.theme,
         toc: args.toc,
         maxWidth: args.maxWidth,
+        inlineImages: args.inlineImages,
       });
       if (result.platform.mode === 'text') {
         const parts = [result.text];
@@ -113,6 +119,39 @@ server.registerTool(
       return {
         isError: true,
         content: [{ type: 'text', text: `排版失败: ${err.message}` }],
+      };
+    }
+  },
+);
+
+server.registerTool(
+  'check_post',
+  {
+    title: 'Markdown 发布前静态检查',
+    description:
+      '检查 Markdown 的排版模板卡片（:::tip 等）是否配对、类型是否合法，以及本地图片引用是否存在。返回错误列表（阻塞）与警告列表（不阻塞）。',
+    inputSchema: z.object({
+      markdown: z.string().describe('要检查的 Markdown 原文'),
+    }),
+  },
+  async (args) => {
+    try {
+      const { errors, warnings } = checkDocument(args.markdown, process.cwd());
+      const lines = [];
+      for (const e of errors) lines.push(`[错误] ${e}`);
+      for (const w of warnings) lines.push(`[警告] ${w}`);
+      if (errors.length === 0) {
+        lines.push(
+          `✓ 检查通过：${args.markdown.split('\n').length} 行，0 错误${
+            warnings.length ? `，${warnings.length} 个警告` : ''
+          }`,
+        );
+      }
+      return textResult(lines.join('\n'));
+    } catch (err) {
+      return {
+        isError: true,
+        content: [{ type: 'text', text: `检查失败: ${err.message}` }],
       };
     }
   },

@@ -41,7 +41,9 @@
 - 🔆 **代码高亮**：内置 GitHub 风格高亮，全部转为内联样式
 - 📋 **目录生成**：`--toc` 一键生成文章目录（带锚点）
 - ☑️ **任务清单**：GFM 任务列表渲染为 ☑ / ☐
-- 🧱 **排版模板**：`:::note` `:::tip` `:::warning` `:::danger` 彩色提示卡片
+- 🧱 **排版模板**：`:::tip` `:::warning` `:::note` `:::danger` `:::quote` 彩色提示卡片，内容支持任意 Markdown
+- ✅ **静态检查**：`postforge check` 发布前校验卡片语法配对与本地图片引用
+- 📷 **图片内联**：`--inline-images` 本地图片转 base64，粘贴公众号自动转存素材
 - 📄 **表格 / 引用 / 图片 / 列表**：完整支持，响应式适配
 - 📦 **可用作库**：`build(markdown, options)` 直接集成到你的工作流
 - 🤖 **MCP Server**：Claude / Cursor 等 AI 可直接调用排版工具
@@ -84,6 +86,8 @@ postforge build post.md -p zhihu -o zhihu.html
 
 ```text
 postforge build <input.md> [选项]
+postforge check <input.md>
+postforge mcp
 postforge list
 postforge -v | --version
 postforge -h | --help
@@ -95,6 +99,7 @@ postforge -h | --help
       --toc              在文章开头生成目录
       --max-width <px>   内容最大宽度
       --title <t>        文档标题（generic 平台使用）
+      --inline-images    本地图片内联为 base64（粘贴公众号自动转存）
 ```
 
 示例：
@@ -108,6 +113,12 @@ postforge build post.md -p xiaohongshu -o xiaohongshu.txt
 
 # 通用网页 + 目录 + 深色主题
 postforge build post.md -p generic --toc --theme dark -o preview.html
+
+# 本地图片内联：粘贴公众号一步到位，微信自动转存素材库 CDN
+postforge build post.md -p wechat --inline-images -o wechat.html
+
+# 发布前静态检查：卡片语法配对 / 本地图片引用
+postforge check post.md
 
 # 从 stdin 读取，输出到 stdout
 cat post.md | postforge build - -p zhihu
@@ -202,6 +213,10 @@ const { html } = build(markdown, {
 :::danger 高危
 这是红色风险卡片的内容。
 :::
+
+:::quote
+纸上得来终觉浅，绝知此事要躬行。
+:::
 ````
 
 | 类型 | 颜色 | 用途 |
@@ -210,8 +225,31 @@ const { html } = build(markdown, {
 | `:::warning` | 橙 | 警告 / 注意 |
 | `:::note` | 蓝 | 说明 / 要点 |
 | `:::danger` | 红 | 风险 / 必须注意 |
+| `:::quote` | 紫 | 语录 / 引用（无标题时自动带装饰引号） |
 
 标题可省略：`:::note\n内容\n:::`。卡片配色跟随主题（clean / paper / dark 各自适配），实现见 `src/cards.js`。
+忘记闭合或写错类型？发布前跑 `postforge check post.md` 会精确定位错误行。
+
+## ✅ 发布前检查
+
+```bash
+postforge check post.md
+# → ✓ 检查通过：123 行，0 错误
+# → ✗ 检查未通过：1 个错误 / [错误] 第 8 行：:::tip 卡片未闭合
+```
+
+检查项：模板卡片语法配对与类型合法性（错误，阻塞）；本地图片引用存在性（警告，不阻塞）。
+
+## 📷 公众号图片：一步到位
+
+公众号不支持外链图片，`--inline-images` 把本地图片内联为 base64，粘贴时微信自动转存为
+`mmbiz.qpic.cn` 素材地址：
+
+```bash
+postforge build post.md -p wechat --inline-images -o wechat.html
+```
+
+完整方案（素材库手动替换 / 批量替换脚本 / FAQ）见 [`docs/wechat-images.md`](docs/wechat-images.md)。
 
 ## ✨ 自举案例
 
@@ -226,12 +264,12 @@ const { html } = build(markdown, {
 ## 🗺 路线图
 
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
-- [x] 6 平台适配（微信公众号 / 知乎 / 掘金 / CSDN / 小红书 / 通用网页）
-- [x] 3 套主题与目录生成
+- [x] 6 平台适配 + 3 套主题 + 目录生成
 - [x] MCP Server 集成（AI 直接排版输出）
-- [x] 排版模板（:::tip / :::warning / :::note / :::danger 提示卡片）
-- [ ] 微信公众号图片自动上传配置说明页
-- [ ] 更多排版模板（代码卡片 / 分割线卡片）
+- [x] 排版模板（:::tip / :::warning / :::note / :::danger / :::quote）
+- [x] 公众号图片处理（docs/wechat-images.md 专题 + --inline-images）
+- [x] 静态检查（postforge check）
+- [ ] 公众号图片一键上传（素材库 API 自动化）
 - [ ] 更多主题与平台（欢迎社区贡献）
 
 ## 🧪 开发与测试
@@ -245,15 +283,18 @@ npm run demo             # 生成示例输出到 examples/
 
 ```text
 src/
-  cli.js        命令行入口
+  cli.js        命令行入口（build / check / mcp / list）
   renderer.js   核心渲染引擎（marked 自定义 Renderer）
-  themes.js     排版主题
+  themes.js     排版主题（clean / paper / dark）
   platforms.js  平台适配配置
+  cards.js      排版模板扩展（提示卡片，工厂函数绑定主题）
+  check.js      静态检查（卡片配对 / 本地图片引用）
   highlight.js  代码高亮 → 内联样式映射
   mcp/server.js MCP Server（AI 调用入口）
   index.js      公开 API
 examples/       示例文章与生成结果
-test/           单元测试
+test/           单元测试（renderer + cli 集成）
+docs/           公众号图片专题、多平台发布案例与宣传文案
 .github/        CI 与 Issue/PR 模板
 ```
 
