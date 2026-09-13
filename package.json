@@ -1,0 +1,44 @@
+{
+  "name": "postforge",
+  "version": "0.1.0",
+  "description": "PostForge 帖工坊 — 开源的 Markdown 多平台排版引擎。一条命令把 Markdown 转成微信公众号 / 知乎 / 掘金 / CSDN / 小红书等平台的富文本，开箱即用、零配置、无需登录任何平台。",
+  "type": "module",
+  "bin": {
+    "postforge": "src/cli.js",
+    "mdx": "src/cli.js"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "demo": "node src/cli.js build examples/demo.md -p wechat -o examples/demo-wechat.html && node src/cli.js build examples/demo.md -p xiaohongshu -o examples/demo-xiaohongshu.txt",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "markdown",
+    "wechat",
+    "zhihu",
+    "juejin",
+    "csdn",
+    "xiaohongshu",
+    "公众号",
+    "排版",
+    "富文本",
+    "content-publishing",
+    "cms"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/la2278647-arch/postforge.git"
+  },
+  "dependencies": {
+    "highlight.js": "^11.12.0",
+    "marked": "^18.0.13"
+  }
+}

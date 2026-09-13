@@ -1,0 +1,12 @@
+# 依赖
+node_modules/
+
+# 输出产物
+dist/
+build/
+
+# 日志与临时文件
+*.log
+.DS_Store
+Thumbs.db
+_probe.js
