@@ -11,7 +11,7 @@
  * 输入文件为 "-" 时从 stdin 读取。
  */
 
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync, watch } from 'node:fs';
 import { build } from './index.js';
 import { checkDocument } from './check.js';
 import { analyze, formatAnalysis } from './info.js';
@@ -46,6 +46,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
       --inline-images    把本地图片内联为 base64 data URI（粘贴公众号可自动转存）
       --theme-file <json> 加载自定义主题 JSON（深合并到 -t 指定的基础主题）
       --numbered-headings  给 h1/h2/h3 自动加编号（如 1. / 1.1）
+      --watch              监听输入文件变化自动重建（边写边预览）
 
 示例:
   postforge build post.md -p wechat -o wechat.html
@@ -68,6 +69,7 @@ function parseArgs(argv) {
     '--max-width': 'maxWidth',
     '--title': 'title',
     '--inline-images': 'inlineImages',
+    '--watch': 'watch',
     '-v': 'version', '--version': 'version',
     '-h': 'help', '--help': 'help',
   };
@@ -78,6 +80,7 @@ function parseArgs(argv) {
       if (key === 'toc') opts.toc = true;
       else if (key === 'inlineImages') opts.inlineImages = true;
       else if (key === 'numberedHeadings') opts.numberedHeadings = true;
+      else if (key === 'watch') opts.watch = true;
       else if (key === 'version') opts.version = true;
       else if (key === 'help') opts.help = true;
       else {
@@ -273,76 +276,106 @@ function main() {
     process.exit(1);
   }
 
-  let markdown;
-  if (input === '-') {
-    markdown = readFileSync(0, 'utf8');
-  } else {
-    markdown = readFileSync(input, 'utf8');
-  }
-
-  const platformId = opts.platform || 'wechat';
-  if (!PLATFORMS[platformId]) {
-    console.error(`错误: 未知平台 "${platformId}"，可用: ${Object.keys(PLATFORMS).join(', ')}`);
-    process.exit(1);
-  }
-  const baseTheme = opts.theme || 'clean';
-  if (!THEMES[baseTheme]) {
-    console.error(`错误: 未知主题 "${baseTheme}"，可用: ${Object.keys(THEMES).join(', ')}`);
-    process.exit(1);
-  }
-
-  // 自定义主题文件：--theme-file <json>，build 内部深合并到 -t 指定的基础主题
-  let themeObj;
-  if (opts.themeFile) {
+  const doBuild = () => {
+    let markdown;
     try {
-      themeObj = JSON.parse(readFileSync(opts.themeFile, 'utf8'));
-      if (typeof themeObj !== 'object' || Array.isArray(themeObj)) {
-        throw new Error('主题 JSON 必须是对象');
-      }
+      markdown = input === '-' ? readFileSync(0, 'utf8') : readFileSync(input, 'utf8');
     } catch (err) {
-      console.error(`错误: 主题文件加载失败: ${err.message}`);
+      console.error(`错误: 读取失败: ${err.message}`);
+      if (!opts.watch) process.exit(1);
+      return;
+    }
+
+    const platformId = opts.platform || 'wechat';
+    if (!PLATFORMS[platformId]) {
+      console.error(`错误: 未知平台 "${platformId}"，可用: ${Object.keys(PLATFORMS).join(', ')}`);
+      if (!opts.watch) process.exit(1);
+      return;
+    }
+    const baseTheme = opts.theme || 'clean';
+    if (!THEMES[baseTheme]) {
+      console.error(`错误: 未知主题 "${baseTheme}"，可用: ${Object.keys(THEMES).join(', ')}`);
+      if (!opts.watch) process.exit(1);
+      return;
+    }
+
+    // 自定义主题文件：--theme-file <json>，build 内部深合并到 -t 指定的基础主题
+    let themeObj;
+    if (opts.themeFile) {
+      try {
+        themeObj = JSON.parse(readFileSync(opts.themeFile, 'utf8'));
+        if (typeof themeObj !== 'object' || Array.isArray(themeObj)) {
+          throw new Error('主题 JSON 必须是对象');
+        }
+      } catch (err) {
+        console.error(`错误: 主题文件加载失败: ${err.message}`);
+        if (!opts.watch) process.exit(1);
+        return;
+      }
+    }
+
+    const result = build(markdown, {
+      platform: platformId,
+      theme: baseTheme,
+      themeObj,
+      toc: opts.toc,
+      numberedHeadings: opts.numberedHeadings,
+      maxWidth: opts.maxWidth ? Number(opts.maxWidth) : undefined,
+      title: opts.title,
+      inlineImages: opts.inlineImages,
+      baseDir: input === '-' ? undefined : dirname(resolve(input)),
+    });
+
+    if (result.platform.mode === 'text') {
+      const parts = [result.text];
+      if (result.images.length > 0) {
+        parts.push('', '—— 图片清单（按顺序插入正文）——', ...result.images);
+      }
+      if (result.hashtags.length > 0) {
+        parts.push('', '—— 建议话题标签 ——', result.hashtags.join(' '));
+      }
+      const out = parts.join('\n');
+      if (opts.output) {
+        writeFileSync(opts.output, out, 'utf8');
+        console.log(`✓ 已生成: ${opts.output} (${result.platform.name}, 纯文本模式, ${out.length} 字符)`);
+      } else {
+        process.stdout.write(out + '\n');
+      }
+      return;
+    }
+
+    if (opts.output) {
+      writeFileSync(opts.output, result.html, 'utf8');
+      const kb = (Buffer.byteLength(result.html, 'utf8') / 1024).toFixed(1);
+      console.log(
+        `✓ 已生成: ${opts.output} (${result.platform.name} · ${result.theme} 主题 · ${kb} KB${result.toc.length ? ` · ${result.toc.length} 个标题` : ''})`,
+      );
+    } else {
+      process.stdout.write(result.html + '\n');
+    }
+  };
+
+  doBuild();
+
+  // --watch：监听输入文件变化自动重建（边写边预览）
+  if (opts.watch && input !== '-') {
+    const watchPath = resolve(input);
+    let timer = null;
+    const debounced = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const stamp = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+        console.log(`[${stamp}] 检测到变化，重新构建...`);
+        doBuild();
+      }, 250);
+    };
+    try {
+      watch(watchPath, { persistent: true }, debounced);
+      console.log(`👀 正在监听 ${watchPath} 的变化（Ctrl+C 退出）`);
+    } catch (err) {
+      console.error(`错误: 无法监听 ${watchPath}: ${err.message}`);
       process.exit(1);
     }
-  }
-
-  const result = build(markdown, {
-    platform: platformId,
-    theme: baseTheme,
-    themeObj,
-    toc: opts.toc,
-    numberedHeadings: opts.numberedHeadings,
-    maxWidth: opts.maxWidth ? Number(opts.maxWidth) : undefined,
-    title: opts.title,
-    inlineImages: opts.inlineImages,
-    baseDir: input === '-' ? undefined : dirname(resolve(input)),
-  });
-
-  if (result.platform.mode === 'text') {
-    const parts = [result.text];
-    if (result.images.length > 0) {
-      parts.push('', '—— 图片清单（按顺序插入正文）——', ...result.images);
-    }
-    if (result.hashtags.length > 0) {
-      parts.push('', '—— 建议话题标签 ——', result.hashtags.join(' '));
-    }
-    const out = parts.join('\n');
-    if (opts.output) {
-      writeFileSync(opts.output, out, 'utf8');
-      console.log(`✓ 已生成: ${opts.output} (${result.platform.name}, 纯文本模式, ${out.length} 字符)`);
-    } else {
-      process.stdout.write(out + '\n');
-    }
-    return;
-  }
-
-  if (opts.output) {
-    writeFileSync(opts.output, result.html, 'utf8');
-    const kb = (Buffer.byteLength(result.html, 'utf8') / 1024).toFixed(1);
-    console.log(
-      `✓ 已生成: ${opts.output} (${result.platform.name} · ${result.theme} 主题 · ${kb} KB${result.toc.length ? ` · ${result.toc.length} 个标题` : ''})`,
-    );
-  } else {
-    process.stdout.write(result.html + '\n');
   }
 }
 
