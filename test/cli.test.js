@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -173,4 +173,29 @@ test('version 输出 semver', () => {
   const r = run(['--version'], process.cwd());
   assert.equal(r.status, 0);
   assert.match(r.stdout.trim(), /^0\.\d+\.\d+$/);
+});
+
+test('batch 批量排版目录，跳过下划线草稿', () => {
+  const t = tmpDir('pf-batch-');
+  try {
+    writeFileSync(join(t.dir, 'a.md'), '# A\n\n:::tip t\nx\n:::\n');
+    writeFileSync(join(t.dir, 'b.md'), '# B\n\n正文\n');
+    writeFileSync(join(t.dir, '_draft.md'), '# 草稿\n');
+    const out = join(t.dir, 'out');
+    const r = run(['batch', t.dir, '-p', 'wechat', '-o', out], t.dir);
+    assert.equal(r.status, 0);
+    assert.match(r.stdout, /2\/2/);
+    assert.match(r.stdout, /out/);
+    // 输出文件存在，草稿未处理
+    const files = readdirSync(out);
+    assert.deepEqual(files.sort(), ['a.html', 'b.html']);
+  } finally {
+    t.cleanup();
+  }
+});
+
+test('batch 目录不存在时报错', () => {
+  const r = run(['batch', 'no-such-dir-xyz'], process.cwd());
+  assert.equal(r.status, 1);
+  assert.match(r.stderr, /无法读取目录/);
 });

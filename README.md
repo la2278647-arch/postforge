@@ -137,6 +137,7 @@ const hello = 'world';
 
 ```text
 postforge build <input.md> [选项]
+postforge batch <目录> [选项]
 postforge check <input.md>
 postforge info <input.md>
 postforge mcp
@@ -174,6 +175,9 @@ postforge check post.md
 
 # 从 stdin 读取，输出到 stdout
 cat post.md | postforge build - -p zhihu
+
+# 批量排版：目录下所有 .md → 输出目录（下划线开头文件视为草稿跳过）
+postforge batch posts/ -p wechat -o dist/
 ```
 
 ## 🤖 MCP Server（AI 直接排版）

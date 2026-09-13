@@ -11,14 +11,14 @@
  * 输入文件为 "-" 时从 stdin 读取。
  */
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { build } from './index.js';
 import { checkDocument } from './check.js';
 import { analyze, formatAnalysis } from './info.js';
 import { PLATFORMS } from './platforms.js';
 import { THEMES } from './themes.js';
 import { fileURLToPath } from 'node:url';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, basename, extname } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'));
@@ -27,6 +27,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
 
 用法:
   postforge build <input.md> [选项]    把 Markdown 排版为平台富文本
+  postforge batch <目录> [选项]        批量排版目录下所有 .md（输出到 -o 目录）
   postforge check <input.md>           静态检查：卡片语法配对 / 本地图片引用
   postforge info <input.md>            文章统计：字数 / 图片 / 阅读时长
   postforge mcp                        启动 MCP stdio server（供 AI 调用）
@@ -140,6 +141,58 @@ function main() {
       console.log(`✗ 检查未通过：${errors.length} 个错误`);
       process.exit(1);
     }
+    return;
+  }
+
+  if (command === 'batch') {
+    // 批量排版：postforge batch <目录> [-p 平台] [-o 输出目录] [--toc] [--theme]
+    const dir = rest[0];
+    if (!dir) {
+      console.error('错误: 缺少目录，用法: postforge batch <目录> [-p wechat] [-o dist/]');
+      process.exit(1);
+    }
+    const platformId = opts.platform || 'wechat';
+    if (!PLATFORMS[platformId]) {
+      console.error(`错误: 未知平台 "${platformId}"，可用: ${Object.keys(PLATFORMS).join(', ')}`);
+      process.exit(1);
+    }
+    const outDir = opts.output || join(dir, 'pf-out');
+    let files;
+    try {
+      files = readdirSync(dir)
+        .filter((f) => f.endsWith('.md') && !f.startsWith('_'))
+        .sort();
+    } catch (err) {
+      console.error(`错误: 无法读取目录 "${dir}": ${err.message}`);
+      process.exit(1);
+    }
+    if (files.length === 0) {
+      console.log(`✓ 目录 "${dir}" 中没有 .md 文件`);
+      return;
+    }
+    mkdirSync(outDir, { recursive: true });
+    let ok = 0;
+    const failures = [];
+    for (const f of files) {
+      const markdown = readFileSync(join(dir, f), 'utf8');
+      const { errors } = checkDocument(markdown, dir);
+      if (errors.length > 0) {
+        failures.push(`${f}（${errors.length} 个错误，跳过）`);
+        continue;
+      }
+      const result = build(markdown, {
+        platform: platformId,
+        theme: opts.theme,
+        toc: opts.toc,
+        inlineImages: opts.inlineImages,
+        baseDir: dir,
+      });
+      const ext = result.platform.mode === 'text' ? '.txt' : '.html';
+      const outFile = join(outDir, basename(f, extname(f)) + ext);
+      writeFileSync(outFile, result.html ?? result.text, 'utf8');
+      ok++;
+    }
+    console.log(`✓ 批量完成：${ok}/${files.length} 个文件 → ${outDir}${failures.length ? `\n  跳过：${failures.join(', ')}` : ''}`);
     return;
   }
 
