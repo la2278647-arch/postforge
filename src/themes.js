@@ -368,6 +368,246 @@ export const THEMES = {
   },
 };
 
+/**
+ * v0.3.0 新主题：基于 clean 派生，仅覆盖差异配色。
+ * 若未覆盖某字段，则继承 clean（字号、间距、边框等保持一致）。
+ */
+function makeTheme(overrides) {
+  const base = THEMES.clean;
+  return { ...base, ...overrides };
+}
+
+/** Nord 冷调：北欧冷灰蓝配色，适合技术阅读 */
+THEMES.nord = makeTheme({
+  id: 'nord',
+  name: 'Nord 冷调',
+  container: {
+    color: '#2e3440',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.8',
+    'letter-spacing': '0.3px',
+    'word-spacing': '1px',
+  },
+  heading: { color: '#2e3440', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#2e3440', 'font-weight': '700' },
+  link: { color: '#5e81ac', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#b46a92',
+    'background-color': '#eceff4',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#eceff4',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#2e3440',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #d8dee9',
+  },
+  blockquote: {
+    'border-left': '4px solid #81a1c1',
+    'background-color': '#eceff4',
+    color: '#4c566a',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#e5e9f0',
+    color: '#2e3440',
+    'font-weight': '600',
+    border: '1px solid #d8dee9',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #d8dee9', padding: '8px 12px' },
+  'tr-alt': { 'background-color': '#f4f6f9' },
+  task: { color: '#5e81ac', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#4a7d5c', bg: 'rgba(74,125,92,0.10)' },
+      warning: { accent: '#9c7a3c', bg: 'rgba(156,122,60,0.10)' },
+      note: { accent: '#4f7085', bg: 'rgba(79,112,133,0.10)' },
+      danger: { accent: '#a94442', bg: 'rgba(169,68,66,0.10)' },
+      quote: { accent: '#7d6a9e', bg: 'rgba(125,106,158,0.10)' },
+    },
+  },
+});
+
+/** Coffee 咖啡暖调：暖棕纸感，适合生活随笔与读书笔记 */
+THEMES.coffee = makeTheme({
+  id: 'coffee',
+  name: 'Coffee 咖啡',
+  container: {
+    color: '#453a2f',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.85',
+    'letter-spacing': '0.4px',
+    'word-spacing': '1px',
+  },
+  heading: { color: '#332820', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#332820', 'font-weight': '700' },
+  link: { color: '#8a5a44', 'text-decoration': 'underline', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#9a4f2c',
+    'background-color': '#f6efe7',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#f7f1e9',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#453a2f',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #e7dccd',
+  },
+  blockquote: {
+    'border-left': '4px solid #c9a37e',
+    'background-color': '#faf5ee',
+    color: '#7c6b5a',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#f0e7db',
+    color: '#453a2f',
+    'font-weight': '600',
+    border: '1px solid #e0d2bf',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #e0d2bf', padding: '8px 12px' },
+  'tr-alt': { 'background-color': '#fbf7f0' },
+  hr: { border: 'none', 'border-top': '1px solid #e0d2bf', 'margin-top': '24px', 'margin-bottom': '24px' },
+  task: { color: '#8a5a44', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#6f824f', bg: 'rgba(111,130,79,0.10)' },
+      warning: { accent: '#a67c2e', bg: 'rgba(166,124,46,0.10)' },
+      note: { accent: '#6f6f9c', bg: 'rgba(111,111,156,0.10)' },
+      danger: { accent: '#b0553f', bg: 'rgba(176,85,63,0.10)' },
+      quote: { accent: '#9b7b56', bg: 'rgba(155,123,86,0.10)' },
+    },
+  },
+});
+
+/** Midnight 深夜蓝：深蓝黑底，适合夜间技术阅读 */
+THEMES.midnight = makeTheme({
+  id: 'midnight',
+  name: 'Midnight 深夜',
+  container: {
+    color: '#c6d0e0',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.8',
+    'letter-spacing': '0.3px',
+  },
+  heading: { color: '#e6ecf7', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#e6ecf7', 'font-weight': '700' },
+  link: { color: '#7aa2f7', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#9ece6a',
+    'background-color': 'rgba(158,206,106,0.10)',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#16233c',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#c6d0e0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #26344f',
+  },
+  blockquote: {
+    'border-left': '4px solid #26344f',
+    'background-color': '#16233c',
+    color: '#8f9cb8',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#16233c',
+    color: '#c6d0e0',
+    'font-weight': '600',
+    border: '1px solid #26344f',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #26344f', padding: '8px 12px' },
+  'tr-alt': { 'background-color': 'rgba(122,162,247,0.03)' },
+  task: { color: '#7aa2f7', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#9ece6a', bg: 'rgba(158,206,106,0.10)' },
+      warning: { accent: '#e0af68', bg: 'rgba(224,175,104,0.10)' },
+      note: { accent: '#7aa2f7', bg: 'rgba(122,162,247,0.10)' },
+      danger: { accent: '#f7768e', bg: 'rgba(247,118,142,0.10)' },
+      quote: { accent: '#bb9af7', bg: 'rgba(187,154,247,0.10)' },
+    },
+  },
+});
+
 export function getTheme(id) {
   return THEMES[id] || THEMES.clean;
 }

@@ -129,6 +129,38 @@ test('dark 主题卡片配色不同于 clean', () => {
   assert.match(dark.html, /#60a5fa/);
 });
 
+test('v0.3.0 新主题注册完整且字段齐全', () => {
+  const REQUIRED = [
+    'container', 'heading', 'paragraph', 'strong', 'em', 'del', 'link', 'inline-code',
+    'codeblock', 'blockquote', 'table', 'th', 'td', 'tr-alt', 'hr', 'ul', 'ol', 'li',
+    'img', 'task', 'toc', 'card',
+  ];
+  for (const id of ['nord', 'coffee', 'midnight']) {
+    const t = THEMES[id];
+    assert.ok(t, `主题 ${id} 存在`);
+    for (const field of REQUIRED) {
+      assert.ok(t[field], `主题 ${id} 缺少字段 ${field}`);
+    }
+    assert.ok(t.card.kinds.tip && t.card.kinds.danger, `${id} 卡片配色齐全`);
+  }
+});
+
+test('六个主题均可渲染且配色互不相同', () => {
+  const md = ':::tip t\nx\n:::\n\n| A |\n|---|\n| 1 |\n\n```js\nconst a = 1;\n```';
+  const outputs = ['clean', 'paper', 'dark', 'nord', 'coffee', 'midnight'].map((id) => ({
+    id,
+    html: build(md, { theme: id }).html,
+  }));
+  for (const o of outputs) {
+    assert.match(o.html, /<section style=/);
+    assert.match(o.html, /<table/);
+    assert.match(o.html, /<pre/);
+    assert.match(o.html, /border-left-color/);
+  }
+  const signatures = new Set(outputs.map((o) => o.html.slice(0, 200)));
+  assert.ok(signatures.size >= 4, '至少 4 个主题有独立配色前缀');
+});
+
 test('quote 卡片无标题时渲染装饰性左引号', () => {
   const { html } = build(':::quote\n纸上得来终觉浅，绝知此事要躬行。\n:::');
   assert.match(html, /border-left-color:#6f42c1/);
