@@ -30,5 +30,8 @@
 ## 素材
 
 - Logo：`docs/logo.svg`
+- 交互式架构图：`docs/diagram/dataflow-postforge.html`（README 展示用截图：`docs/diagram/*.png`）
+- 发布文案例（自举）：`docs/case/announce.md` → wechat/xiaohongshu/generic 三输出
+- 技术深挖文（自举）：`docs/case/tech-deep.md` → wechat/juejin/generic 三输出（适合掘金/知乎技术板块）
 - 示例输出：`examples/demo-wechat.html`、`examples/demo-generic.html`、`examples/demo-xiaohongshu.txt`
 - 演示命令：`npm run demo` 可重新生成全部示例
