@@ -14,6 +14,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { build } from './index.js';
 import { checkDocument } from './check.js';
+import { analyze, formatAnalysis } from './info.js';
 import { PLATFORMS } from './platforms.js';
 import { THEMES } from './themes.js';
 import { fileURLToPath } from 'node:url';
@@ -27,6 +28,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
 用法:
   postforge build <input.md> [选项]    把 Markdown 排版为平台富文本
   postforge check <input.md>           静态检查：卡片语法配对 / 本地图片引用
+  postforge info <input.md>            文章统计：字数 / 图片 / 阅读时长
   postforge mcp                        启动 MCP stdio server（供 AI 调用）
   postforge list                       列出支持的平台与主题
   postforge -v | --version            显示版本
@@ -136,6 +138,19 @@ function main() {
       console.log(`✗ 检查未通过：${errors.length} 个错误`);
       process.exit(1);
     }
+    return;
+  }
+
+  if (command === 'info') {
+    const input = rest[0];
+    if (!input) {
+      console.error('错误: 缺少输入文件，用法: postforge info <input.md>');
+      process.exit(1);
+    }
+    const markdown = input === '-' ? readFileSync(0, 'utf8') : readFileSync(input, 'utf8');
+    const stats = analyze(markdown, { theme: opts.theme });
+    console.log('📊 文章统计：');
+    for (const line of formatAnalysis(stats)) console.log(`  ${line}`);
     return;
   }
 

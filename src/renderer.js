@@ -20,7 +20,8 @@ import { createCardExtension, cardToText } from './cards.js';
  * marked v18 的 options.extensions 只认转换后的结构，且 lexer 忽略旧式对象数组；
  * 这里不经过全局 marked.use() 注册，避免模块级状态在多主题渲染时串色。
  */
-function toMarkedExtensions(theme) {
+/** 导出供 info 等模块复用（统计也需要识别卡片 token） */
+export function toMarkedExtensions(theme) {
   const ext = createCardExtension(theme);
   return {
     block: [ext.tokenizer],

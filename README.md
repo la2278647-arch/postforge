@@ -97,6 +97,7 @@ postforge build post.md -p zhihu -o zhihu.html
 ```text
 postforge build <input.md> [选项]
 postforge check <input.md>
+postforge info <input.md>
 postforge mcp
 postforge list
 postforge -v | --version
@@ -105,7 +106,7 @@ postforge -h | --help
 选项:
   -p, --platform <id>    目标平台（默认 wechat）
   -o, --output <file>    输出到文件（默认输出到 stdout）
-  -t, --theme <id>       排版主题（clean / paper / dark）
+  -t, --theme <id>       排版主题（clean / paper / nord / coffee / dark / midnight）
       --toc              在文章开头生成目录
       --max-width <px>   内容最大宽度
       --title <t>        文档标题（generic 平台使用）
@@ -267,6 +268,18 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 ```
 
 完整方案（素材库手动替换 / 批量替换脚本 / FAQ）见 [`docs/wechat-images.md`](docs/wechat-images.md)。
+
+## 📁 模板库
+
+`examples/templates/` 提供三篇开箱即用的排版模板，复制改改就能发：
+
+| 模板 | 适用 | 特点 |
+| ---- | ---- | ---- |
+| [`tech-tutorial.md`](examples/templates/tech-tutorial.md) | 技术教程 | 收获卡片 / 步骤 / 避坑卡 / 原理说明 / 行动清单 |
+| [`wechat-article.md`](examples/templates/wechat-article.md) | 公众号文章 | 金句卡 / 对比表格 / 划重点 / 行动号召 |
+| [`xiaohongshu-draft.md`](examples/templates/xiaohongshu-draft.md) | 小红书笔记 | 卖点卡 / 步骤 / 效果对比 / 图片清单 / 话题标签 |
+
+发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 
 ## ✨ 自举案例
 
