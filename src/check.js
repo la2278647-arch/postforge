@@ -10,8 +10,10 @@
 
 import { existsSync } from 'node:fs';
 import { resolve, isAbsolute } from 'node:path';
+import { KINDS } from './cards.js';
 
-export const CARD_KINDS = ['tip', 'warning', 'note', 'danger', 'quote'];
+/** 排版模板类型（与 cards.js 同步） */
+export const CARD_KINDS = KINDS;
 
 const REMOTE_OR_SPECIAL = /^(https?:|data:|#|\/\/)/i;
 /** 行首卡片标记：:::tip 标题 / :::warning / ::: 收尾 */
@@ -40,7 +42,8 @@ export function checkDocument(markdown, baseDir = process.cwd()) {
       if (stack.length) stack.pop();
       else errors.push(`第 ${i + 1} 行：多余的卡片结束符 :::`);
     } else if (kindSet.has(token)) {
-      stack.push({ kind: token, line: i + 1 });
+      // divider 为单行语法（:::divider 文字），无需闭合
+      if (token !== 'divider') stack.push({ kind: token, line: i + 1 });
     } else {
       errors.push(`第 ${i + 1} 行：未知卡片类型 :::${token}（可用：${CARD_KINDS.join(' / ')}）`);
     }

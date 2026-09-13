@@ -1,18 +1,22 @@
 /**
- * PostForge 排版模板扩展：提示卡片（:::tip / :::warning / :::note / :::danger / :::quote）
+ * PostForge 排版模板扩展：提示卡片与分隔条
  *
- * 语法：
+ * 卡片语法：
  *   :::tip 标题（可选）
  *   卡片内容，支持任意 Markdown（段落、列表、代码等）
  *   :::
  *
  * 渲染为带主题配色的卡片 div（左边框 + 浅色背景 + 强调标题）。
  * quote 卡片（语录/引用）在无标题时自动附加一个装饰性左引号。
+ *
+ * 分隔条语法（单行，无需闭合）：
+ *   :::divider 文字（可选，无文字时渲染为纯分隔线）
+ * 渲染为上下边框夹文字的居中分隔条（公众号兼容）。
  */
 
 import { THEMES } from './themes.js';
 
-export const KINDS = ['tip', 'warning', 'note', 'danger', 'quote'];
+export const KINDS = ['tip', 'warning', 'note', 'danger', 'quote', 'divider'];
 
 function esc(s) {
   return String(s)
@@ -46,6 +50,19 @@ export function createCardExtension(theme) {
       return src.indexOf(':::');
     },
     tokenizer(src) {
+      // divider：单行语法（:::divider 可选文字），无需闭合符；仅空格分隔标题，换行不进入标题
+      const dividerRule = /^:::divider(?: +(.*?))?(?:\n(?=\n|$)|$)/;
+      const dm = dividerRule.exec(src);
+      if (dm) {
+        return {
+          type: 'postforgeCard',
+          raw: dm[0],
+          kind: 'divider',
+          title: (dm[1] || '').trim(),
+          body: '',
+          tokens: [],
+        };
+      }
       const rule = /^:::(tip|warning|note|danger|quote)(?:\s+(.*?))?\n([\s\S]*?)\n:::(?:\n|$)/;
       const match = rule.exec(src);
       if (!match) return undefined;
@@ -59,6 +76,13 @@ export function createCardExtension(theme) {
       };
     },
     renderer(token) {
+      // 分隔条：上下边框夹文字（无文字时渲染纯分隔线），中性配色兼容深浅主题
+      if (token.kind === 'divider') {
+        const label = token.title
+          ? `<span style="letter-spacing:3px">❖ ${esc(token.title)} ❖</span>`
+          : '';
+        return `<div style="text-align:center;padding:10px 0;color:#a8a8a8;font-size:13px;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;margin-top:18px;margin-bottom:18px">${label}</div>`;
+      }
       const kind = card.kinds[token.kind] || card.kinds.note;
       const titleHtml = token.title
         ? `<strong style="${toCss({ ...card.title, color: kind.accent })}">${esc(token.title)}</strong>`
@@ -82,6 +106,9 @@ export const postforgeCardExtension = createCardExtension(THEMES.clean);
 
 /** 供文本提取使用：把卡片 token 转成纯文本（标题 + 内容） */
 export function cardToText(token, blockToText) {
+  if (token.kind === 'divider') {
+    return token.title ? `── ${token.title} ──` : '──';
+  }
   const title = token.title ? `【${token.title}】` : '';
   return `${title}${blockToText(token.tokens)}`;
 }

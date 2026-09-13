@@ -182,6 +182,40 @@ test('quote 卡片三主题配色独立', () => {
   assert.match(dark.html, /#c084fc/);
 });
 
+test('divider 分隔条：带文字渲染上下边框夹文字', () => {
+  const { html } = build('正文一\n\n:::divider 第三章\n\n正文二');
+  assert.match(html, /border-top:1px solid #e5e5e5/);
+  assert.match(html, /❖ 第三章 ❖/);
+  assert.match(html, /text-align:center/);
+});
+
+test('divider 分隔条：无文字渲染纯分隔线', () => {
+  const { html } = build(':::divider\n\n正文');
+  assert.match(html, /border-top:1px solid #e5e5e5/);
+  assert.doesNotMatch(html, /❖/);
+});
+
+test('divider 在 dark 主题同样可用（中性配色）', () => {
+  const { html } = build(':::divider 分隔', { theme: 'dark' });
+  assert.match(html, /❖ 分隔 ❖/);
+});
+
+test('divider 不要求闭合（build 不抛错）', () => {
+  assert.doesNotThrow(() => build(':::divider 合法\n正文\n:::tip t\nx\n:::'));
+});
+
+test('checkDocument 识别 divider 为合法单行语法', async () => {
+  const { checkDocument } = await import('../src/check.js');
+  const r = checkDocument(':::tip 标题\n内容\n:::\n\n:::divider 分隔\n\n正文', 'D:\\AI回收站\\mdx-postforge');
+  assert.deepEqual(r.errors, []);
+  assert.ok(r.warnings.every((w) => !w.includes('divider')), 'divider 不产生警告');
+});
+
+test('小红书模式：divider 渲染为分隔线文本', () => {
+  const r = build(':::divider 第二章\n\n内容', { platform: 'xiaohongshu' });
+  assert.match(r.text, /── 第二章 ──/);
+});
+
 test('平台与主题注册表完整', () => {
   assert.ok(Object.keys(PLATFORMS).length >= 6);
   assert.ok(Object.keys(THEMES).length >= 3);
