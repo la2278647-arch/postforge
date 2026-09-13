@@ -1,0 +1,31 @@
+{
+  "id": "brand-blue",
+  "name": "品牌蓝",
+  "container": {
+    "color": "#1f3a5f",
+    "font-size": "16px"
+  },
+  "heading": { "color": "#0b2545" },
+  "link": { "color": "#2f6fb0" },
+  "inline-code": { "color": "#b3487d", "background-color": "#eef4fb" },
+  "codeblock": {
+    "background-color": "#f0f5fc",
+    "border": "1px solid #d5e3f5",
+    "color": "#1f3a5f"
+  },
+  "blockquote": {
+    "border-left": "4px solid #8fb3dc",
+    "background-color": "#eef4fb",
+    "color": "#4a6a94"
+  },
+  "th": { "background-color": "#e3eefb", "border": "1px solid #c8ddf3", "color": "#0b2545" },
+  "td": { "border": "1px solid #c8ddf3" },
+  "card": {
+    "kinds": {
+      "tip": { "accent": "#2e7d5b", "bg": "rgba(46,125,91,0.10)" },
+      "warning": { "accent": "#b07a2a", "bg": "rgba(176,122,42,0.10)" },
+      "note": { "accent": "#2f6fb0", "bg": "rgba(47,111,176,0.10)" },
+      "danger": { "accent": "#c2453a", "bg": "rgba(194,69,58,0.10)" }
+    }
+  }
+}

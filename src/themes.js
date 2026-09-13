@@ -372,7 +372,7 @@ export const THEMES = {
  * v0.3.0 新主题：基于 clean 派生，仅覆盖差异配色。
  * 若未覆盖某字段，则继承 clean（字号、间距、边框等保持一致）。
  */
-function makeTheme(overrides) {
+export function makeTheme(overrides) {
   const base = THEMES.clean;
   return { ...base, ...overrides };
 }

@@ -42,6 +42,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
       --max-width <px>   内容最大宽度 (仅 generic 平台有意义)
       --title <t>        文档标题 (generic 平台使用)
       --inline-images    把本地图片内联为 base64 data URI（粘贴公众号可自动转存）
+      --theme-file <json> 加载自定义主题 JSON（深合并到 -t 指定的基础主题）
 
 示例:
   postforge build post.md -p wechat -o wechat.html
@@ -58,6 +59,7 @@ function parseArgs(argv) {
     '-p': 'platform', '--platform': 'platform',
     '-o': 'output', '--output': 'output',
     '-t': 'theme', '--theme': 'theme',
+    '--theme-file': 'themeFile',
     '--toc': 'toc',
     '--max-width': 'maxWidth',
     '--title': 'title',
@@ -187,14 +189,30 @@ function main() {
     console.error(`错误: 未知平台 "${platformId}"，可用: ${Object.keys(PLATFORMS).join(', ')}`);
     process.exit(1);
   }
-  if (opts.theme && !THEMES[opts.theme]) {
-    console.error(`错误: 未知主题 "${opts.theme}"，可用: ${Object.keys(THEMES).join(', ')}`);
+  const baseTheme = opts.theme || 'clean';
+  if (!THEMES[baseTheme]) {
+    console.error(`错误: 未知主题 "${baseTheme}"，可用: ${Object.keys(THEMES).join(', ')}`);
     process.exit(1);
+  }
+
+  // 自定义主题文件：--theme-file <json>，build 内部深合并到 -t 指定的基础主题
+  let themeObj;
+  if (opts.themeFile) {
+    try {
+      themeObj = JSON.parse(readFileSync(opts.themeFile, 'utf8'));
+      if (typeof themeObj !== 'object' || Array.isArray(themeObj)) {
+        throw new Error('主题 JSON 必须是对象');
+      }
+    } catch (err) {
+      console.error(`错误: 主题文件加载失败: ${err.message}`);
+      process.exit(1);
+    }
   }
 
   const result = build(markdown, {
     platform: platformId,
-    theme: opts.theme,
+    theme: themeObj ? baseTheme : undefined,
+    themeObj,
     toc: opts.toc,
     maxWidth: opts.maxWidth ? Number(opts.maxWidth) : undefined,
     title: opts.title,

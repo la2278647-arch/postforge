@@ -69,6 +69,22 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
+/** 深合并：普通对象递归合并（数组与原始值直接覆盖），用于自定义主题字段覆盖 */
+export function deepMerge(base, over) {
+  const out = { ...base };
+  for (const [k, v] of Object.entries(over || {})) {
+    if (
+      v && typeof v === 'object' && !Array.isArray(v) &&
+      base[k] && typeof base[k] === 'object' && !Array.isArray(base[k])
+    ) {
+      out[k] = deepMerge(base[k], v);
+    } else {
+      out[k] = v;
+    }
+  }
+  return out;
+}
+
 function toCss(obj) {
   return Object.entries(obj)
     .map(([k, v]) => `${k}:${String(v).replace(/"/g, '&quot;')}`)
@@ -385,14 +401,17 @@ function extractText(tokens) {
  */
 export function build(markdown, options = {}) {
   const platform = getPlatform(options.platform || 'wechat');
-  const theme = getTheme(options.theme || platform.defaultTheme);
+  // themeObj：自定义主题字段（深合并到基础主题，未覆盖字段继承）
+  const theme = options.themeObj
+    ? deepMerge(getTheme(options.theme || platform.defaultTheme), options.themeObj)
+    : getTheme(options.theme || platform.defaultTheme);
   // 每个 build 调用构造绑定当前主题的扩展结构，无全局注册、多主题安全
   const lexerOptions = { gfm: true, breaks: false, extensions: toMarkedExtensions(theme) };
   const tokens = marked.lexer(markdown, lexerOptions);
 
   if (platform.mode === 'text') {
     const { text, images, hashtags } = extractText(tokens);
-    return { platform, theme: theme.id, text, images, hashtags, toc: [] };
+    return { platform, theme: theme.id || 'custom', text, images, hashtags, toc: [] };
   }
 
   const renderer = new PostRenderer(theme, platform, options);
@@ -413,10 +432,10 @@ export function build(markdown, options = {}) {
       { body: section, title: options.title || '' },
       theme,
     );
-    return { platform, theme: theme.id, html, toc: renderer.headings };
+    return { platform, theme: theme.id || 'custom', html, toc: renderer.headings };
   }
 
-  return { platform, theme: theme.id, html: section, toc: renderer.headings };
+  return { platform, theme: theme.id || 'custom', html: section, toc: renderer.headings };
 }
 
 export { PostRenderer };

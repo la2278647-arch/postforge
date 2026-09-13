@@ -246,6 +246,18 @@ const { html } = build(markdown, {
 
 自定义主题：在 `src/themes.js` 中追加一个主题对象即可，字段与现成主题完全一致（可用 `makeTheme` 基于 `clean` 派生，只覆盖差异配色）。
 
+**无需改代码的自定义主题**：用 `--theme-file` 加载 JSON（深合并到基础主题，未覆盖字段自动继承）：
+
+```bash
+postforge build post.md -p wechat --theme-file my-theme.json
+```
+
+```json
+{ "id": "brand", "container": { "color": "#1f3a5f" }, "link": { "color": "#2f6fb0" } }
+```
+
+内置示例：`examples/themes/brand-blue.json`（品牌蓝主题）。库用法：`build(md, { themeObj: { ... } })`。
+
 ## 🧱 排版模板（提示卡片）
 
 在 Markdown 中用 `:::` 语法插入彩色提示卡片，内容支持任意 Markdown（段落、列表、代码、链接等）：

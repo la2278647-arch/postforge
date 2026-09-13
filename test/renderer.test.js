@@ -145,6 +145,28 @@ test('v0.3.0 新主题注册完整且字段齐全', () => {
   }
 });
 
+test('build 支持自定义主题对象（themeObj），未覆盖字段继承基础', () => {
+  const custom = { id: 'brand', container: { color: '#123456' }, link: { color: '#abcdef' } };
+  const { html, theme } = build('## 标题\n\n[链接](https://a.com) 与 `代码`', { themeObj: custom });
+  assert.equal(theme, 'brand');
+  assert.match(html, /#123456/);
+  assert.match(html, /#abcdef/);
+  // 未覆盖字段（行内代码圆角 3px）继承 clean
+  assert.match(html, /border-radius:3px/);
+});
+
+test('themeObj 可覆盖卡片配色（深合并语义）', () => {
+  const custom = {
+    id: 'x',
+    card: { kinds: { tip: { accent: '#ff0000', bg: 'rgba(255,0,0,0.1)' } } },
+  };
+  const { html } = build(':::tip t\nx\n:::', { themeObj: custom });
+  assert.match(html, /#ff0000/);
+  // 未覆盖的 kinds（warning 等）不应丢失
+  const customWarn = build(':::warning w\nx\n:::', { themeObj: custom });
+  assert.match(customWarn.html, /border-left-color:/, 'warning 卡片仍应正常渲染');
+});
+
 test('六个主题均可渲染且配色互不相同', () => {
   const md = ':::tip t\nx\n:::\n\n| A |\n|---|\n| 1 |\n\n```js\nconst a = 1;\n```';
   const outputs = ['clean', 'paper', 'dark', 'nord', 'coffee', 'midnight'].map((id) => ({
