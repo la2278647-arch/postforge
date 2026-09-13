@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, rmSync, readdirSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, rmSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -167,6 +167,20 @@ test('list 命令列出平台与主题', () => {
   assert.match(r.stdout, /支持的平台/);
   assert.match(r.stdout, /微信公众号/);
   assert.match(r.stdout, /主题/);
+});
+
+test('build --theme 指定主题生效（回归：v0.4.3 曾失效）', () => {
+  const t = tmpDir('pf-theme-cli-');
+  try {
+    writeFileSync(join(t.dir, 'post.md'), '## 标题\n\n正文\n');
+    const r = run(['build', 'post.md', '-p', 'generic', '--theme', 'one-dark', '-o', 'out.html'], t.dir);
+    assert.equal(r.status, 0);
+    assert.match(r.stdout, /one-dark 主题/, '输出消息应显示所选主题');
+    const html = readFileSync(join(t.dir, 'out.html'), 'utf8');
+    assert.match(html, /#e06c75/, 'one-dark 标题色应生效');
+  } finally {
+    t.cleanup();
+  }
 });
 
 test('version 输出 semver', () => {

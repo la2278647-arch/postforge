@@ -608,6 +608,159 @@ THEMES.midnight = makeTheme({
   },
 });
 
+/** One Dark：Atom 编辑器经典深色，程序员审美 */
+THEMES['one-dark'] = makeTheme({
+  id: 'one-dark',
+  name: 'One Dark 深色',
+  container: {
+    color: '#abb2bf',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.8',
+    'letter-spacing': '0.3px',
+  },
+  heading: { color: '#e06c75', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#d19a66', 'font-weight': '700' },
+  link: { color: '#61afef', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#98c379',
+    'background-color': 'rgba(152,195,121,0.10)',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#282c34',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#abb2bf',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #3e4451',
+  },
+  blockquote: {
+    'border-left': '4px solid #3e4451',
+    'background-color': '#282c34',
+    color: '#7f848e',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#282c34',
+    color: '#d19a66',
+    'font-weight': '600',
+    border: '1px solid #3e4451',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #3e4451', padding: '8px 12px' },
+  'tr-alt': { 'background-color': 'rgba(97,175,239,0.04)' },
+  task: { color: '#61afef', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#98c379', bg: 'rgba(152,195,121,0.10)' },
+      warning: { accent: '#e5c07b', bg: 'rgba(229,192,123,0.10)' },
+      note: { accent: '#61afef', bg: 'rgba(97,175,239,0.10)' },
+      danger: { accent: '#e06c75', bg: 'rgba(224,108,117,0.10)' },
+      quote: { accent: '#c678dd', bg: 'rgba(198,120,221,0.10)' },
+    },
+  },
+});
+
+/** Solarized Light：经典护眼浅色（Ethan Schoonover 配色） */
+THEMES.solarized = makeTheme({
+  id: 'solarized',
+  name: 'Solarized 护眼',
+  container: {
+    color: '#657b83',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.8',
+    'letter-spacing': '0.3px',
+  },
+  heading: { color: '#586e75', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#586e75', 'font-weight': '700' },
+  link: { color: '#268bd2', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#2aa198',
+    'background-color': '#eee8d5',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#eee8d5',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#657b83',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #d5ccba',
+  },
+  blockquote: {
+    'border-left': '4px solid #93a1a1',
+    'background-color': '#eee8d5',
+    color: '#839496',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#eee8d5',
+    color: '#586e75',
+    'font-weight': '600',
+    border: '1px solid #d5ccba',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #d5ccba', padding: '8px 12px' },
+  'tr-alt': { 'background-color': '#f5efdf' },
+  hr: { border: 'none', 'border-top': '1px solid #d5ccba', 'margin-top': '24px', 'margin-bottom': '24px' },
+  task: { color: '#268bd2', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#859900', bg: 'rgba(133,153,0,0.10)' },
+      warning: { accent: '#b58900', bg: 'rgba(181,137,0,0.10)' },
+      note: { accent: '#268bd2', bg: 'rgba(38,139,210,0.10)' },
+      danger: { accent: '#dc322f', bg: 'rgba(220,50,47,0.10)' },
+      quote: { accent: '#6c71c4', bg: 'rgba(108,113,196,0.10)' },
+    },
+  },
+});
+
 export function getTheme(id) {
   return THEMES[id] || THEMES.clean;
 }

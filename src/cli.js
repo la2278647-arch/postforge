@@ -264,7 +264,7 @@ function main() {
 
   const result = build(markdown, {
     platform: platformId,
-    theme: themeObj ? baseTheme : undefined,
+    theme: baseTheme,
     themeObj,
     toc: opts.toc,
     maxWidth: opts.maxWidth ? Number(opts.maxWidth) : undefined,
