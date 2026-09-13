@@ -41,6 +41,7 @@
 - 🔆 **代码高亮**：内置 GitHub 风格高亮，全部转为内联样式
 - 📋 **目录生成**：`--toc` 一键生成文章目录（带锚点）
 - ☑️ **任务清单**：GFM 任务列表渲染为 ☑ / ☐
+- 🧱 **排版模板**：`:::note` `:::tip` `:::warning` `:::danger` 彩色提示卡片
 - 📄 **表格 / 引用 / 图片 / 列表**：完整支持，响应式适配
 - 📦 **可用作库**：`build(markdown, options)` 直接集成到你的工作流
 - 🤖 **MCP Server**：Claude / Cursor 等 AI 可直接调用排版工具
@@ -181,14 +182,56 @@ const { html } = build(markdown, {
 
 自定义主题：在 `src/themes.js` 中追加一个主题对象即可，字段与现成主题完全一致。
 
+## 🧱 排版模板（提示卡片）
+
+在 Markdown 中用 `:::` 语法插入彩色提示卡片，内容支持任意 Markdown（段落、列表、代码、链接等）：
+
+````markdown
+:::tip 小贴士
+这是绿色提示卡片的内容。
+:::
+
+:::warning 注意
+这是橙色警告卡片的内容。
+:::
+
+:::note 要点
+这是蓝色说明卡片的内容。
+:::
+
+:::danger 高危
+这是红色风险卡片的内容。
+:::
+````
+
+| 类型 | 颜色 | 用途 |
+| ---- | ---- | ---- |
+| `:::tip` | 绿 | 技巧 / 提示 |
+| `:::warning` | 橙 | 警告 / 注意 |
+| `:::note` | 蓝 | 说明 / 要点 |
+| `:::danger` | 红 | 风险 / 必须注意 |
+
+标题可省略：`:::note\n内容\n:::`。卡片配色跟随主题（clean / paper / dark 各自适配），实现见 `src/cards.js`。
+
+## ✨ 自举案例
+
+[`docs/case/announce.md`](docs/case/announce.md) 是一篇真实的 PostForge 发布文，下方文件就是**用 PostForge 自己排版**的成品，可直接打开 / 复制使用：
+
+| 输出 | 说明 |
+| ---- | ---- |
+| [`announce-generic.html`](docs/case/announce-generic.html) | 完整网页（含目录），浏览器直接打开预览 |
+| [`announce-wechat.html`](docs/case/announce-wechat.html) | 公众号富文本，粘贴进编辑器即可 |
+| [`announce-xiaohongshu.txt`](docs/case/announce-xiaohongshu.txt) | 小红书纯文本 + 图片清单 + 话题标签 |
+
 ## 🗺 路线图
 
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
 - [x] 6 平台适配（微信公众号 / 知乎 / 掘金 / CSDN / 小红书 / 通用网页）
 - [x] 3 套主题与目录生成
 - [x] MCP Server 集成（AI 直接排版输出）
+- [x] 排版模板（:::tip / :::warning / :::note / :::danger 提示卡片）
 - [ ] 微信公众号图片自动上传配置说明页
-- [ ] 常用排版模板（代码卡片 / 分割线卡片 / 提示框）
+- [ ] 更多排版模板（代码卡片 / 分割线卡片）
 - [ ] 更多主题与平台（欢迎社区贡献）
 
 ## 🧪 开发与测试

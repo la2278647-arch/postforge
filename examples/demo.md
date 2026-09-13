@@ -74,6 +74,16 @@ const platforms = ['wechat', 'zhihu', 'juejin', 'csdn', 'xiaohongshu'];
 platforms.forEach((p) => console.log(`支持平台: ${p}`));
 ```
 
+### 提示卡片
+
+:::tip 小贴士
+PostForge 的排版模板：用 `:::tip` / `:::warning` / `:::note` / `:::danger` 插入彩色提示卡片，内容支持任意 Markdown。
+:::
+
+:::warning 注意
+公众号粘贴前请先保存草稿——图片需上传至公众号素材库后替换地址。
+:::
+
 ### 图片
 
 ![PostForge Logo](https://avatars.githubusercontent.com/u/190791720?v=4)

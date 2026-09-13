@@ -9,6 +9,10 @@ import hljs from 'highlight.js';
 import { applyTokenStyles } from './highlight.js';
 import { getTheme } from './themes.js';
 import { getPlatform } from './platforms.js';
+import { postforgeCardExtension, setCardTheme, cardToText } from './cards.js';
+
+// 注册排版模板扩展（提示卡片等）
+marked.use({ extensions: [postforgeCardExtension] });
 
 function esc(s) {
   return String(s)
@@ -237,6 +241,9 @@ function extractText(tokens) {
         case 'blockquote':
           out.push(`> ${blockToText(t.tokens)}`);
           break;
+        case 'postforgeCard':
+          out.push(cardToText(t, blockToText));
+          break;
         case 'list':
           renderItems(t.items, t.ordered, t.start || 1, out);
           break;
@@ -285,7 +292,8 @@ function extractText(tokens) {
 export function build(markdown, options = {}) {
   const platform = getPlatform(options.platform || 'wechat');
   const theme = getTheme(options.theme || platform.defaultTheme);
-  const tokens = marked.lexer(markdown, { gfm: true, breaks: false });
+  setCardTheme(theme);
+  const tokens = marked.lexer(markdown, { gfm: true, breaks: false, extensions: marked.defaults.extensions });
 
   if (platform.mode === 'text') {
     const { text, images, hashtags } = extractText(tokens);
@@ -293,7 +301,12 @@ export function build(markdown, options = {}) {
   }
 
   const renderer = new PostRenderer(theme, platform, options);
-  const parser = new Parser({ renderer, gfm: true, breaks: false });
+  const parser = new Parser({
+    renderer,
+    gfm: true,
+    breaks: false,
+    extensions: marked.defaults.extensions,
+  });
   const body = parser.parse(tokens);
 
   let content = body;

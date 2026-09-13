@@ -107,6 +107,23 @@ export const THEMES = {
       'margin-bottom': '24px',
       'font-size': '14px',
     },
+    card: {
+      box: {
+        'border-left': '4px solid',
+        'border-radius': '8px',
+        padding: '14px 16px',
+        'margin-top': '0',
+        'margin-bottom': '16px',
+        'line-height': '1.7',
+      },
+      title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+      kinds: {
+        tip: { accent: '#16a34a', bg: 'rgba(22,163,74,0.09)' },
+        warning: { accent: '#d97706', bg: 'rgba(217,119,6,0.09)' },
+        note: { accent: '#2563eb', bg: 'rgba(37,99,235,0.09)' },
+        danger: { accent: '#dc2626', bg: 'rgba(220,38,38,0.09)' },
+      },
+    },
   },
 
   /**
@@ -203,6 +220,23 @@ export const THEMES = {
       'margin-bottom': '28px',
       'font-size': '14px',
     },
+    card: {
+      box: {
+        'border-left': '4px solid',
+        'border-radius': '8px',
+        padding: '16px 18px',
+        'margin-top': '0',
+        'margin-bottom': '18px',
+        'line-height': '1.8',
+      },
+      title: { 'font-weight': '700', 'font-size': '16px', display: 'block', 'margin-bottom': '6px' },
+      kinds: {
+        tip: { accent: '#5c8a4e', bg: 'rgba(92,138,78,0.10)' },
+        warning: { accent: '#b07f2a', bg: 'rgba(176,127,42,0.10)' },
+        note: { accent: '#5a7ba8', bg: 'rgba(90,123,168,0.10)' },
+        danger: { accent: '#ad4b3c', bg: 'rgba(173,75,60,0.10)' },
+      },
+    },
   },
 
   /**
@@ -286,6 +320,23 @@ export const THEMES = {
       padding: '16px 20px',
       'margin-bottom': '24px',
       'font-size': '14px',
+    },
+    card: {
+      box: {
+        'border-left': '4px solid',
+        'border-radius': '8px',
+        padding: '14px 16px',
+        'margin-top': '0',
+        'margin-bottom': '16px',
+        'line-height': '1.7',
+      },
+      title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+      kinds: {
+        tip: { accent: '#4ade80', bg: 'rgba(74,222,128,0.10)' },
+        warning: { accent: '#fbbf24', bg: 'rgba(251,191,36,0.10)' },
+        note: { accent: '#60a5fa', bg: 'rgba(96,165,250,0.10)' },
+        danger: { accent: '#f87171', bg: 'rgba(248,113,113,0.10)' },
+      },
     },
   },
 };

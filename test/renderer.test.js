@@ -87,6 +87,48 @@ test('HTML 转义安全', () => {
   assert.match(html, /a &lt; b &amp; c &gt; d/);
 });
 
+test('提示卡片渲染（:::tip 带标题）', () => {
+  const { html } = build(':::tip 小贴士\n这是**重点**内容\n:::');
+  assert.match(html, /<div style="[^"]*border-left:4px solid/);
+  assert.match(html, /border-left-color:#16a34a/);
+  assert.match(html, /<strong style="[^"]*#16a34a[^"]*">小贴士<\/strong>/);
+  assert.match(html, /<strong style="color:#1a1a1a;font-weight:700">重点<\/strong>/);
+});
+
+test('提示卡片无标题时不输出空标题', () => {
+  const { html } = build(':::warning\n没有标题\n:::');
+  assert.doesNotMatch(html, /<strong style="[^"]*"><\/strong>/);
+  assert.match(html, /没有标题/);
+});
+
+test('四种卡片 kind 均有独立配色', () => {
+  const md = ':::tip t\n1\n:::\n\n:::warning w\n2\n:::\n\n:::note n\n3\n:::\n\n:::danger d\n4\n:::';
+  const { html } = build(md);
+  assert.match(html, /#16a34a/); // tip 绿
+  assert.match(html, /#d97706/); // warning 橙
+  assert.match(html, /#2563eb/); // note 蓝
+  assert.match(html, /#dc2626/); // danger 红
+});
+
+test('卡片内支持列表与代码', () => {
+  const { html } = build(':::note 要点\n- a\n- b\n\n```js\nconst x = 1;\n```\n:::');
+  assert.match(html, /<ul/);
+  assert.match(html, /<pre/);
+});
+
+test('小红书模式提取卡片内容', () => {
+  const r = build(':::tip 省钱技巧\n货比三家\n:::', { platform: 'xiaohongshu' });
+  assert.match(r.text, /省钱技巧/);
+  assert.match(r.text, /货比三家/);
+});
+
+test('dark 主题卡片配色不同于 clean', () => {
+  const clean = build(':::note n\nx\n:::');
+  const dark = build(':::note n\nx\n:::', { theme: 'dark' });
+  assert.notEqual(clean.html, dark.html);
+  assert.match(dark.html, /#60a5fa/);
+});
+
 test('平台与主题注册表完整', () => {
   assert.ok(Object.keys(PLATFORMS).length >= 6);
   assert.ok(Object.keys(THEMES).length >= 3);

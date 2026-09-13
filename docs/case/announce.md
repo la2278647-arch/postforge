@@ -1,0 +1,69 @@
+# 我开源了 PostForge：一个命令，把 Markdown 排版成公众号/知乎/掘金/CSDN/小红书
+
+> 这篇文章本身就是用 PostForge 排版的 —— 排版结果见 `docs/case/` 目录，复制即用。
+
+如果你写公众号、知乎、掘金或 CSDN，你一定经历过这种痛苦：文章在 Markdown 里写得好好的，到了每个平台却要重新排版一遍。
+
+公众号要求全内联样式、不支持 `<style>`；知乎粘贴后会清洗掉大部分自定义样式；小红书干脆不支持富文本，只接受纯文本加图片。于是每发一个平台，就多一次重复劳动。
+
+市面上的排版工具，大多只覆盖公众号，而且很多年久失修。所以我开源了 **PostForge（帖工坊）**：https://github.com/la2278647-arch/postforge
+
+## PostForge 是什么
+
+一个零配置的 Markdown 多平台排版引擎：
+
+```bash
+# 公众号
+postforge build post.md -p wechat -o wechat.html
+# 小红书（纯文本 + 图片清单 + 话题标签）
+postforge build post.md -p xiaohongshu -o xiaohongshu.txt
+# 通用网页（带目录）
+postforge build post.md -p generic --toc -o preview.html
+```
+
+同一篇 Markdown，输出六个平台的成品：**微信公众号、知乎、掘金、CSDN、小红书、通用网页**。
+
+:::tip 它怎么做到的
+基于 marked 的自定义 Renderer，把每个元素渲染成内联样式；代码高亮用 highlight.js，再把 token class 映射成内联颜色，公众号里也能显示 GitHub 风格高亮。
+:::
+
+## 主要特性
+
+- **全内联样式**：粘贴即用，不依赖 `<style>` 与外部 CSS
+- **3 套主题**：Clean 简洁 / Paper 纸感 / Dark 深色
+- **代码高亮**、表格斑马纹、GFM 任务清单、目录生成
+- **排版模板**：`:::note` `:::tip` `:::warning` `:::danger` 彩色提示卡片
+- **MCP Server**：Claude / Cursor 可以直接调用排版工具
+- **零在线依赖**：本地渲染，不传数据到任何服务器，只有 3 个运行时依赖
+
+### 支持的平台
+
+| 平台 | 命令 | 输出 |
+| ---- | ---- | ---- |
+| 微信公众号 | `-p wechat` | 内联样式 HTML 片段 |
+| 知乎专栏 | `-p zhihu` | HTML 片段 |
+| 掘金 | `-p juejin` | HTML 片段 |
+| CSDN 博客 | `-p csdn` | HTML 片段 |
+| 小红书 | `-p xiaohongshu` | 纯文本 + 图片 + 话题标签 |
+| 通用网页 | `-p generic` | 完整 HTML 文档 |
+
+## 路线图
+
+- [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
+- [x] 6 平台适配 + 3 套主题
+- [x] MCP Server 集成
+- [ ] 微信公众号图片自动上传配置说明
+- [ ] 更多排版模板与主题
+
+:::warning 使用提示
+公众号不允许外链图片：请先把图片上传到公众号素材库，再替换 HTML 中的图片地址。
+:::
+
+## 写在最后
+
+PostForge 是一个纯粹的本地工具：不登录、不上传、不锁定。写一次 Markdown，随处发布。
+
+仓库地址：https://github.com/la2278647-arch/postforge
+MIT 协议，欢迎 Star、Issue 与 PR。
+
+*写一次 Markdown，随处发布。*
