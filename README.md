@@ -450,6 +450,8 @@ docs/           公众号图片专题、多平台发布案例与宣传文案
 
 欢迎 Issue 与 PR！无论是新平台、新主题、还是渲染细节优化，都很有价值。请先跑通 `npm test`。
 
+**更多文档**：[项目全景总结](docs/PROJECT-SUMMARY.md) · [宣传速递](docs/promotion/quick-share.md) · [CHANGELOG](CHANGELOG.md)
+
 ## 📄 License
 
 [MIT](./LICENSE) © la2278647-arch
