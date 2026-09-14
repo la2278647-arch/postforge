@@ -158,7 +158,7 @@ Run it yourself: `node scripts/benchmark.mjs`
 
 ## Contributing
 
-PRs and Issues welcome — new platforms, themes, and templates especially. Run `npm test` before submitting. See [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SECURITY.md](SECURITY.md), and [CHANGELOG.md](CHANGELOG.md) for release history.
+PRs and Issues welcome — new platforms, themes, and templates especially. Run `npm test` before submitting. See [PROJECT-SUMMARY.en.md](docs/PROJECT-SUMMARY.en.md) (project overview), [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SECURITY.md](SECURITY.md), and [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## License
 
