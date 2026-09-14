@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PostForge 在线演示 · Markdown 多平台排版引擎</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f6f8fa; color: #24292e; }
+  header { background: #1f2937; color: #f9fafb; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+  header h1 { font-size: 18px; font-weight: 700; }
+  header span { font-size: 13px; opacity: .7; }
+  header a { margin-left: auto; color: #93c5fd; font-size: 13px; text-decoration: none; }
+  main { display: flex; height: calc(100vh - 56px); gap: 0; }
+  .left { width: 46%; display: flex; flex-direction: column; border-right: 1px solid #e5e7eb; }
+  .controls { padding: 10px 14px; background: #fff; border-bottom: 1px solid #e5e7eb; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .controls select { padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; background: #fff; }
+  .controls button { padding: 6px 14px; border: 1px solid #3b82f6; background: #3b82f6; color: #fff; border-radius: 6px; font-size: 13px; cursor: pointer; }
+  .controls button:hover { background: #2563eb; }
+  #md { flex: 1; border: none; resize: none; padding: 14px; font-family: "SFMono-Regular", Consolas, Menlo, monospace; font-size: 13px; line-height: 1.7; background: #fff; outline: none; }
+  .right { flex: 1; background: #f3f4f6; }
+  #out { width: 100%; height: 100%; border: none; background: #fff; }
+  .hint { font-size: 12px; color: #6b7280; padding: 0 14px 8px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>PostForge 在线演示</h1>
+  <span>Markdown → 15 平台富文本 · 全部本地渲染，不传数据</span>
+  <a href="https://github.com/la2278647-arch/postforge" target="_blank">GitHub ⭐</a>
+</header>
+<main>
+  <section class="left">
+    <div class="controls">
+      <select id="platform" title="目标平台"></select>
+      <select id="theme" title="排版主题"></select>
+      <button id="example" title="载入示例文章">载入示例</button>
+    </div>
+    <textarea id="md" spellcheck="false" placeholder="在这里粘贴 Markdown..."></textarea>
+    <div class="hint">输入即排版（300ms 防抖）· 小红书为纯文本模式 · 图片外链在预览中可直接显示</div>
+  </section>
+  <section class="right">
+    <iframe id="out" title="排版预览"></iframe>
+  </section>
+</main>
+<script src="./postforge.browser.js"></script>
+<script>
+(function () {
+  const { build, PLATFORMS, THEMES } = window.PostForge;
+  const mdEl = document.getElementById('md');
+  const outEl = document.getElementById('out');
+  const platformEl = document.getElementById('platform');
+  const themeEl = document.getElementById('theme');
+
+  // 平台 / 主题选择器
+  for (const id of Object.keys(PLATFORMS)) {
+    const o = document.createElement('option');
+    o.value = id; o.textContent = PLATFORMS[id].name;
+    platformEl.appendChild(o);
+  }
+  platformEl.value = 'wechat';
+  for (const id of Object.keys(THEMES)) {
+    const o = document.createElement('option');
+    o.value = id; o.textContent = THEMES[id].name;
+    themeEl.appendChild(o);
+  }
+
+  // 示例文章
+  const SAMPLE = `# PostForge 排版演示
+
+这是一篇**演示文章**，展示 PostForge 的核心能力。
+
+:::tip 小贴士
+排版模板：\`:::tip\` / \`:::warning\` / \`:::note\` / \`:::danger\` / \`:::quote\`，内容支持任意 Markdown。
+:::
+
+## 代码高亮
+
+\`\`\`js
+const platforms = ['wechat', 'zhihu', 'juejin', 'medium'];
+platforms.forEach((p) => console.log('支持平台:', p));
+\`\`\`
+
+## 表格与清单
+
+| 平台 | 输出 |
+| ---- | ---- |
+| 公众号 | 内联样式 HTML |
+
+- [x] 全内联样式
+- [x] 代码高亮
+- [ ] 等你来体验
+
+:::divider 开始排版
+`;
+
+  mdEl.value = SAMPLE;
+
+  // 渲染（generic 输出完整文档，其余平台包一层预览容器）
+  function render() {
+    try {
+      const md = mdEl.value;
+      const platform = platformEl.value;
+      const theme = themeEl.value;
+      const result = build(md, { platform, theme, toc: true });
+      if (result.platform.mode === 'text') {
+        outEl.srcdoc = '<body style="font-family:sans-serif;padding:20px;white-space:pre-wrap;font-size:14px">'
+          + escapeHtml(result.text) + '</body>';
+        return;
+      }
+      outEl.srcdoc = '<body style="margin:0;background:#fff;padding:24px">' + result.html + '</body>';
+    } catch (err) {
+      outEl.srcdoc = '<body style="font-family:sans-serif;padding:20px;background:#fef2f2;color:#7f1d1d;white-space:pre-wrap">⚠️ 渲染错误\n' + escapeHtml(String(err.message || err)) + '</body>';
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // 300ms 防抖
+  let timer = null;
+  mdEl.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(render, 300); });
+  platformEl.addEventListener('change', render);
+  themeEl.addEventListener('change', render);
+  document.getElementById('example').addEventListener('click', () => { mdEl.value = SAMPLE; render(); });
+
+  render();
+})();
+</script>
+</body>
+</html>
