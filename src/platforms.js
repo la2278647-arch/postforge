@@ -86,6 +86,20 @@ export const PLATFORMS = {
     mode: 'html',
     defaultTheme: 'clean',
   },
+  typecho: {
+    id: 'typecho',
+    name: 'Typecho 博客',
+    desc: '内联样式富文本，粘贴进 Typecho 后台编辑器（自建博客）',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
+  wordpress: {
+    id: 'wordpress',
+    name: 'WordPress',
+    desc: '内联样式富文本，粘贴进 WordPress 经典/区块编辑器（自建博客）',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
   xiaohongshu: {
     id: 'xiaohongshu',
     name: '小红书',

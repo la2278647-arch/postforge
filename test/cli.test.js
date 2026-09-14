@@ -193,7 +193,7 @@ test('doctor 环境诊断通过', () => {
   const r = run(['doctor'], process.cwd());
   assert.equal(r.status, 0);
   assert.match(r.stdout, /全部检查通过/);
-  assert.match(r.stdout, /平台注册表：13 个/);
+  assert.match(r.stdout, /平台注册表：15 个/);
   assert.match(r.stdout, /渲染自检通过/);
 });
 
