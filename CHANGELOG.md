@@ -10,6 +10,10 @@
 - `postforge serve <input.md>`：本地 HTTP 实时预览（默认端口 4173；自动刷新脚本轮询 mtime 指纹，改文件浏览器即刷新；渲染错误页保留刷新、改好自动恢复；`--no-open` / `--port`）
 - `postforge new <模板>`：从模板库生成文章草稿（`new list` 查看；不覆盖已有文件；`-o` 自动创建父目录）
 - `openBrowser` 跨平台（win32 `cmd start` / darwin `open` / linux `xdg-open`）
+- `postforge check` 增强：
+  - 重复标题警告（同文本标题多次出现，影响目录锚点唯一性；自动跳过围栏代码块内的 `#` 行）
+  - 本地链接目标检查（普通链接 `[text](path)` 指向不存在的本地文件给警告；远程 / 图片 / 锚点忽略）
+- MCP Server 新增 `template_list` / `template_get` 工具：AI 可直接枚举模板库并按名称获取模板全文作为创作起点
 
 ### 修复
 
@@ -17,7 +21,7 @@
 
 ### 测试
 
-- 63 → 69（serve 2 + new 4 用例）
+- 63 → 74（serve 2 + new 4 + check 增强 4 用例）
 
 ## [0.5.12] - 2026-09-14
 

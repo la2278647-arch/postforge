@@ -61,5 +61,38 @@ export function checkDocument(markdown, baseDir = process.cwd()) {
     }
   }
 
+  // 重复标题检查（warning）：同文本标题出现多次，影响目录锚点唯一性
+  // 跳过围栏代码块（``` 或 ~~~）内的行，避免误报
+  const HEADING_RE = /^(#{1,6})\s+(.+)$/;
+  const seenHeadings = new Map();
+  let inFence = false;
+  lines.forEach((line, i) => {
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      return;
+    }
+    if (inFence) return;
+    const hm = HEADING_RE.exec(line);
+    if (!hm) return;
+    const text = hm[2].trim();
+    if (seenHeadings.has(text)) {
+      warnings.push(`第 ${i + 1} 行：标题「${text}」与第 ${seenHeadings.get(text)} 行重复`);
+    } else {
+      seenHeadings.set(text, i + 1);
+    }
+  });
+
+  // 本地链接引用检查（warning）：普通链接 [text](path) 指向不存在的本地文件
+  // lookbehind 排除图片 ![alt](path)
+  const LINK_RE = /(?<!!)\[[^\]]*\]\(([^)\s]+)(?:\s+["'][^"']*["'])?\)/g;
+  for (const match of markdown.matchAll(LINK_RE)) {
+    const href = match[1];
+    if (REMOTE_OR_SPECIAL.test(href)) continue;
+    const abs = isAbsolute(href) ? href : resolve(baseDir, href);
+    if (!existsSync(abs)) {
+      warnings.push(`本地链接目标不存在：${href}（解析为 ${abs}）`);
+    }
+  }
+
   return { errors, warnings };
 }

@@ -20,12 +20,13 @@ import { analyze } from '../info.js';
 import { checkDocument } from '../check.js';
 import { PLATFORMS } from '../platforms.js';
 import { THEMES } from '../themes.js';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(readFileSync(join(__dirname, '..', '..', 'package.json'), 'utf8'));
+const TEMPLATE_DIR = join(__dirname, '..', '..', 'examples', 'templates');
 
 const platformIds = Object.keys(PLATFORMS);
 const themeIds = Object.keys(THEMES);
@@ -190,6 +191,61 @@ server.registerTool(
       return {
         isError: true,
         content: [{ type: 'text', text: `统计失败: ${err.message}` }],
+      };
+    }
+  },
+);
+
+server.registerTool(
+  'template_list',
+  {
+    title: '列出排版模板',
+    description: '返回 PostForge 模板库中的可用文章模板（名称 + 标题），适合创作前选择起点',
+    inputSchema: z.object({}),
+  },
+  async () => {
+    try {
+      const rows = readdirSync(TEMPLATE_DIR)
+        .filter((f) => f.endsWith('.md'))
+        .sort()
+        .map((f) => {
+          const title = readFileSync(join(TEMPLATE_DIR, f), 'utf8').split('\n')[0].replace(/^#\s*/, '');
+          return `${f.replace(/\.md$/, '').padEnd(20)} ${title}`;
+        });
+      return textResult(rows.join('\n'));
+    } catch (err) {
+      return {
+        isError: true,
+        content: [{ type: 'text', text: `模板库读取失败: ${err.message}` }],
+      };
+    }
+  },
+);
+
+server.registerTool(
+  'template_get',
+  {
+    title: '获取排版模板全文',
+    description:
+      '按名称返回模板库中某个模板的完整 Markdown 内容（如 tech-tutorial / wechat-article / xiaohongshu-draft），可直接作为创作起点或改造',
+    inputSchema: z.object({
+      name: z.string().describe('模板名称（template_list 返回的第一列）'),
+    }),
+  },
+  async (args) => {
+    try {
+      const file = join(TEMPLATE_DIR, `${args.name}.md`);
+      if (!existsSync(file)) {
+        return {
+          isError: true,
+          content: [{ type: 'text', text: `模板 "${args.name}" 不存在（template_list 查看可用模板）` }],
+        };
+      }
+      return textResult(readFileSync(file, 'utf8'));
+    } catch (err) {
+      return {
+        isError: true,
+        content: [{ type: 'text', text: `模板读取失败: ${err.message}` }],
       };
     }
   },

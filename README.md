@@ -42,7 +42,8 @@
 - 📋 **目录生成**：`--toc` 一键生成文章目录（带锚点）
 - ☑️ **任务清单**：GFM 任务列表渲染为 ☑ / ☐
 - 🧱 **排版模板**：`:::tip` `:::warning` `:::note` `:::danger` `:::quote` 彩色提示卡片，内容支持任意 Markdown
-- ✅ **静态检查**：`postforge check` 发布前校验卡片语法配对与本地图片引用
+- ✅ **静态检查**：`postforge check` 发布前校验卡片语法配对 / 本地图片引用 / 重复标题 / 本地链接目标（带行号）
+- 📋 **模板库入口**：`postforge new` 从内置模板一键生成草稿（new list 查看 10 种模板）
 - 📷 **图片内联**：`--inline-images` 本地图片转 base64，粘贴公众号自动转存素材
 - 📄 **表格 / 引用 / 图片 / 列表**：完整支持，响应式适配
 - 📦 **可用作库**：`build(markdown, options)` 直接集成到你的工作流
@@ -147,7 +148,7 @@ const hello = 'world';
 ```text
 postforge build <input.md> [选项]
 postforge batch <目录> [选项]
-postforge check <input.md>
+postforge check <input.md>             静态检查：卡片配对 / 图片与链接引用 / 重复标题
 postforge info <input.md>
 postforge serve <input.md> [--port N]   本地 HTTP 实时预览（改文件浏览器自动刷新）
 postforge demo                           一键体验：本地预览示例文章（自动打开浏览器）
@@ -211,8 +212,10 @@ npm run mcp          # 或 postforge mcp
 | `list_platforms` | 列出支持的平台 |
 | `list_themes` | 列出排版主题 |
 | `build_post` | 把 Markdown 排版为目标平台富文本（`markdown` / `platform` / `theme` / `toc` / `maxWidth`） |
-| `check_post` | 发布前静态检查（卡片配对 / 图片引用） |
+| `check_post` | 发布前静态检查（卡片配对 / 图片引用 / 重复标题 / 链接目标） |
 | `get_post_stats` | 文章统计（字数 / 图片 / 代码块 / 标题 / 阅读时长） |
+| `template_list` | 列出模板库可用文章模板（名称 + 标题） |
+| `template_get` | 按名称获取模板完整 Markdown（如 `tech-tutorial` / `wechat-article`），直接作为创作起点 |
 
 ### 在 Claude Code 中配置
 

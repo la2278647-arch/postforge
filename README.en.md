@@ -29,7 +29,7 @@
 - 🔆 **Code highlighting**: GitHub-palette highlight.js tokens mapped to inline colors
 - 🧱 **Templates**: `:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote` callout cards + `:::divider` section separators
 - 📋 **TOC generation**: `--toc` inserts an anchored table of contents
-- 🔍 **Pre-publish lint**: `postforge check` validates card syntax pairing and local image references (with line numbers)
+- 🔍 **Pre-publish lint**: `postforge check` validates card syntax pairing, local image/link references, and duplicate headings (with line numbers)
 - 📊 **Article stats**: `postforge info` — word counts (CJK + English), images, code blocks, reading time
 - 📷 **Image inlining**: `--inline-images` turns local images into base64; WeChat auto-saves them to its CDN on paste
 - 🤖 **MCP Server**: Claude / Cursor can call `build_post` / `check_post` directly
@@ -117,7 +117,7 @@ Callout cards follow the theme's colors; `:::divider` renders a section separato
 npm run mcp    # or: postforge mcp
 ```
 
-Exposes `list_platforms`, `list_themes`, `build_post`, `check_post`, `get_post_stats`. Example (Claude Code):
+Exposes `list_platforms`, `list_themes`, `build_post`, `check_post`, `get_post_stats`, `template_list`, `template_get`. Example (Claude Code):
 
 ```bash
 claude mcp add --scope project postforge -- node C:/path/to/postforge/src/mcp/server.js

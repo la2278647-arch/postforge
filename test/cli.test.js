@@ -345,3 +345,46 @@ test('serve 非法端口报错', () => {
     t.cleanup();
   }
 });
+
+// ---------- v0.6.0：check 增强（重复标题 / 本地链接） ----------
+
+test('check 报重复标题警告（不阻塞）', () => {
+  const md = '# 第一章\n\n内容\n\n# 第一章\n\n结尾\n';
+  const { errors, warnings } = checkDocument(md);
+  assert.deepEqual(errors, []);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /标题「第一章」与第 1 行重复/);
+});
+
+test('check 代码块内的 # 行不误报标题', () => {
+  const md = '# 标题\n\n```js\n# 这不是标题\n```\n\n# 标题\n';
+  const { errors, warnings } = checkDocument(md);
+  assert.deepEqual(errors, []);
+  assert.equal(warnings.length, 1, '只应报告真实标题重复');
+});
+
+test('check 报本地链接目标不存在警告', () => {
+  const t = tmpDir('pf-check-link-');
+  try {
+    const md = '[说明](docs/missing.md)\n';
+    const { errors, warnings } = checkDocument(md, t.dir);
+    assert.deepEqual(errors, []);
+    assert.equal(warnings.length, 1);
+    assert.match(warnings[0], /本地链接目标不存在：docs\/missing\.md/);
+  } finally {
+    t.cleanup();
+  }
+});
+
+test('check 忽略远程链接与图片链接', () => {
+  const md = '[官网](https://example.com)\n![图](local.png)\n[锚点](#章节)\n';
+  const t = tmpDir('pf-check-link-ok-');
+  try {
+    writeFileSync(join(t.dir, 'local.png'), 'x');
+    const { errors, warnings } = checkDocument(md, t.dir);
+    assert.deepEqual(errors, []);
+    assert.deepEqual(warnings, []);
+  } finally {
+    t.cleanup();
+  }
+});
