@@ -84,13 +84,15 @@ postforge build <input.md> [options]
 postforge batch <directory> [options]
 postforge check <input.md>
 postforge info <input.md>
+postforge serve <input.md> [--port N]   live preview with auto-reload
+postforge new <template> [-o file]       scaffold a draft from the template library
 postforge mcp
 postforge list
 postforge -v | --version
 postforge -h | --help
 ```
 
-Options: `-p/--platform`, `-o/--output`, `-t/--theme`, `--toc`, `--max-width`, `--title`, `--inline-images`.
+Options: `-p/--platform`, `-o/--output`, `-t/--theme`, `--toc`, `--max-width`, `--title`, `--inline-images`, `--numbered-headings`, `--watch`.
 
 ## Templates
 

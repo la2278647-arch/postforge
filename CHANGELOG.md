@@ -3,6 +3,32 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [0.6.0] - 2026-09-14
+
+### 新增
+
+- `postforge serve <input.md>`：本地 HTTP 实时预览（默认端口 4173；自动刷新脚本轮询 mtime 指纹，改文件浏览器即刷新；渲染错误页保留刷新、改好自动恢复；`--no-open` / `--port`）
+- `postforge new <模板>`：从模板库生成文章草稿（`new list` 查看；不覆盖已有文件；`-o` 自动创建父目录）
+- `openBrowser` 跨平台（win32 `cmd start` / darwin `open` / linux `xdg-open`）
+
+### 修复
+
+- `new -o` 输出到不存在子目录报错（补 `mkdirSync recursive`）
+
+### 测试
+
+- 63 → 69（serve 2 + new 4 用例）
+
+## [0.5.4] - 2026-09-14
+
+### 新增
+
+- 平台 11 → 13：`medium`（Medium）/ `devto`（DEV.to）国际平台
+
+### 测试
+
+- doctor 断言平台数 11 → 13
+
 ## [0.5.3] - 2026-09-14
 
 ### 新增
@@ -214,6 +240,8 @@
 
 - 13 个单元测试全绿
 
+[0.6.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.6.0
+[0.5.4]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.4
 [0.5.3]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.3
 [0.5.2]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.2
 [0.5.1]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.1
