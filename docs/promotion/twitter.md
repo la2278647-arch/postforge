@@ -1,6 +1,6 @@
 # PostForge English promo copy · Twitter/X
 
-> Ready to post. Keep hashtags light.
+> Ready to post. Keep hashtags light. Aligned with v0.6.1.
 
 ---
 
@@ -11,15 +11,18 @@ Tired of reformatting the same article for every Chinese content platform (WeCha
 I open-sourced **PostForge** — a zero-config Markdown typesetting engine:
 
 ▸ One command: `postforge build post.md -p wechat`
+▸ **15 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SF, InfoQ, Medium, DEV.to, Typecho, WordPress, Xiaohongshu, generic HTML
 ▸ Fully inlined styles (WeChat requires inline CSS — no <style> allowed)
-▸ Code highlighting, tables, task lists, auto TOC
-▸ Themed callout cards (`:::tip`…`:::quote`) + pre-publish lint (`postforge check`)
-▸ Pure-text mode with hashtag suggestions for Xiaohongshu
+▸ Code highlighting, tables, task lists, auto TOC, numbered headings
+▸ **10 themes** (clean/paper/dark/nord/coffee/midnight/one-dark/solarized/github-light/solarized-dark)
+▸ Themed callout cards (`:::tip`…`:::quote`, `:::link`, `:::divider`) + pre-publish lint (`postforge check`)
+▸ Live preview (`postforge serve`), 11 templates (`postforge new`), pure-text mode for Xiaohongshu
 ▸ Runs 100% locally, 3 deps, ships an MCP server for Claude/Cursor
+▸ Live browser demo: https://la2278647-arch.github.io/postforge/demo/
 
 https://github.com/la2278647-arch/postforge
 
-MIT. Stars & PRs welcome ❤️
+MIT. 78 tests green. Stars & PRs welcome ❤️
 
 #OpenSource #Markdown #ContentCreation #DeveloperTools #IndieHacker
 
@@ -33,10 +36,10 @@ https://github.com/la2278647-arch/postforge
 
 1/ The problem: WeChat only accepts inline styles, Zhihu strips most custom CSS, Xiaohongshu only takes plain text. Existing tools mostly cover WeChat only — and many are abandoned.
 
-2/ The fix: a single CLI that renders your Markdown to each platform's rich text. Fully inlined styles, GitHub-style code highlighting, TOC, task lists. Themed callout cards (`:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote`) and a pre-publish lint command (`postforge check`) catch mistakes before you paste. Xiaohongshu gets plain text + image list + hashtag suggestions.
+2/ The fix: a single CLI that renders your Markdown to each platform's rich text — 15 platforms, fully inlined styles, GitHub-style code highlighting, TOC, task lists. Themed callout cards (`:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote`, plus `:::link` and `:::divider`) and a pre-publish lint command (`postforge check`) catch mistakes before you paste. Xiaohongshu gets plain text + image list + hashtag suggestions.
 
-3/ Zero SaaS, zero lock-in: runs locally, only `marked` + `highlight.js` as deps. Also usable as a library: `build(md, { platform: 'wechat' })`.
+3/ Zero SaaS, zero lock-in: runs locally, only `marked` + `highlight.js` as deps. Live preview with `postforge serve`, 11 starter templates with `postforge new`. Also usable as a library: `build(md, { platform: 'wechat' })`, and it ships an MCP server so Claude/Cursor can call it directly.
 
-4/ MIT licensed. If you publish on Chinese platforms, give it a star — or better, send a PR for a new theme/platform.
+4/ MIT licensed, 78 tests green, live demo at https://la2278647-arch.github.io/postforge/demo/. If you publish on Chinese platforms, give it a star — or better, send a PR for a new theme/platform.
 
 https://github.com/la2278647-arch/postforge

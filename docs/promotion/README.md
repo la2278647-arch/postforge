@@ -3,7 +3,7 @@
 本目录为各平台就绪的宣传文案，复制即发。发布后请把对应链接回填到
 `docs/promotion/links.md`（已建好归档表，直接补链接即可），方便归档与互相引流。
 
-当前版本：**v0.2.0**（提示卡片 / postforge check / --inline-images / MCP check_post），
+当前版本：**v0.6.1**（15 平台 / 10 主题 / 11 模板 / serve 实时预览 / check 增强 / MCP 4 工具 / 78 测试全绿），
 发布前用 `postforge check` 校验文案 Markdown。
 
 ## 覆盖的平台

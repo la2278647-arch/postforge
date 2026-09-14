@@ -3,6 +3,24 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式，
 版本号遵循 [SemVer](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased]
+
+### 新增
+
+- 模板库新增 `moving-checklist`（搬家清单模板，第 11 个模板）：预算表 / 分房间打包清单 / 搬家日流程 / 入住后 checklist，含 `:::note` / `:::warning` / `:::divider` 排版模板示例
+- 新增 `docs/research/market-research.md`：阶段一市场调研报告存档（候选方向对比 / 选择理由 / 目标用户画像 / 数据来源）
+- 新增 `docs/ITERATION-LOG.md`：全程迭代日志，每轮记录变更内容与优化目标
+
+### 文档
+
+- 全部宣传文案升级至 v0.6.1（此前停留在 v0.2.0）：
+  - `docs/promotion/juejin.md`：测试 36 → 78、功能列表补齐（15 平台 / 10 主题 / 11 模板 / serve / new / batch --json / MCP 4 工具）
+  - `docs/promotion/v2ex.md`：平台 11 → 15、主题 6 → 10、测试 36 → 78
+  - `docs/promotion/zhihu.md`：主题 3 → 10、补 serve / check 增强 / MCP 工具
+  - `docs/promotion/twitter.md` / `hackernews.md` / `reddit.md`：英文文案同步最新数据（78 测试 / 15 平台 / 10 主题 / 在线 Demo）
+  - `docs/promotion/weibo.md`：修正"六平台"过时表述
+- `docs/promotion/README.md` 与 `links.md`：版本标注 v0.2.0 → v0.6.1，补发布待办
+
 ## [0.6.0] - 2026-09-14
 
 ### 新增
