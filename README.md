@@ -257,9 +257,11 @@ const { html } = build(markdown, {
 | `nord` | 北欧冷灰蓝 | 技术阅读、工具类文章 |
 | `coffee` | 咖啡暖棕纸感 | 生活随笔 / 读书笔记 |
 | `solarized` | 经典护眼浅色 | 长时间阅读 / 文档 |
+| `github-light` | GitHub 官方浅色 | 代码 / 技术文档 |
 | `dark` | 深色底、高对比 | 深色阅读 / 夜间模式 |
 | `midnight` | 深夜蓝黑底 | 技术博客夜间版 |
 | `one-dark` | Atom 编辑器深色 | 程序员审美 / 代码文章 |
+| `solarized-dark` | Solarized 护眼深色 | 夜间阅读的护眼之选 |
 
 自定义主题：在 `src/themes.js` 中追加一个主题对象即可，字段与现成主题完全一致（可用 `makeTheme` 基于 `clean` 派生，只覆盖差异配色）。
 

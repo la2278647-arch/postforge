@@ -761,6 +761,158 @@ THEMES.solarized = makeTheme({
   },
 });
 
+/** GitHub Light：GitHub 官方浅色，代码/文档经典审美 */
+THEMES['github-light'] = makeTheme({
+  id: 'github-light',
+  name: 'GitHub Light 浅色',
+  container: {
+    color: '#24292e',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.8',
+    'letter-spacing': '0.3px',
+  },
+  heading: { color: '#24292e', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#24292e', 'font-weight': '700' },
+  link: { color: '#0366d6', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#d73a49',
+    'background-color': 'rgba(27,31,35,0.06)',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#f6f8fa',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#24292e',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #eaecef',
+  },
+  blockquote: {
+    'border-left': '4px solid #dfe2e5',
+    'background-color': '#f6f8fa',
+    color: '#6a737d',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#f6f8fa',
+    color: '#24292e',
+    'font-weight': '600',
+    border: '1px solid #dfe2e5',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #dfe2e5', padding: '8px 12px' },
+  'tr-alt': { 'background-color': '#fafbfc' },
+  task: { color: '#0366d6', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#22863a', bg: 'rgba(34,134,58,0.09)' },
+      warning: { accent: '#b08800', bg: 'rgba(176,136,0,0.09)' },
+      note: { accent: '#0366d6', bg: 'rgba(3,102,214,0.09)' },
+      danger: { accent: '#d73a49', bg: 'rgba(215,58,73,0.09)' },
+      quote: { accent: '#6f42c1', bg: 'rgba(111,66,193,0.09)' },
+    },
+  },
+});
+
+/** Solarized Dark：护眼深色（Solarized 家族深色版） */
+THEMES['solarized-dark'] = makeTheme({
+  id: 'solarized-dark',
+  name: 'Solarized Dark 护眼深色',
+  container: {
+    color: '#93a1a1',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.8',
+    'letter-spacing': '0.3px',
+  },
+  heading: { color: '#eee8d5', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#eee8d5', 'font-weight': '700' },
+  link: { color: '#268bd2', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#2aa198',
+    'background-color': 'rgba(42,161,152,0.12)',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#073642',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#93a1a1',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #0b4450',
+  },
+  blockquote: {
+    'border-left': '4px solid #0b4450',
+    'background-color': '#073642',
+    color: '#657b83',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#073642',
+    color: '#eee8d5',
+    'font-weight': '600',
+    border: '1px solid #0b4450',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #0b4450', padding: '8px 12px' },
+  'tr-alt': { 'background-color': 'rgba(38,139,210,0.05)' },
+  task: { color: '#268bd2', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#859900', bg: 'rgba(133,153,0,0.12)' },
+      warning: { accent: '#b58900', bg: 'rgba(181,137,0,0.12)' },
+      note: { accent: '#268bd2', bg: 'rgba(38,139,210,0.12)' },
+      danger: { accent: '#dc322f', bg: 'rgba(220,50,47,0.12)' },
+      quote: { accent: '#6c71c4', bg: 'rgba(108,113,196,0.12)' },
+    },
+  },
+});
+
 export function getTheme(id) {
   return THEMES[id] || THEMES.clean;
 }

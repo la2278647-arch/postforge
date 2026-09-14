@@ -24,7 +24,7 @@
 ## Features
 
 - 🖥️ **13 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text mode), Medium, DEV.to, generic web page
-- 🎨 **8 themes**: clean / paper / nord / coffee / solarized / dark / midnight / one-dark — extendable via `makeTheme` or `--theme-file`
+- 🎨 **10 themes**: clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark — extendable via `makeTheme` or `--theme-file`
 - 🧩 **Fully inline styles**: paste-and-go, no `<style>` or external CSS required
 - 🔆 **Code highlighting**: GitHub-palette highlight.js tokens mapped to inline colors
 - 🧱 **Templates**: `:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote` callout cards + `:::divider` section separators

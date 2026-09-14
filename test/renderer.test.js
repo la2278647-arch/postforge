@@ -135,7 +135,7 @@ test('v0.3.0 新主题注册完整且字段齐全', () => {
     'codeblock', 'blockquote', 'table', 'th', 'td', 'tr-alt', 'hr', 'ul', 'ol', 'li',
     'img', 'task', 'toc', 'card',
   ];
-  for (const id of ['nord', 'coffee', 'midnight', 'one-dark', 'solarized']) {
+  for (const id of ['nord', 'coffee', 'midnight', 'one-dark', 'solarized', 'github-light', 'solarized-dark']) {
     const t = THEMES[id];
     assert.ok(t, `主题 ${id} 存在`);
     for (const field of REQUIRED) {
@@ -169,7 +169,7 @@ test('themeObj 可覆盖卡片配色（深合并语义）', () => {
 
 test('六个主题均可渲染且配色互不相同', () => {
   const md = ':::tip t\nx\n:::\n\n| A |\n|---|\n| 1 |\n\n```js\nconst a = 1;\n```';
-  const outputs = ['clean', 'paper', 'dark', 'nord', 'coffee', 'midnight', 'one-dark', 'solarized'].map((id) => ({
+  const outputs = ['clean', 'paper', 'dark', 'nord', 'coffee', 'midnight', 'one-dark', 'solarized', 'github-light', 'solarized-dark'].map((id) => ({
     id,
     html: build(md, { theme: id }).html,
   }));
