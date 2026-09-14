@@ -208,6 +208,19 @@ function main() {
   }
 
   if (command === 'list') {
+    if (opts.json) {
+      process.stdout.write(
+        JSON.stringify(
+          {
+            platforms: Object.values(PLATFORMS).map((p) => ({ id: p.id, name: p.name, mode: p.mode, desc: p.desc })),
+            themes: Object.values(THEMES).map((t) => ({ id: t.id, name: t.name })),
+          },
+          null,
+          2,
+        ) + '\n',
+      );
+      return;
+    }
     console.log('支持的平台:');
     for (const p of Object.values(PLATFORMS)) {
       console.log(`  ${p.id.padEnd(12)} ${p.name} — ${p.desc}`);
