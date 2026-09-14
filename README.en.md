@@ -127,6 +127,9 @@ Then ask your AI: "Format this article for WeChat" — it calls `build_post` and
 - `xiaohongshu-draft.md` — Xiaohongshu notes
 - `weekly-report.md` — weekly reports
 - `product-launch.md` — product announcements
+- `meeting-notes.md` — meeting minutes
+- `faq.md` — FAQ documents
+- `reading-notes.md` — book notes
 
 ## Performance
 
