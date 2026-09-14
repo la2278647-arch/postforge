@@ -392,6 +392,13 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`tech-deep-en-generic.html`](docs/case/tech-deep-en-generic.html) | **English** 完整网页（含目录） |
 | [`tech-deep-en-wechat.html`](docs/case/tech-deep-en-wechat.html) | **English** 公众号富文本 |
 
+**快速上手**：[`getting-started.md`](docs/case/getting-started.md) 是一篇从安装到发布的新手教程（5 分钟流程），同样自举排版：
+
+| 输出 | 说明 |
+| ---- | ---- |
+| [`getting-started-generic.html`](docs/case/getting-started-generic.html) | 完整网页（含目录） |
+| [`getting-started-wechat.html`](docs/case/getting-started-wechat.html) | 公众号富文本 |
+
 ## 🗺 路线图
 
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
