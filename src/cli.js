@@ -80,6 +80,7 @@ function parseArgs(argv) {
     '--watch': 'watch',
     '--port': 'port',
     '--no-open': 'noOpen',
+    '--json': 'json',
     '-v': 'version', '--version': 'version',
     '-h': 'help', '--help': 'help',
   };
@@ -92,6 +93,7 @@ function parseArgs(argv) {
       else if (key === 'numberedHeadings') opts.numberedHeadings = true;
       else if (key === 'watch') opts.watch = true;
       else if (key === 'noOpen') opts.noOpen = true;
+      else if (key === 'json') opts.json = true;
       else if (key === 'version') opts.version = true;
       else if (key === 'help') opts.help = true;
       else {
@@ -293,6 +295,10 @@ function main() {
     }
     const markdown = input === '-' ? readFileSync(0, 'utf8') : readFileSync(input, 'utf8');
     const stats = analyze(markdown, { theme: opts.theme });
+    if (opts.json) {
+      process.stdout.write(JSON.stringify(stats, null, 2) + '\n');
+      return;
+    }
     console.log('📊 文章统计：');
     for (const line of formatAnalysis(stats)) console.log(`  ${line}`);
     return;

@@ -197,6 +197,21 @@ test('doctor 环境诊断通过', () => {
   assert.match(r.stdout, /渲染自检通过/);
 });
 
+test('info --json 输出结构化统计', () => {
+  const t = tmpDir('pf-info-json-');
+  try {
+    writeFileSync(join(t.dir, 'post.md'), '# 标题\n\n正文内容\n\n![图](https://a.com/1.png)\n');
+    const r = run(['info', 'post.md', '--json'], t.dir);
+    assert.equal(r.status, 0);
+    const j = JSON.parse(r.stdout);
+    assert.ok(typeof j.cn === 'number' && j.cn > 0, '中文字数存在');
+    assert.equal(j.images, 1);
+    assert.ok(j.minutes >= 1);
+  } finally {
+    t.cleanup();
+  }
+});
+
 test('batch 批量排版目录，跳过下划线草稿', () => {
   const t = tmpDir('pf-batch-');
   try {
