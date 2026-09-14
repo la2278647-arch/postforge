@@ -264,11 +264,13 @@ function main() {
     mkdirSync(outDir, { recursive: true });
     let ok = 0;
     const failures = [];
+    const jsonResults = [];
     for (const f of files) {
       const markdown = readFileSync(join(dir, f), 'utf8');
       const { errors } = checkDocument(markdown, dir);
       if (errors.length > 0) {
         failures.push(`${f}（${errors.length} 个错误，跳过）`);
+        jsonResults.push({ file: f, status: 'skipped', error: errors.join('; ') });
         continue;
       }
       const result = build(markdown, {
@@ -281,7 +283,14 @@ function main() {
       const ext = result.platform.mode === 'text' ? '.txt' : '.html';
       const outFile = join(outDir, basename(f, extname(f)) + ext);
       writeFileSync(outFile, result.html ?? result.text, 'utf8');
+      jsonResults.push({ file: f, out: outFile, status: 'ok', platform: result.platform.id });
       ok++;
+    }
+    if (opts.json) {
+      process.stdout.write(
+        JSON.stringify({ ok, total: files.length, outDir, results: jsonResults }, null, 2) + '\n',
+      );
+      return;
     }
     console.log(`✓ 批量完成：${ok}/${files.length} 个文件 → ${outDir}${failures.length ? `\n  跳过：${failures.join(', ')}` : ''}`);
     return;
@@ -508,6 +517,28 @@ ${refreshScript()}</body></html>`;
       inlineImages: opts.inlineImages,
       baseDir: input === '-' ? undefined : dirname(resolve(input)),
     });
+
+    // --json：结构化输出（脚本/CI 集成，不打印消息）
+    if (opts.json) {
+      process.stdout.write(
+        JSON.stringify(
+          {
+            platform: result.platform.id,
+            theme: result.theme,
+            mode: result.platform.mode,
+            output: opts.output || null,
+            html: result.html ?? null,
+            text: result.text ?? null,
+            images: result.images ?? [],
+            hashtags: result.hashtags ?? [],
+            toc: result.toc ?? [],
+          },
+          null,
+          2,
+        ) + '\n',
+      );
+      return;
+    }
 
     if (result.platform.mode === 'text') {
       const parts = [result.text];
