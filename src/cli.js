@@ -11,7 +11,9 @@
  * 输入文件为 "-" 时从 stdin 读取。
  */
 
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync, watch } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync, watch, statSync } from 'node:fs';
+import { createServer } from 'node:http';
+import { spawn } from 'node:child_process';
 import { build } from './index.js';
 import { checkDocument } from './check.js';
 import { analyze, formatAnalysis } from './info.js';
@@ -30,6 +32,8 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
   postforge batch <目录> [选项]        批量排版目录下所有 .md（输出到 -o 目录）
   postforge check <input.md>           静态检查：卡片语法配对 / 本地图片引用
   postforge info <input.md>            文章统计：字数 / 图片 / 阅读时长
+  postforge serve <input.md> [选项]    本地 HTTP 实时预览（改文件浏览器自动刷新）
+  postforge new <模板> [-o 文件]       从模板库生成文章草稿（new list 查看模板）
   postforge mcp                        启动 MCP stdio server（供 AI 调用）
   postforge list                       列出支持的平台与主题
   postforge doctor                     环境诊断（版本 / 依赖 / 注册表 / 渲染自检）
@@ -47,6 +51,8 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
       --theme-file <json> 加载自定义主题 JSON（深合并到 -t 指定的基础主题）
       --numbered-headings  给 h1/h2/h3 自动加编号（如 1. / 1.1）
       --watch              监听输入文件变化自动重建（边写边预览）
+      --port <n>          serve 监听端口（默认 4173；0 表示自动分配）
+      --no-open           serve 启动后不自动打开浏览器
 
 示例:
   postforge build post.md -p wechat -o wechat.html
@@ -54,6 +60,8 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
   postforge build post.md -p generic --toc -o preview.html
   postforge build post.md -p wechat --inline-images -o wechat.html
   postforge check post.md
+  postforge serve post.md --toc
+  postforge new tech-tutorial
   cat post.md | postforge build - -p zhihu
 `;
 
@@ -70,6 +78,8 @@ function parseArgs(argv) {
     '--title': 'title',
     '--inline-images': 'inlineImages',
     '--watch': 'watch',
+    '--port': 'port',
+    '--no-open': 'noOpen',
     '-v': 'version', '--version': 'version',
     '-h': 'help', '--help': 'help',
   };
@@ -81,6 +91,7 @@ function parseArgs(argv) {
       else if (key === 'inlineImages') opts.inlineImages = true;
       else if (key === 'numberedHeadings') opts.numberedHeadings = true;
       else if (key === 'watch') opts.watch = true;
+      else if (key === 'noOpen') opts.noOpen = true;
       else if (key === 'version') opts.version = true;
       else if (key === 'help') opts.help = true;
       else {
@@ -93,6 +104,38 @@ function parseArgs(argv) {
     }
   }
   return opts;
+}
+
+/** 跨平台打开默认浏览器（尽力而为，失败静默） */
+function openBrowser(url) {
+  try {
+    if (process.platform === 'win32') {
+      spawn('cmd', ['/c', 'start', '', url], { stdio: 'ignore', detached: true, windowsHide: true }).unref();
+    } else if (process.platform === 'darwin') {
+      spawn('open', [url], { stdio: 'ignore', detached: true }).unref();
+    } else {
+      spawn('xdg-open', [url], { stdio: 'ignore', detached: true }).unref();
+    }
+  } catch {
+    /* 打开失败不影响预览服务 */
+  }
+}
+
+/** 生成 serve 页面注入的自动刷新脚本（轮询 /__pf/mtime，变化即 reload） */
+function refreshScript() {
+  return `<script>
+(function () {
+  var first = true;
+  function tick() {
+    fetch('/__pf/mtime').then(function (r) { return r.json(); }).then(function (j) {
+      if (first) { window.__pf = j.mtime; first = false; }
+      else if (j.mtime !== window.__pf) { window.__pf = j.mtime; window.location.reload(); }
+    }).catch(function () {});
+    setTimeout(tick, 800);
+  }
+  tick();
+})();
+</script>`;
 }
 
 function main() {
@@ -252,6 +295,140 @@ function main() {
     const stats = analyze(markdown, { theme: opts.theme });
     console.log('📊 文章统计：');
     for (const line of formatAnalysis(stats)) console.log(`  ${line}`);
+    return;
+  }
+
+  if (command === 'new') {
+    // 模板库入口：postforge new list / postforge new <name> [-o 文件]
+    const TEMPLATE_DIR = join(__dirname, '..', 'examples', 'templates');
+    const tpl = rest[0];
+    if (!tpl) {
+      console.log('用法: postforge new <模板> [-o 输出文件]  （postforge new list 查看可用模板）');
+      process.exit(1);
+    }
+    if (tpl === 'list' || tpl === 'ls') {
+      let files;
+      try {
+        files = readdirSync(TEMPLATE_DIR).filter((f) => f.endsWith('.md')).sort();
+      } catch (err) {
+        console.error(`错误: 无法读取模板库: ${err.message}`);
+        process.exit(1);
+      }
+      console.log('可用模板（postforge new <名字> 生成草稿）:');
+      for (const f of files) {
+        const title = readFileSync(join(TEMPLATE_DIR, f), 'utf8').split('\n')[0].replace(/^#\s*/, '');
+        console.log(`  ${f.replace(/\.md$/, '').padEnd(20)} ${title}`);
+      }
+      return;
+    }
+    const src = join(TEMPLATE_DIR, `${tpl}.md`);
+    if (!existsSync(src)) {
+      console.error(`错误: 模板 "${tpl}" 不存在（postforge new list 查看可用模板）`);
+      process.exit(1);
+    }
+    const outFile = opts.output ? resolve(opts.output) : join(process.cwd(), `${tpl}.md`);
+    if (existsSync(outFile)) {
+      console.error(`错误: ${outFile} 已存在，为不覆盖请用 -o 指定其它文件名`);
+      process.exit(1);
+    }
+    mkdirSync(dirname(outFile), { recursive: true });
+    writeFileSync(outFile, readFileSync(src, 'utf8'), 'utf8');
+    console.log(`✓ 已生成草稿: ${outFile}`);
+    console.log(`  下一步: postforge check ${basename(outFile)} && postforge build ${basename(outFile)} -p wechat -o out.html`);
+    return;
+  }
+
+  if (command === 'serve') {
+    // 本地 HTTP 实时预览：postforge serve <input.md> [--port N] [--no-open] [--toc] [--theme]
+    const input = rest[0];
+    if (!input) {
+      console.error('错误: 缺少输入文件，用法: postforge serve <input.md> [--port 4173]');
+      process.exit(1);
+    }
+    const port = opts.port === undefined ? 4173 : Number(opts.port);
+    if (!Number.isInteger(port) || port < 0 || port > 65535) {
+      console.error(`错误: 非法端口 "${opts.port}"`);
+      process.exit(1);
+    }
+    const baseTheme = opts.theme || 'clean';
+    if (!THEMES[baseTheme]) {
+      console.error(`错误: 未知主题 "${baseTheme}"，可用: ${Object.keys(THEMES).join(', ')}`);
+      process.exit(1);
+    }
+    let themeObj;
+    if (opts.themeFile) {
+      try {
+        themeObj = JSON.parse(readFileSync(opts.themeFile, 'utf8'));
+        if (typeof themeObj !== 'object' || Array.isArray(themeObj)) throw new Error('主题 JSON 必须是对象');
+      } catch (err) {
+        console.error(`错误: 主题文件加载失败: ${err.message}`);
+        process.exit(1);
+      }
+    }
+    const baseDir = dirname(resolve(input));
+    const title = basename(input, extname(input));
+    // 文件实时指纹（mtime + size）：改文件后指纹立即变化，浏览器轮询即可感知
+    const fileFingerprint = () => {
+      try {
+        const st = statSync(input);
+        return `${st.mtimeMs}:${st.size}`;
+      } catch {
+        return '0:0';
+      }
+    };
+
+    const renderPage = () => {
+      try {
+        const md = readFileSync(input, 'utf8');
+        const { html } = build(md, {
+          platform: 'generic',
+          theme: baseTheme,
+          themeObj,
+          toc: opts.toc,
+          numberedHeadings: opts.numberedHeadings,
+          inlineImages: opts.inlineImages,
+          baseDir,
+          title,
+        });
+        return html.replace('</body>', `${refreshScript()}</body>`);
+      } catch (err) {
+        // 渲染失败时展示错误页（保留刷新脚本，改好文件自动恢复）
+        const msg = String(err.message || err).replace(/</g, '&lt;');
+        return `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>PostForge 预览 · 渲染错误</title></head>
+<body style="font-family:system-ui,sans-serif;padding:40px;background:#fef2f2;color:#7f1d1d">
+<h2>⚠️ 渲染错误</h2><pre style="white-space:pre-wrap;font-size:14px">${msg}</pre>
+${refreshScript()}</body></html>`;
+      }
+    };
+
+    const server = createServer((req, res) => {
+      if (req.url === '/__pf/mtime') {
+        res.setHeader('content-type', 'application/json');
+        res.end(JSON.stringify({ mtime: fileFingerprint() }));
+        return;
+      }
+      res.setHeader('content-type', 'text/html; charset=utf-8');
+      res.end(renderPage());
+    });
+
+    server.listen(port, '127.0.0.1', () => {
+      const realPort = server.address().port;
+      const url = `http://127.0.0.1:${realPort}/`;
+      console.log(`✓ 预览服务器: ${url}（Ctrl+C 退出）`);
+      if (!opts.noOpen) openBrowser(url);
+    });
+
+    // 文件变化时打印提示（页面脚本会自动刷新）
+    if (input !== '-') {
+      try {
+        watch(resolve(input), { persistent: true }, () => {
+          const stamp = new Date().toLocaleTimeString('zh-CN', { hour12: false });
+          console.log(`[${stamp}] 文件已更新，浏览器将自动刷新...`);
+        });
+      } catch (err) {
+        console.error(`错误: 无法监听 ${input}: ${err.message}`);
+      }
+    }
     return;
   }
 

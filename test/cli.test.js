@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, readFileSync, rmSync, readdirSync } from 'node:fs';
+import { spawnSync, spawn } from 'node:child_process';
+import { mkdtempSync, writeFileSync, readFileSync, rmSync, readdirSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -220,4 +220,113 @@ test('batch 目录不存在时报错', () => {
   const r = run(['batch', 'no-such-dir-xyz'], process.cwd());
   assert.equal(r.status, 1);
   assert.match(r.stderr, /无法读取目录/);
+});
+
+// ---------- v0.6.0：postforge new / serve ----------
+
+test('new list 列出模板库', () => {
+  const r = run(['new', 'list'], process.cwd());
+  assert.equal(r.status, 0);
+  assert.match(r.stdout, /可用模板/);
+  assert.match(r.stdout, /tech-tutorial/);
+  assert.match(r.stdout, /xiaohongshu-draft/);
+});
+
+test('new 生成草稿且不覆盖已存在文件', () => {
+  const t = tmpDir('pf-new-');
+  try {
+    const r1 = run(['new', 'tech-tutorial'], t.dir);
+    assert.equal(r1.status, 0);
+    assert.match(r1.stdout, /已生成草稿/);
+    assert.ok(existsSync(join(t.dir, 'tech-tutorial.md')));
+    const r2 = run(['new', 'tech-tutorial'], t.dir);
+    assert.equal(r2.status, 1);
+    assert.match(r2.stderr, /已存在/);
+  } finally {
+    t.cleanup();
+  }
+});
+
+test('new 支持 -o 指定输出文件', () => {
+  const t = tmpDir('pf-new-o-');
+  try {
+    const out = join(t.dir, 'draft', 'custom.md');
+    const r = run(['new', 'faq', '-o', out], t.dir);
+    assert.equal(r.status, 0);
+    assert.ok(existsSync(out));
+  } finally {
+    t.cleanup();
+  }
+});
+
+test('new 未知模板报错', () => {
+  const t = tmpDir('pf-new-bad-');
+  try {
+    const r = run(['new', 'not-exist'], t.dir);
+    assert.equal(r.status, 1);
+    assert.match(r.stderr, /不存在/);
+  } finally {
+    t.cleanup();
+  }
+});
+
+test('serve 渲染页面且 mtime 指纹随文件变化（自动刷新信号）', async () => {
+  const t = tmpDir('pf-serve-');
+  const md = join(t.dir, 'post.md');
+  writeFileSync(md, '# 版本一\n\n正文 A\n');
+  const child = spawn(process.execPath, [cli, 'serve', md, '--port', '0', '--no-open'], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  let url = null;
+  const onData = (buf) => {
+    const m = buf.toString('utf8').match(/http:\/\/127\.0\.0\.1:(\d+)\//);
+    if (m) url = `http://127.0.0.1:${m[1]}/`;
+  };
+  child.stdout.on('data', onData);
+  child.stderr.on('data', onData);
+  try {
+    const deadline = Date.now() + 8000;
+    while (!url && Date.now() < deadline) await new Promise((r) => setTimeout(r, 100));
+    assert.ok(url, 'serve 应输出预览 URL');
+
+    const get = async (path) => {
+      const res = await fetch(url + path);
+      return { status: res.status, text: await res.text() };
+    };
+
+    const p1 = await get('');
+    assert.equal(p1.status, 200);
+    assert.match(p1.text, /版本一/);
+    assert.match(p1.text, /__pf\/mtime/);
+
+    const fp1 = JSON.parse((await get('__pf/mtime')).text).mtime;
+    await new Promise((r) => setTimeout(r, 60));
+    writeFileSync(md, '# 版本二\n\n正文 B\n');
+
+    let fp2 = fp1;
+    for (let i = 0; i < 30 && fp2 === fp1; i++) {
+      await new Promise((r) => setTimeout(r, 100));
+      fp2 = JSON.parse((await get('__pf/mtime')).text).mtime;
+    }
+    assert.notEqual(fp2, fp1, '文件修改后 mtime 指纹应变化（触发浏览器刷新）');
+
+    const p2 = await get('');
+    assert.match(p2.text, /版本二/);
+    assert.ok(!p2.text.includes('正文 A'), '页面应渲染最新内容');
+  } finally {
+    child.kill();
+    t.cleanup();
+  }
+});
+
+test('serve 非法端口报错', () => {
+  const t = tmpDir('pf-serve-port-');
+  try {
+    writeFileSync(join(t.dir, 'post.md'), '# t\n');
+    const r = run(['serve', join(t.dir, 'post.md'), '--port', 'abc'], t.dir);
+    assert.equal(r.status, 1);
+    assert.match(r.stderr, /非法端口/);
+  } finally {
+    t.cleanup();
+  }
 });
