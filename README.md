@@ -17,6 +17,7 @@
 </p>
 
 <p align="center">
+  <a href="https://la2278647-arch.github.io/postforge/demo/" target="_blank">🚀 在线演示（浏览器直接体验）</a> ·
   <a href="#快速开始">快速开始</a> ·
   <a href="#支持的平台">支持的平台</a> ·
   <a href="#clI-参考">CLI 参考</a> ·
