@@ -72,6 +72,20 @@ export const PLATFORMS = {
     mode: 'html',
     defaultTheme: 'clean',
   },
+  medium: {
+    id: 'medium',
+    name: 'Medium',
+    desc: '内联样式富文本，粘贴进 Medium 编辑器（国际技术写作）',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
+  devto: {
+    id: 'devto',
+    name: 'DEV.to',
+    desc: '内联样式富文本，粘贴进 DEV.to 编辑器（国际开发者社区）',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
   xiaohongshu: {
     id: 'xiaohongshu',
     name: '小红书',
