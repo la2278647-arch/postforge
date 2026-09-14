@@ -19,6 +19,12 @@
 
 - 63 → 69（serve 2 + new 4 用例）
 
+## [0.5.11] - 2026-09-14
+
+### 新增
+
+- `postforge list --json`：平台/主题结构化输出（与 build/batch/info --json 组成四件套）
+
 ## [0.5.10] - 2026-09-14
 
 ### 新增
@@ -299,6 +305,7 @@
 - 13 个单元测试全绿
 
 [0.6.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.6.0
+[0.5.11]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.11
 [0.5.10]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.10
 [0.5.9]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.9
 [0.5.8]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.8
