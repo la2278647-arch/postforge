@@ -138,7 +138,10 @@ Then ask your AI: "Format this article for WeChat" — it calls `build_post` and
 - `reading-notes.md` — book notes
 - `okr.md` — OKR planning
 - `travel-plan.md` — travel plans
-- `okr.md` — OKR planning
+
+## Live Demo
+
+Try it in your browser — no install needed: **https://la2278647-arch.github.io/postforge/demo/** (Markdown → 15 platforms × 10 themes, rendered 100% locally in the page).
 
 ## Performance
 
