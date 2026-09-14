@@ -362,6 +362,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`meeting-notes.md`](examples/templates/meeting-notes.md) | 会议纪要 | 议题结论 / 行动项表格 / 待确认事项 / 下次会议 |
 | [`faq.md`](examples/templates/faq.md) | FAQ 文档 | 分主题问答 / 排查步骤 / 使用技巧 / 更新说明 |
 | [`reading-notes.md`](examples/templates/reading-notes.md) | 读书笔记 | 核心观点卡 / 行动清单 / 摘抄 / 荐读人群 |
+| [`okr.md`](examples/templates/okr.md) | OKR 规划 | 目标/关键结果卡 / 进度追踪表 / 风险依赖 / 季度复盘 |
 
 发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 
