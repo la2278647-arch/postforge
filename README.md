@@ -410,6 +410,12 @@ npm run demo             # 生成示例输出到 examples/
 node scripts/benchmark.mjs   # 渲染性能基准（5K/50K/200K 字文档最快耗时）
 ```
 
+**本地质量门禁**（可选）：启用 pre-commit 钩子后，每次提交自动跑测试、失败即阻止：
+
+```bash
+git config core.hooksPath .githooks   # 启用 .githooks/pre-commit
+```
+
 项目结构：
 
 ```text
