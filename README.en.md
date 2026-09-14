@@ -95,7 +95,7 @@ postforge -v | --version
 postforge -h | --help
 ```
 
-Options: `-p/--platform`, `-o/--output`, `-t/--theme`, `--toc`, `--max-width`, `--title`, `--inline-images`, `--numbered-headings`, `--watch`.
+Options: `-p/--platform`, `-o/--output`, `-t/--theme`, `--toc`, `--max-width`, `--title`, `--inline-images`, `--numbered-headings`, `--watch`, `--theme-file`, `--json` (structured output for build/batch/check/info/list).
 
 ## Templates
 
