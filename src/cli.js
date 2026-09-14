@@ -241,6 +241,13 @@ function main() {
     const markdown = input === '-' ? readFileSync(0, 'utf8') : readFileSync(input, 'utf8');
     const baseDir = input === '-' ? process.cwd() : dirname(resolve(input));
     const { errors, warnings } = checkDocument(markdown, baseDir);
+    if (opts.json) {
+      process.stdout.write(
+        JSON.stringify({ pass: errors.length === 0, errors, warnings, lines: markdown.split('\n').length }, null, 2) + '\n',
+      );
+      if (errors.length > 0) process.exit(1);
+      return;
+    }
     for (const w of warnings) console.log(`  [警告] ${w}`);
     for (const e of errors) console.log(`  [错误] ${e}`);
     if (errors.length === 0) {
