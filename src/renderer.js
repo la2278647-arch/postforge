@@ -5,13 +5,47 @@
  */
 
 import { marked, Renderer, Parser } from 'marked';
-import hljs from 'highlight.js';
+// highlight.js 按需注册常用语言（控制包体积；冷门语言回退为无高亮）
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import typescript from 'highlight.js/lib/languages/typescript';
+import python from 'highlight.js/lib/languages/python';
+import bash from 'highlight.js/lib/languages/bash';
+import shell from 'highlight.js/lib/languages/shell';
+import json from 'highlight.js/lib/languages/json';
+import xml from 'highlight.js/lib/languages/xml';
+import css from 'highlight.js/lib/languages/css';
+import java from 'highlight.js/lib/languages/java';
+import cpp from 'highlight.js/lib/languages/cpp';
+import c from 'highlight.js/lib/languages/c';
+import go from 'highlight.js/lib/languages/go';
+import rust from 'highlight.js/lib/languages/rust';
+import sql from 'highlight.js/lib/languages/sql';
+import yaml from 'highlight.js/lib/languages/yaml';
+import markdown from 'highlight.js/lib/languages/markdown';
+import plaintext from 'highlight.js/lib/languages/plaintext';
 import { readFileSync } from 'node:fs';
 import { resolve, extname, isAbsolute } from 'node:path';
 import { applyTokenStyles } from './highlight.js';
 import { getTheme } from './themes.js';
 import { getPlatform } from './platforms.js';
 import { createCardExtension, cardToText } from './cards.js';
+
+for (const [name, def] of [
+  ['javascript', javascript], ['js', javascript],
+  ['typescript', typescript], ['ts', typescript],
+  ['python', python], ['py', python],
+  ['bash', bash], ['sh', bash], ['shell', shell],
+  ['json', json], ['xml', xml], ['html', xml],
+  ['css', css], ['java', java],
+  ['cpp', cpp], ['c', c],
+  ['go', go], ['rust', rust], ['rs', rust],
+  ['sql', sql], ['yaml', yaml], ['yml', yaml],
+  ['markdown', markdown], ['md', markdown],
+  ['plaintext', plaintext], ['text', plaintext],
+]) {
+  hljs.registerLanguage(name, def);
+}
 
 /**
  * 图片尺寸语法 inline 扩展：![alt](url =WxH 或 =W)
