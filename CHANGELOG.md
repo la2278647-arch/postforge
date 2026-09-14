@@ -19,6 +19,26 @@
 
 - 63 → 69（serve 2 + new 4 用例）
 
+## [0.5.6] - 2026-09-14
+
+### 新增
+
+- 平台 13 → 15：`typecho`（Typecho 博客）/ `wordpress`（WordPress）自建博客系统
+
+### 测试
+
+- doctor 断言平台数 13 → 15
+
+## [0.5.5] - 2026-09-14
+
+### 新增
+
+- 主题 8 → 10：`github-light`（GitHub 官方浅色）/ `solarized-dark`（护眼深色）
+
+### 测试
+
+- 主题完整性/互异性列表扩展至 10
+
 ## [0.5.4] - 2026-09-14
 
 ### 新增
@@ -241,6 +261,8 @@
 - 13 个单元测试全绿
 
 [0.6.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.6.0
+[0.5.6]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.6
+[0.5.5]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.5
 [0.5.4]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.4
 [0.5.3]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.3
 [0.5.2]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.2

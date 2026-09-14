@@ -367,6 +367,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`faq.md`](examples/templates/faq.md) | FAQ 文档 | 分主题问答 / 排查步骤 / 使用技巧 / 更新说明 |
 | [`reading-notes.md`](examples/templates/reading-notes.md) | 读书笔记 | 核心观点卡 / 行动清单 / 摘抄 / 荐读人群 |
 | [`okr.md`](examples/templates/okr.md) | OKR 规划 | 目标/关键结果卡 / 进度追踪表 / 风险依赖 / 季度复盘 |
+| [`travel-plan.md`](examples/templates/travel-plan.md) | 旅行计划 | 行前清单 / 行程安排 / 美食清单 / 预算明细 / 避坑提醒 |
 
 发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 
