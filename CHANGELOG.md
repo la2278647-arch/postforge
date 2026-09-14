@@ -19,6 +19,18 @@
 
 - 63 → 69（serve 2 + new 4 用例）
 
+## [0.5.7] - 2026-09-14
+
+### 优化
+
+- highlight.js 按需注册常用语言（20 个别名），浏览器 bundle 1.9MB → 310KB（-84%）
+- 在线 Demo（GitHub Pages）加载提速；冷门语言优雅回退无高亮
+
+### 新增
+
+- 交互式在线 Demo `docs/demo/`（esbuild 浏览器打包 + node:fs/path shims）+ GitHub Pages 部署
+- `scripts/build-demo.mjs` 构建脚本；devDep `esbuild`
+
 ## [0.5.6] - 2026-09-14
 
 ### 新增
@@ -261,6 +273,7 @@
 - 13 个单元测试全绿
 
 [0.6.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.6.0
+[0.5.7]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.7
 [0.5.6]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.6
 [0.5.5]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.5
 [0.5.4]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.4
