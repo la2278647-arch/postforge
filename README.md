@@ -146,6 +146,7 @@ postforge batch <目录> [选项]
 postforge check <input.md>
 postforge info <input.md>
 postforge serve <input.md> [--port N]   本地 HTTP 实时预览（改文件浏览器自动刷新）
+postforge demo                           一键体验：本地预览示例文章（自动打开浏览器）
 postforge new <模板> [-o 文件]           从模板库生成文章草稿（new list 查看）
 postforge mcp
 postforge list

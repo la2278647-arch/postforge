@@ -1,6 +1,6 @@
 {
   "name": "postforge",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "PostForge 帖工坊 — 开源的 Markdown 多平台排版引擎。一条命令把 Markdown 转成微信公众号 / 知乎 / 掘金 / CSDN / 小红书等平台的富文本，开箱即用、零配置、无需登录任何平台。",
   "type": "module",
   "bin": {

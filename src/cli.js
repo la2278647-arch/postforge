@@ -33,6 +33,7 @@ const HELP = `PostForge ${pkg.version} — 开源的 Markdown 多平台排版引
   postforge check <input.md>           静态检查：卡片语法配对 / 本地图片引用
   postforge info <input.md>            文章统计：字数 / 图片 / 阅读时长
   postforge serve <input.md> [选项]    本地 HTTP 实时预览（改文件浏览器自动刷新）
+  postforge demo                       一键体验：本地预览示例文章（自动打开浏览器）
   postforge new <模板> [-o 文件]       从模板库生成文章草稿（new list 查看模板）
   postforge mcp                        启动 MCP stdio server（供 AI 调用）
   postforge list                       列出支持的平台与主题
@@ -159,7 +160,13 @@ function main() {
     return;
   }
 
-  const [command, ...rest] = opts._;
+  let [command, ...rest] = opts._;
+
+  // postforge demo：一键体验（等价于 serve examples/demo.md）
+  if (command === 'demo') {
+    rest.unshift(join(__dirname, '..', 'examples', 'demo.md'));
+    command = 'serve';
+  }
 
   if (command === 'doctor') {
     // 环境诊断：Node 版本 / 依赖完整性 / 注册表 / 渲染自检
