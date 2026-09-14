@@ -16,7 +16,7 @@
 
 import { THEMES } from './themes.js';
 
-export const KINDS = ['tip', 'warning', 'note', 'danger', 'quote', 'divider'];
+export const KINDS = ['tip', 'warning', 'note', 'danger', 'quote', 'divider', 'link'];
 
 function esc(s) {
   return String(s)
@@ -50,6 +50,22 @@ export function createCardExtension(theme) {
       return src.indexOf(':::');
     },
     tokenizer(src) {
+      // link：单行语法（:::link 标题 URL 或 :::link URL），渲染为链接卡片
+      const linkRule = /^:::link(?:\s+(.*?))?\s+(https?:\/\/[^\s]+)(?=\n|$)/;
+      const lm = linkRule.exec(src);
+      if (lm) {
+        const url = lm[2];
+        const title = (lm[1] || url.replace(/^https?:\/\//, '')).trim();
+        return {
+          type: 'postforgeCard',
+          raw: lm[0],
+          kind: 'link',
+          title,
+          url,
+          body: '',
+          tokens: [],
+        };
+      }
       // divider：单行语法（:::divider 可选文字），无需闭合符；仅空格分隔标题，换行不进入标题
       const dividerRule = /^:::divider(?: +(.*?))?(?:\n(?=\n|$)|$)/;
       const dm = dividerRule.exec(src);
@@ -76,6 +92,16 @@ export function createCardExtension(theme) {
       };
     },
     renderer(token) {
+      // 链接卡片：🔗 图标 + 标题 + 域名，中性配色兼容深浅主题
+      if (token.kind === 'link') {
+        let domain = token.url;
+        try {
+          domain = new URL(token.url).hostname.replace(/^www\./, '');
+        } catch {
+          /* 保持原 URL */
+        }
+        return `<div style="border:1px solid #e5e5e5;border-radius:8px;padding:12px 14px;margin-top:0;margin-bottom:16px;background-color:rgba(127,127,127,0.04)"><a href="${esc(token.url)}" style="display:flex;align-items:center;text-decoration:none;color:inherit"><span style="font-size:22px;margin-right:12px">🔗</span><span style="flex:1;min-width:0"><strong style="display:block;font-size:14px;color:#576b95;word-break:break-all">${esc(token.title)}</strong><small style="display:block;color:#a8a8a8;font-size:12px;margin-top:2px">${esc(domain)}</small></span></a></div>`;
+      }
       // 分隔条：上下边框夹文字（无文字时渲染纯分隔线），中性配色兼容深浅主题
       if (token.kind === 'divider') {
         const label = token.title
@@ -106,6 +132,9 @@ export const postforgeCardExtension = createCardExtension(THEMES.clean);
 
 /** 供文本提取使用：把卡片 token 转成纯文本（标题 + 内容） */
 export function cardToText(token, blockToText) {
+  if (token.kind === 'link') {
+    return `【${token.title}】 ${token.url}`;
+  }
   if (token.kind === 'divider') {
     return token.title ? `── ${token.title} ──` : '──';
   }

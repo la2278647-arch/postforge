@@ -254,6 +254,31 @@ test('divider 分隔条：带文字渲染上下边框夹文字', () => {
   assert.match(html, /text-align:center/);
 });
 
+test('link 链接卡片：标题 + URL + 域名', () => {
+  const { html } = build(':::link PostForge 仓库 https://github.com/la2278647-arch/postforge');
+  assert.match(html, /🔗/);
+  assert.match(html, /href="https:\/\/github\.com\/la2278647-arch\/postforge"/);
+  assert.match(html, /PostForge 仓库/);
+  assert.match(html, /github\.com/, '域名显示');
+  assert.match(html, /border-radius:8px/);
+});
+
+test('link 链接卡片：仅 URL 时标题取域名', () => {
+  const { html } = build(':::link https://example.com/article');
+  assert.match(html, /example\.com\/article/);
+});
+
+test('link 卡片不要求闭合（check 通过）', async () => {
+  const { checkDocument } = await import('../src/check.js');
+  const r = checkDocument(':::link 标题 https://a.com\n\n正文', 'D:\\AI回收站\\mdx-postforge');
+  assert.deepEqual(r.errors, []);
+});
+
+test('小红书模式：link 渲染为标题+URL', () => {
+  const r = build(':::link 项目 https://github.com/la2278647-arch/postforge', { platform: 'xiaohongshu' });
+  assert.match(r.text, /【项目】 https:\/\/github\.com\/la2278647-arch\/postforge/);
+});
+
 test('divider 分隔条：无文字渲染纯分隔线', () => {
   const { html } = build(':::divider\n\n正文');
   assert.match(html, /border-top:1px solid #e5e5e5/);
