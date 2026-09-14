@@ -87,6 +87,7 @@ postforge batch <directory> [options]
 postforge check <input.md>
 postforge info <input.md>
 postforge serve <input.md> [--port N]   live preview with auto-reload
+postforge demo                         one-command local preview of the sample article
 postforge new <template> [-o file]       scaffold a draft from the template library
 postforge mcp
 postforge list
