@@ -21,7 +21,7 @@ postforge build post.md -p xiaohongshu -o xiaohongshu.txt
 postforge build post.md -p generic --toc -o preview.html
 ```
 
-同一篇 Markdown，输出十一个平台的成品：**微信公众号、知乎、掘金、CSDN、语雀、简书、博客园、思否、InfoQ、小红书、通用网页**。
+同一篇 Markdown，输出十三个平台的成品：**微信公众号、知乎、掘金、CSDN、语雀、简书、博客园、思否、InfoQ、小红书、Medium、DEV.to、通用网页**。
 
 :::tip 它怎么做到的
 基于 marked 的自定义 Renderer，把每个元素渲染成内联样式；代码高亮用 highlight.js，再把 token class 映射成内联颜色，公众号里也能显示 GitHub 风格高亮。
@@ -49,13 +49,17 @@ postforge build post.md -p generic --toc -o preview.html
 | 语雀 | `-p yuque` | HTML 片段 |
 | 简书 | `-p jianshu` | HTML 片段 |
 | 博客园 | `-p cnblogs` | HTML 片段 |
+| 思否 | `-p sf` | HTML 片段 |
+| InfoQ | `-p infoq` | HTML 片段 |
+| Medium | `-p medium` | HTML 片段 |
+| DEV.to | `-p devto` | HTML 片段 |
 | 小红书 | `-p xiaohongshu` | 纯文本 + 图片 + 话题标签 |
 | 通用网页 | `-p generic` | 完整 HTML 文档 |
 
 ## 路线图
 
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
-- [x] 11 平台适配 + 6 套主题
+- [x] 13 平台适配 + 8 套主题
 - [x] MCP Server 集成
 - [x] 排版模板（5 种提示卡片）+ 静态检查（postforge check）
 - [x] 公众号图片处理专题（docs/wechat-images.md + --inline-images）
