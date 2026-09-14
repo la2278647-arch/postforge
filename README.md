@@ -90,9 +90,13 @@ postforge build post.md -p zhihu -o zhihu.html
 PostForge 支持排版模板与代码高亮。
 :::
 
+:::divider 第二章
+
 | 平台 | 命令 |
 | ---- | ---- |
 | 公众号 | `-p wechat` |
+
+![示意图](https://a.com/pic.png =300x200)
 
 ```js
 const hello = 'world';
