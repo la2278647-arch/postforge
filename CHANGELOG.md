@@ -19,6 +19,16 @@
 
 - 63 → 69（serve 2 + new 4 用例）
 
+## [0.5.8] - 2026-09-14
+
+### 新增
+
+- `postforge info --json`：结构化统计输出（cn / enWords / images / codeBlocks / headings / cards / minutes），脚本与 CI 集成友好
+
+### 测试
+
+- 69 → 70（info --json 用例）
+
 ## [0.5.7] - 2026-09-14
 
 ### 优化
@@ -273,6 +283,7 @@
 - 13 个单元测试全绿
 
 [0.6.0]: https://github.com/la2278647-arch/postforge/releases/tag/v0.6.0
+[0.5.8]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.8
 [0.5.7]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.7
 [0.5.6]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.6
 [0.5.5]: https://github.com/la2278647-arch/postforge/releases/tag/v0.5.5
