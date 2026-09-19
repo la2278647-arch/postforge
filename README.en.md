@@ -13,7 +13,7 @@
   <img alt="License" src="https://img.shields.io/github/license/la2278647-arch/postforge" />
   <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" />
   <img alt="Version" src="https://img.shields.io/github/package-json/v/la2278647-arch/postforge" />
-  <img alt="Platforms" src="https://img.shields.io/badge/platforms-15-blue" />
+  <img alt="Platforms" src="https://img.shields.io/badge/platforms-16-blue" />
   <img alt="MCP" src="https://img.shields.io/badge/MCP-Server-7c3aed" />
 </p>
 
@@ -23,7 +23,7 @@
 
 ## Features
 
-- 🖥️ **15 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text mode), Medium, DEV.to, Typecho, WordPress, generic web page
+- 🖥️ **16 platforms**: WeChat, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text mode), Medium, DEV.to, Hashnode, Typecho, WordPress, generic web page
 - 🎨 **10 themes**: clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark — extendable via `makeTheme` or `--theme-file`
 - 🧩 **Fully inline styles**: paste-and-go, no `<style>` or external CSS required
 - 🔆 **Code highlighting**: GitHub-palette highlight.js tokens mapped to inline colors
@@ -75,6 +75,7 @@ postforge build post.md -p zhihu -o zhihu.html
 | Medium | `-p medium` | HTML fragment |
 | DEV.to | `-p devto` | HTML fragment |
 | Typecho | `-p typecho` | HTML fragment |
+| Hashnode | `-p hashnode` | HTML fragment |
 | WordPress | `-p wordpress` | HTML fragment |
 | Xiaohongshu | `-p xiaohongshu` | plain text + images + hashtags |
 | Generic | `-p generic` | full HTML document |
@@ -143,7 +144,7 @@ Then ask your AI: "Format this article for WeChat" — it calls `build_post` and
 
 ## Live Demo
 
-Try it in your browser — no install needed: **https://la2278647-arch.github.io/postforge/demo/** (Markdown → 15 platforms × 10 themes, rendered 100% locally in the page).
+Try it in your browser — no install needed: **https://la2278647-arch.github.io/postforge/demo/** (Markdown → 16 platforms × 10 themes, rendered 100% locally in the page).
 
 ## Performance
 

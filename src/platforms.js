@@ -93,6 +93,13 @@ export const PLATFORMS = {
     mode: 'html',
     defaultTheme: 'clean',
   },
+  hashnode: {
+    id: 'hashnode',
+    name: 'Hashnode',
+    desc: '内联样式富文本，粘贴进 Hashnode 编辑器（国际开发者博客）',
+    mode: 'html',
+    defaultTheme: 'clean',
+  },
   wordpress: {
     id: 'wordpress',
     name: 'WordPress',
