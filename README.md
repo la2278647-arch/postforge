@@ -269,6 +269,7 @@ const { html } = build(markdown, {
 | `nord` | 北欧冷灰蓝 | 技术阅读、工具类文章 |
 | `coffee` | 咖啡暖棕纸感 | 生活随笔 / 读书笔记 |
 | `solarized` | 经典护眼浅色 | 长时间阅读 / 文档 |
+| `mint` | 薄荷绿清新浅色 | 生活 / 健康 / 自然类内容 |
 | `github-light` | GitHub 官方浅色 | 代码 / 技术文档 |
 | `dark` | 深色底、高对比 | 深色阅读 / 夜间模式 |
 | `midnight` | 深夜蓝黑底 | 技术博客夜间版 |

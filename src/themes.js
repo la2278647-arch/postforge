@@ -913,6 +913,83 @@ THEMES['solarized-dark'] = makeTheme({
   },
 });
 
+/** Mint 薄荷绿：清新浅色，适合生活 / 健康 / 自然主题内容 */
+THEMES.mint = makeTheme({
+  id: 'mint',
+  name: 'Mint 薄荷',
+  container: {
+    color: '#2f4f43',
+    'font-family':
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+    'font-size': '15px',
+    'line-height': '1.85',
+    'letter-spacing': '0.4px',
+  },
+  heading: { color: '#1f3d33', 'font-weight': '700', 'line-height': '1.4', 'margin-top': '28px', 'margin-bottom': '14px' },
+  strong: { color: '#1f3d33', 'font-weight': '700' },
+  link: { color: '#2e8b6e', 'text-decoration': 'none', 'word-break': 'break-all' },
+  'inline-code': {
+    color: '#3a7d5f',
+    'background-color': '#eaf6f0',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '90%',
+    padding: '2px 5px',
+    'border-radius': '3px',
+  },
+  codeblock: {
+    'background-color': '#eaf6f0',
+    'font-family': '"SFMono-Regular", Consolas, monospace',
+    'font-size': '13px',
+    'line-height': '1.6',
+    padding: '14px 16px',
+    'border-radius': '8px',
+    'overflow-x': 'auto',
+    color: '#2f4f43',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+    border: '1px solid #cfe8dc',
+  },
+  blockquote: {
+    'border-left': '4px solid #7fc4a8',
+    'background-color': '#eaf6f0',
+    color: '#55806f',
+    padding: '12px 16px',
+    'border-radius': '0 6px 6px 0',
+    'margin-top': '0',
+    'margin-bottom': '16px',
+  },
+  th: {
+    'background-color': '#ddf0e7',
+    color: '#1f3d33',
+    'font-weight': '600',
+    border: '1px solid #c2e2d3',
+    padding: '8px 12px',
+    'text-align': 'left',
+  },
+  td: { border: '1px solid #c2e2d3', padding: '8px 12px' },
+  'tr-alt': { 'background-color': '#f2faf6' },
+  hr: { border: 'none', 'border-top': '1px solid #c2e2d3', 'margin-top': '24px', 'margin-bottom': '24px' },
+  task: { color: '#2e8b6e', 'margin-right': '6px' },
+  card: {
+    box: {
+      'border-left': '4px solid',
+      'border-radius': '8px',
+      padding: '14px 16px',
+      'margin-top': '0',
+      'margin-bottom': '16px',
+      'line-height': '1.7',
+    },
+    title: { 'font-weight': '700', 'font-size': '15px', display: 'block', 'margin-bottom': '6px' },
+    kinds: {
+      tip: { accent: '#2e8b6e', bg: 'rgba(46,139,110,0.10)' },
+      warning: { accent: '#a98a2d', bg: 'rgba(169,138,45,0.10)' },
+      note: { accent: '#3a7d9e', bg: 'rgba(58,125,158,0.10)' },
+      danger: { accent: '#b05a4a', bg: 'rgba(176,90,74,0.10)' },
+      quote: { accent: '#5f8a7a', bg: 'rgba(95,138,122,0.10)' },
+    },
+  },
+});
+
 export function getTheme(id) {
   return THEMES[id] || THEMES.clean;
 }
