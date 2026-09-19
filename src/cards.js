@@ -16,7 +16,7 @@
 
 import { THEMES } from './themes.js';
 
-export const KINDS = ['tip', 'warning', 'note', 'danger', 'quote', 'divider', 'link'];
+export const KINDS = ['tip', 'warning', 'note', 'danger', 'quote', 'divider', 'link', 'code'];
 
 function esc(s) {
   return String(s)
@@ -79,6 +79,19 @@ export function createCardExtension(theme) {
           tokens: [],
         };
       }
+      // code 卡片：:::code 标题 + 代码块（``` 包裹）+ :::（需闭合）
+      const codeRule = /^:::code(?:\s+(.*?))?\n([\s\S]*?)\n:::(?:\n|$)/;
+      const cm = codeRule.exec(src);
+      if (cm) {
+        return {
+          type: 'postforgeCard',
+          raw: cm[0],
+          kind: 'code',
+          title: (cm[1] || '').trim(),
+          body: cm[2],
+          tokens: this.lexer.blockTokens(cm[2]),
+        };
+      }
       const rule = /^:::(tip|warning|note|danger|quote)(?:\s+(.*?))?\n([\s\S]*?)\n:::(?:\n|$)/;
       const match = rule.exec(src);
       if (!match) return undefined;
@@ -101,6 +114,13 @@ export function createCardExtension(theme) {
           /* 保持原 URL */
         }
         return `<div style="border:1px solid #e5e5e5;border-radius:8px;padding:12px 14px;margin-top:0;margin-bottom:16px;background-color:rgba(127,127,127,0.04)"><a href="${esc(token.url)}" style="display:flex;align-items:center;text-decoration:none;color:inherit"><span style="font-size:22px;margin-right:12px">🔗</span><span style="flex:1;min-width:0"><strong style="display:block;font-size:14px;color:#576b95;word-break:break-all">${esc(token.title)}</strong><small style="display:block;color:#a8a8a8;font-size:12px;margin-top:2px">${esc(domain)}</small></span></a></div>`;
+      }
+      // 代码卡片：边框圆角容器 + 标题栏 + 代码块
+      if (token.kind === 'code') {
+        const titleBar = token.title
+          ? `<div style="padding:8px 14px;font-size:13px;color:#6b7280;background-color:rgba(127,127,127,0.08);border-bottom:1px solid #e5e5e5;font-family:&quot;SFMono-Regular&quot;,Consolas,monospace">${esc(token.title)}</div>`
+          : '';
+        return `<div style="border:1px solid #e5e5e5;border-radius:8px;overflow:hidden;margin-top:0;margin-bottom:16px">${titleBar}${this.parser.parse(token.tokens)}</div>`;
       }
       // 分隔条：上下边框夹文字（无文字时渲染纯分隔线），中性配色兼容深浅主题
       if (token.kind === 'divider') {
@@ -132,6 +152,9 @@ export const postforgeCardExtension = createCardExtension(THEMES.clean);
 
 /** 供文本提取使用：把卡片 token 转成纯文本（标题 + 内容） */
 export function cardToText(token, blockToText) {
+  if (token.kind === 'code') {
+    return token.title ? `【代码：${token.title}】\n${blockToText(token.tokens)}` : blockToText(token.tokens);
+  }
   if (token.kind === 'link') {
     return `【${token.title}】 ${token.url}`;
   }

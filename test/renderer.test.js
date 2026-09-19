@@ -268,6 +268,31 @@ test('link 链接卡片：仅 URL 时标题取域名', () => {
   assert.match(html, /example\.com\/article/);
 });
 
+test('code 代码卡片：标题栏 + 高亮代码', () => {
+  const { html } = build(':::code 示例代码\n```js\nconst x = 1;\n```\n:::');
+  assert.match(html, /代码卡片|示例代码/);
+  assert.match(html, /示例代码/, '标题栏显示');
+  assert.match(html, /<pre/, '代码块渲染');
+  assert.match(html, /color:#d73a49/, 'JS 高亮生效');
+});
+
+test('code 代码卡片：无标题时不显示标题栏', () => {
+  const { html } = build(':::code\n```python\nprint(1)\n```\n:::');
+  assert.match(html, /<pre/);
+});
+
+test('code 卡片未闭合时 check 报错（需闭合）', async () => {
+  const { checkDocument } = await import('../src/check.js');
+  const r = checkDocument(':::code 标题\n```js\nx\n```\n', 'D:\\AI回收站\\mdx-postforge');
+  assert.ok(r.errors.some((e) => e.includes('未闭合')), 'code 卡片需闭合');
+});
+
+test('小红书模式：code 卡片输出代码文本', () => {
+  const r = build(':::code 示例\n```js\nconst a = 1;\n```\n:::', { platform: 'xiaohongshu' });
+  assert.match(r.text, /示例/);
+  assert.match(r.text, /const a = 1/);
+});
+
 test('link 卡片不要求闭合（check 通过）', async () => {
   const { checkDocument } = await import('../src/check.js');
   const r = checkDocument(':::link 标题 https://a.com\n\n正文', 'D:\\AI回收站\\mdx-postforge');

@@ -318,6 +318,12 @@ postforge build post.md -p wechat --theme-file my-theme.json
 :::divider
 
 :::link PostForge 仓库 https://github.com/la2278647-arch/postforge
+
+:::code 安装示例
+```bash
+npm install postforge
+```
+:::
 ````
 
 | 类型 | 颜色 | 用途 |
@@ -329,6 +335,7 @@ postforge build post.md -p wechat --theme-file my-theme.json
 | `:::quote` | 紫 | 语录 / 引用（无标题时自动带装饰引号） |
 | `:::divider` | 中性 | 章节分隔条（单行语法，无需闭合；无文字时渲染纯分隔线） |
 | `:::link` | 中性 | 链接卡片（单行语法：`:::link 标题 URL`；🔗 图标 + 域名显示） |
+| `:::code` | 中性 | 代码卡片（`:::code 标题` + \`\`\` 代码 \`\`\` + `:::`；标题栏 + 高亮代码） |
 
 标题可省略：`:::note\n内容\n:::`。卡片配色跟随主题（6 套主题各自适配），实现见 `src/cards.js`。
 忘记闭合或写错类型？发布前跑 `postforge check post.md` 会精确定位错误行。
