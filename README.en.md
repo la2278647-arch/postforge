@@ -139,6 +139,7 @@ Then ask your AI: "Format this article for WeChat" — it calls `build_post` and
 - `reading-notes.md` — book notes
 - `okr.md` — OKR planning
 - `travel-plan.md` — travel plans
+- `moving-checklist.md` — moving checklists
 
 ## Live Demo
 
