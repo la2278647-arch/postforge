@@ -382,6 +382,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 | [`okr.md`](examples/templates/okr.md) | OKR 规划 | 目标/关键结果卡 / 进度追踪表 / 风险依赖 / 季度复盘 |
 | [`travel-plan.md`](examples/templates/travel-plan.md) | 旅行计划 | 行前清单 / 行程安排 / 美食清单 / 预算明细 / 避坑提醒 |
 | [`moving-checklist.md`](examples/templates/moving-checklist.md) | 搬家清单 | 分房间打包清单 / 搬家日流程 / 入住 checklist / 预算 |
+| [`study-plan.md`](examples/templates/study-plan.md) | 学习计划 | 目标拆解 / 阶段规划 / 资源清单 / 每周复盘 / 防放弃 |
 
 发布前体检：`postforge check`（语法 + 图片）与 `postforge info`（字数 / 阅读时长 / 素材统计）。
 
