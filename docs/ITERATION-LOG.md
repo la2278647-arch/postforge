@@ -102,3 +102,17 @@
 
 **验证结果**：`npm test` 82 用例全绿；宣传文案 grep 无 v0.6.1 / 15 平台 / 10 主题 / 11 模板旧数据残留；Release 与 Discussions 链接可访问。
 
+---
+
+## 第 7 轮（2026-09-19）—— 外部平台发布尝试与站外素材分发
+
+**优化目标**：把宣传从 GitHub 站内扩展到外部平台；在无登录态约束下尽量完成可自动分发的素材。
+
+**变更内容**：
+
+1. **登录态勘察**：以 CDP 启动 Chrome 逐平台检查登录状态——GitHub 已登录；X 触发 Cloudflare 安全验证；Reddit 被网络风控拦截；Hacker News / 掘金 / 知乎 / V2EX / 微博 / CSDN 均未登录。外部平台发布需要用户先完成登录（或提供凭据），否则无法代发。
+2. **站外素材**：创建公开 Gist 宣传速递（中英双语，含仓库 / Demo / Release 链接）：https://gist.github.com/la2278647-arch/aff2ee73d8e48dbd5a5a5f7a02f0f6d4
+3. **归档**：links.md 回填 Gist 链接，外部平台保持 🟡 待发布。
+
+**验证结果**：Gist 已公开可访问；GitHub 站内 4 项宣传（仓库 / Release / Pages / Discussions）全部在线；外部平台待用户登录后继续。
+
