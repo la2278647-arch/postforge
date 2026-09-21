@@ -116,3 +116,20 @@
 
 **验证结果**：Gist 已公开可访问；GitHub 站内 4 项宣传（仓库 / Release / Pages / Discussions）全部在线；外部平台待用户登录后继续。
 
+---
+
+## 第 8 轮（2026-09-21）—— 替代方案：Awesome 列表 PR 站外宣传
+
+**优化目标**：在外部平台需要登录/风控受阻后，改用无需用户登录的替代渠道——向高流量 Awesome 列表提交 PR，把 PostForge 收录进生态目录。
+
+**变更内容**：
+
+1. **提交 4 个 Awesome 列表 PR**（全部通过 GitHub API fork + 分支 + 文件上传 + PR，无需 git push）：
+   - BubuAnabelas/awesome-markdown#153（Markdown Converters）
+   - mundimark/awesome-markdown#156（Markdown Libraries & Tools）
+   - jakeolschewski/awesome-content-creation#26（Writing Tools）
+   - punkpeye/awesome-mcp-servers#14806（MCP Developer Tools）
+2. **归档**：links.md 新增 Awesome PR 表。
+
+**验证结果**：4 个 PR 均已创建并可访问；GitHub 站内宣传 5 项（仓库 / Release / Pages / Discussions / Gist）+ 4 个 Awesome PR 全部就绪。外部平台（X / Reddit / HN / 掘金 / 知乎 / V2EX / 微博 / CSDN）仍待用户登录或账号授权。
+
