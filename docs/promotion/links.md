@@ -6,8 +6,9 @@
 
 | 平台 | 链接 | 状态 | 备注 |
 | ---- | ---- | ---- | ---- |
-| GitHub Release | https://github.com/la2278647-arch/postforge/releases | 🟢 | 已发布至 v0.6.5 |
-| GitHub Pages Demo | https://la2278647-arch.github.io/postforge/demo/ | 🟢 | 在线交互 Demo |
+| GitHub Release | https://github.com/la2278647-arch/postforge/releases/tag/v0.6.5 | 🟢 | 已发布至 v0.6.5（Release notes 已完善） |
+| GitHub Pages Demo | https://la2278647-arch.github.io/postforge/demo/ | 🟢 | 在线交互 Demo（16 平台 × 11 主题） |
+| GitHub Discussions | https://github.com/la2278647-arch/postforge/discussions/2 | 🟢 | v0.6.5 发布公告（Announcements） |
 | 微信公众号 | （推送后回填） | 🟡 | 用 docs/case/announce-wechat.html |
 | 知乎 | （回答链接） | 🟡 | 文案见 docs/promotion/zhihu.md |
 | 掘金 | （文章链接） | 🟡 | 文案见 docs/promotion/juejin.md |

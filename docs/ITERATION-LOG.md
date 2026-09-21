@@ -97,7 +97,8 @@
 2. **宣传文案同步**：docs/promotion/ 全部 8 份文案版本标注与数据更新至 v0.6.5（含 MCP 工具数 4 → 7）。
 3. **发布案例与 Demo**：getting-started / announce / demo 页面平台数 15 → 16，示例输出同步。
 4. **CHANGELOG**：v0.6.2 / v0.6.3 / v0.6.4 / v0.6.5 归档为正式版本条目。
-5. **发布**：推送 GitHub main，创建 v0.6.5 Release。
+5. **发布**：推送 GitHub main；完善 v0.6.5 Release notes（16 平台 / 11 主题 / 12 模板 / 82 测试 / MCP 7 工具）。
+6. **站内公告**：创建 GitHub Discussions Announcements 公告帖（https://github.com/la2278647-arch/postforge/discussions/2），并新增发布执行清单 `docs/promotion/PUBLISH-NOW.md`。
 
-**验证结果**：`npm test` 82 用例全绿；宣传文案 grep 无 v0.6.1 / 15 平台 / 10 主题 / 11 模板旧数据残留；Release 链接可访问。
+**验证结果**：`npm test` 82 用例全绿；宣传文案 grep 无 v0.6.1 / 15 平台 / 10 主题 / 11 模板旧数据残留；Release 与 Discussions 链接可访问。
 
