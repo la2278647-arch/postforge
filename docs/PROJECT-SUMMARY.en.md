@@ -4,7 +4,7 @@
 
 ## One-liner
 
-**PostForge** is an open-source Markdown typesetting engine: one command turns a single Markdown file into publisher-ready rich text for **15 platforms**, with fully inline styles — paste-and-go, zero config, zero SaaS.
+**PostForge** is an open-source Markdown typesetting engine: one command turns a single Markdown file into publisher-ready rich text for **16 platforms**, with fully inline styles — paste-and-go, zero config, zero SaaS.
 
 🔗 https://github.com/la2278647-arch/postforge · 🚀 Live Demo: https://la2278647-arch.github.io/postforge/demo/
 
@@ -12,9 +12,9 @@
 
 | Area | Details |
 | ---- | ------- |
-| **Platforms** | WeChat OA, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text), Medium, DEV.to, Typecho, WordPress, generic web page |
-| **Themes** | 10 built-in (clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark) + custom theme files |
-| **Templates** | 10 ready-to-fill templates (tutorial, WeChat article, Xiaohongshu note, weekly report, product launch, meeting notes, FAQ, book notes, OKR, travel plan) |
+| **Platforms** | WeChat OA, Zhihu, Juejin, CSDN, Yuque, Jianshu, CNBlogs, SegmentFault, InfoQ CN, Xiaohongshu (plain-text), Medium, DEV.to, Typecho, Hashnode, WordPress, generic web page |
+| **Themes** | 11 built-in (clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark / mint) + custom theme files |
+| **Templates** | 12 ready-to-fill templates (tutorial, WeChat article, Xiaohongshu note, weekly report, product launch, meeting notes, FAQ, book notes, OKR, travel plan, moving checklist, study plan) |
 | **Typesetting syntax** | `:::tip/warning/note/danger/quote` callout cards + `:::divider` separators |
 | **Workflow** | build / batch / serve (live preview with auto-reload) / watch / new / check / info / doctor / list / demo / mcp |
 | **Structured output** | `--json` on build / batch / check / info / list for scripting and CI |
@@ -32,13 +32,13 @@
 
 | Item | Status |
 | ---- | ------ |
-| Tests | 70/70 green (node:test) |
+| Tests | 82/82 green (node:test) |
 | Dependencies | 3 runtime deps (marked / highlight.js / MCP SDK), 0 vulnerabilities |
-| Releases | 25 (v0.1.0 → v0.5.12), full CHANGELOG |
+| Releases | v0.1.0 → v0.6.5, full CHANGELOG |
 | Docs | Bilingual READMEs, tech deep-dives (CN/EN), getting-started, interactive architecture diagram |
 | Community | Discussions / Wiki / SECURITY / CoC / CONTRIBUTING / FUNDING / Issue·PR templates / pre-commit gate |
 | Publish | npm name `postforge` available; dry-run & clean-install verified (awaiting credentials) |
-| Live demo | GitHub Pages interactive demo (15 platforms × 10 themes, real-time) |
+| Live demo | GitHub Pages interactive demo (16 platforms × 11 themes, real-time) |
 
 ## Design Principles
 

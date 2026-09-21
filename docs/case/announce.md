@@ -30,7 +30,7 @@ postforge build post.md -p generic --toc -o preview.html
 ## 主要特性
 
 - **全内联样式**：粘贴即用，不依赖 `<style>` 与外部 CSS
-- **6 套主题**：Clean 简洁 / Paper 纸感 / Nord 冷调 / Coffee 咖啡 / Dark 深色 / Midnight 深夜
+- **11 套主题**：Clean 简洁 / Paper 纸感 / Nord 冷调 / Coffee 咖啡 / Dark 深色 / Midnight 深夜 / One Dark / Solarized / GitHub Light / Solarized Dark / Mint 薄荷
 - **代码高亮**、表格斑马纹、GFM 任务清单、目录生成
 - **排版模板**：`:::tip` `:::warning` `:::note` `:::danger` `:::quote` 彩色提示卡片，内容支持任意 Markdown
 - **发布前检查**：`postforge check` 校验卡片语法配对与本地图片引用（带行号）

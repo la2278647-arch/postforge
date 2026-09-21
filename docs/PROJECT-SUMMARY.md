@@ -4,7 +4,7 @@
 
 ## 一句话
 
-**PostForge（帖工坊）**：开源的 Markdown 多平台排版引擎——同一篇文章，一条命令排版成 **15 个平台**的富文本，全内联样式粘贴即用，零配置零 SaaS。
+**PostForge（帖工坊）**：开源的 Markdown 多平台排版引擎——同一篇文章，一条命令排版成 **16 个平台**的富文本，全内联样式粘贴即用，零配置零 SaaS。
 
 🔗 https://github.com/la2278647-arch/postforge · 🚀 在线 Demo：https://la2278647-arch.github.io/postforge/demo/
 
@@ -12,9 +12,9 @@
 
 | 维度 | 内容 |
 | ---- | ---- |
-| **平台** | 微信公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 思否 / InfoQ / 小红书（纯文本）/ Medium / DEV.to / Typecho / WordPress / 通用网页 |
-| **主题** | 10 套内置（clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark）+ 自定义主题文件 |
-| **模板库** | 10 篇开箱即用（技术教程 / 公众号文章 / 小红书种草 / 周报 / 产品发布 / 会议纪要 / FAQ / 读书笔记 / OKR / 旅行计划） |
+| **平台** | 微信公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 思否 / InfoQ / 小红书（纯文本）/ Medium / DEV.to / Typecho / Hashnode / WordPress / 通用网页 |
+| **主题** | 11 套内置（clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark / mint）+ 自定义主题文件 |
+| **模板库** | 12 篇开箱即用（技术教程 / 公众号文章 / 小红书种草 / 周报 / 产品发布 / 会议纪要 / FAQ / 读书笔记 / OKR / 旅行计划 / 搬家清单 / 学习计划） |
 | **排版模板** | `:::tip` / `:::warning` / `:::note` / `:::danger` / `:::quote` 卡片 + `:::divider` 分隔条 |
 | **工作流** | build / batch / serve（实时预览）/ watch / new / check / info / doctor / list / demo / mcp |
 | **结构化输出** | build / batch / check / info / list 全支持 `--json` |
@@ -32,13 +32,13 @@
 
 | 项 | 状态 |
 | ---- | ---- |
-| 测试 | 70/70 单元测试全绿（node:test） |
+| 测试 | 82/82 单元测试全绿（node:test） |
 | 依赖 | 3 个运行时依赖（marked / highlight.js / MCP SDK），审计 0 漏洞 |
-| 版本 | 25 个 Release（v0.1.0 → v0.5.12），CHANGELOG 全版本 |
+| 版本 | Release 覆盖 v0.1.0 → v0.6.5，CHANGELOG 全版本 |
 | 文档 | 中英 README / 双语技术深挖 / 快速上手 / 架构图（交互式） |
 | 社区 | Discussions / Wiki / SECURITY / CoC / CONTRIBUTING / FUNDING / Issue·PR 模板 / pre-commit 门禁 |
 | 发布 | npm 包名 `postforge` 可用，发布预演与干净安装全绿（待授权上线） |
-| 在线体验 | GitHub Pages 交互式 Demo（15 平台 × 10 主题实时排版） |
+| 在线体验 | GitHub Pages 交互式 Demo（16 平台 × 11 主题实时排版） |
 
 ## 设计理念
 

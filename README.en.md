@@ -145,7 +145,7 @@ Then ask your AI: "Format this article for WeChat" — it calls `build_post` and
 
 ## Live Demo
 
-Try it in your browser — no install needed: **https://la2278647-arch.github.io/postforge/demo/** (Markdown → 16 platforms × 10 themes, rendered 100% locally in the page).
+Try it in your browser — no install needed: **https://la2278647-arch.github.io/postforge/demo/** (Markdown → 16 platforms × 11 themes, rendered 100% locally in the page).
 
 ## Performance
 

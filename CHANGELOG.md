@@ -5,21 +5,65 @@
 
 ## [Unreleased]
 
+### 文档
+
+- 全部宣传素材同步至 v0.6.5（16 平台 / 11 主题 / 12 模板 / 82 测试 / MCP 7 工具）：
+  - README / README.en / PROJECT-SUMMARY 中英：主题 10 → 11、模板 10 → 12、平台 15 → 16、测试 70 → 82、Release 覆盖至 v0.6.5
+  - `docs/promotion/*`：全部文案版本标注 v0.6.1 → v0.6.5，平台/主题/模板/测试/MCP 工具数同步
+  - 发布案例与在线 Demo：`docs/case/getting-started*`、`docs/case/announce*`、`docs/demo/index.html`、`examples/demo*` 平台数 15 → 16
+- 发布 v0.6.5 GitHub Release，回填 `docs/promotion/links.md`
+
+## [0.6.5] - 2026-09-19
+
 ### 新增
 
-- 模板库新增 `moving-checklist`（搬家清单模板，第 11 个模板）：预算表 / 分房间打包清单 / 搬家日流程 / 入住后 checklist，含 `:::note` / `:::warning` / `:::divider` 排版模板示例
-- 新增 `docs/research/market-research.md`：阶段一市场调研报告存档（候选方向对比 / 选择理由 / 目标用户画像 / 数据来源）
-- 新增 `docs/ITERATION-LOG.md`：全程迭代日志，每轮记录变更内容与优化目标
+- 主题扩展至 11 套：新增 `mint`（薄荷绿清新浅色，适合生活 / 健康 / 自然类内容）
+
+### 测试
+
+- 主题完整性 / 互异性列表扩展至 11
 
 ### 文档
 
-- 全部宣传文案升级至 v0.6.1（此前停留在 v0.2.0）：
-  - `docs/promotion/juejin.md`：测试 36 → 78、功能列表补齐（15 平台 / 10 主题 / 11 模板 / serve / new / batch --json / MCP 4 工具）
-  - `docs/promotion/v2ex.md`：平台 11 → 15、主题 6 → 10、测试 36 → 78
-  - `docs/promotion/zhihu.md`：主题 3 → 10、补 serve / check 增强 / MCP 工具
-  - `docs/promotion/twitter.md` / `hackernews.md` / `reddit.md`：英文文案同步最新数据（78 测试 / 15 平台 / 10 主题 / 在线 Demo）
-  - `docs/promotion/weibo.md`：修正"六平台"过时表述
-- `docs/promotion/README.md` 与 `links.md`：版本标注 v0.2.0 → v0.6.1，补发布待办
+- README 中英主题表 10 → 11
+
+## [0.6.4] - 2026-09-19
+
+### 新增
+
+- `:::code 标题` + \`\`\` 代码 \`\`\` + `:::` 代码卡片语法：标题栏 + 高亮代码块；`check` 视为需闭合卡片（未闭合报错）；小红书模式输出「【代码：标题】+ 代码文本」
+
+### 测试
+
+- 82 用例全绿（新增 code 卡片 4 用例）
+
+### 文档
+
+- README 模板语法表补 `:::code`（8 种语法）
+
+## [0.6.3] - 2026-09-19
+
+### 新增
+
+- 模板库扩充至 12 篇：`moving-checklist`（搬家清单：预算表 / 分房间打包 / 搬家日流程 / 入住 checklist）与 `study-plan`（学习计划：目标拆解 / 阶段规划 / 资源清单 / 每周复盘表）
+
+### 文档
+
+- README 中英模板表 10 → 12
+
+## [0.6.2] - 2026-09-19
+
+### 新增
+
+- 平台扩展至 16：新增 `hashnode`（国际开发者博客，内联样式富文本）
+
+### 测试
+
+- doctor 断言平台数 15 → 16
+
+### 文档
+
+- README 中英平台表 15 → 16、徽章 `platforms-16`
 
 ## [0.6.0] - 2026-09-14
 

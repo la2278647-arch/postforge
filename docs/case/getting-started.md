@@ -4,7 +4,7 @@
 
 ## 它是谁
 
-PostForge（帖工坊）是一个开源的 Markdown 多平台排版引擎：同一篇文章，一条命令排版成 **15 个平台**的富文本——公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 思否 / InfoQ / 小红书 / Medium / DEV.to / Typecho / WordPress / 通用网页。
+PostForge（帖工坊）是一个开源的 Markdown 多平台排版引擎：同一篇文章，一条命令排版成 **16 个平台**的富文本——公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 思否 / InfoQ / 小红书 / Medium / DEV.to / Typecho / Hashnode / WordPress / 通用网页。
 
 :::tip 核心理念
 全内联样式：公众号不认 `<style>` 和外部 CSS，PostForge 把每个元素的样式都内联进去，粘贴即所得。

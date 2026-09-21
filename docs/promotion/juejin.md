@@ -1,6 +1,6 @@
 # PostForge 宣传文案 · 掘金（技术文章）
 
-> 发布时标题可加 emoji。正文为 Markdown，掘金客户端支持贴代码块。本版对齐 v0.6.1。
+> 发布时标题可加 emoji。正文为 Markdown，掘金客户端支持贴代码块。本版对齐 v0.6.5。
 
 ---
 
@@ -43,8 +43,8 @@ postforge build post.md -p generic --toc -o preview.html
 
 支持的特性：
 
-- **15 个平台**：公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 思否 / InfoQ / 小红书 / Medium / DEV.to / Typecho / WordPress / 通用网页
-- **10 套主题**：clean / paper / dark / nord / coffee / midnight / one-dark / solarized / github-light / solarized-dark，可自定义
+- **16 个平台**：公众号 / 知乎 / 掘金 / CSDN / 语雀 / 简书 / 博客园 / 思否 / InfoQ / 小红书 / Medium / DEV.to / Typecho / Hashnode / WordPress / 通用网页
+- **11 套主题**：clean / paper / dark / nord / coffee / midnight / one-dark / solarized / github-light / solarized-dark / mint，可自定义
 - GFM 任务清单（☑ ☐）、表格斑马纹、引用块、图片自适应
 - `--toc` 目录生成（带锚点，h1-h3）、`--numbered-headings` 标题自动编号
 - 排版模板：`:::tip / :::warning / :::note / :::danger / :::quote` 彩色提示卡片（quote 带装饰引号）
@@ -52,7 +52,7 @@ postforge build post.md -p generic --toc -o preview.html
 - 发布前检查：`postforge check` 校验卡片配对、本地图片引用、重复标题、本地链接目标（带行号，支持 `--json`）
 - 图片内联：`--inline-images` 本地图片转 base64，公众号粘贴自动转存素材；支持 `=WxH` 尺寸语法
 - 实时预览：`postforge serve` 本地 HTTP 预览（改文件浏览器自动刷新）
-- 模板库：`postforge new` 从 11 种模板一键生成草稿（FAQ/周报/OKR/产品发布/小红书种草等）
+- 模板库：`postforge new` 从 12 种模板一键生成草稿（FAQ/周报/OKR/产品发布/小红书种草等）
 - 结构化输出：`build / batch / info / list / check --json` 五件套，脚本与 CI 友好
 - MCP Server：Claude / Cursor 可直接调用 `build_post` / `check_post` / `template_list` / `template_get`
 - 可作库使用：`build(markdown, { platform: 'wechat' })`
@@ -62,7 +62,7 @@ postforge build post.md -p generic --toc -o preview.html
 
 - Node.js >= 18，ESM
 - 仅 3 个运行时依赖：`marked`（解析）+ `highlight.js`（高亮）+ `@modelcontextprotocol/sdk`（仅 MCP 模式）
-- 单元测试：`node:test`，78 个用例全绿（渲染 + CLI 集成 + MCP + 检查器）
+- 单元测试：`node:test`，82 个用例全绿（渲染 + CLI 集成 + MCP + 检查器）
 - CI：GitHub Actions 矩阵（Node 18 / 20 / 22 / 24）
 
 ### 项目结构
@@ -71,12 +71,12 @@ postforge build post.md -p generic --toc -o preview.html
 src/
   cli.js        命令行入口（build / batch / check / serve / new / demo / info / list / mcp）
   renderer.js   核心渲染引擎（marked 自定义 Renderer）
-  themes.js     10 套排版主题
-  platforms.js  15 个平台适配配置
+  themes.js     11 套排版主题
+  platforms.js  16 个平台适配配置
   cards.js      排版模板扩展（提示卡片 / 链接卡片 / 分隔条）
   check.js      静态检查（卡片配对 / 图片引用 / 重复标题 / 链接目标）
   highlight.js  代码高亮 → 内联样式映射
-  mcp/server.js MCP Server（4 个工具）
+  mcp/server.js MCP Server（7 个工具）
   index.js      公开 API
 examples/       示例文章与生成结果
 test/           单元测试（renderer + cli + mcp）

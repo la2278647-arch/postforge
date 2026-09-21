@@ -4,7 +4,7 @@
 
 ## 项目一句话
 
-**PostForge（帖工坊）**：开源的 Markdown 多平台排版引擎——一条命令把 Markdown 转成 **15 个平台**的富文本（公众号/知乎/掘金/CSDN/语雀/简书/博客园/思否/InfoQ/小红书/Medium/DEV.to/Typecho/WordPress/通用网页），全内联样式粘贴即用，零配置零 SaaS。
+**PostForge（帖工坊）**：开源的 Markdown 多平台排版引擎——一条命令把 Markdown 转成 **16 个平台**的富文本（公众号/知乎/掘金/CSDN/语雀/简书/博客园/思否/InfoQ/小红书/Medium/DEV.to/Typecho/Hashnode/WordPress/通用网页），全内联样式粘贴即用，零配置零 SaaS。
 
 🔗 https://github.com/la2278647-arch/postforge
 
@@ -31,7 +31,7 @@
 
 ## 建议发布顺序（1 天内完成）
 
-1. **GitHub 站内**（已完成）：仓库公开 + topics + 6 个 Release + Discussions 欢迎帖
+1. **GitHub 站内**（已完成）：仓库公开 + topics + Release（至 v0.6.5）+ Discussions 欢迎帖
 2. **掘金**（中文技术社区主阵地）：`juejin.md` 技术长文
 3. **知乎**：想法短文案 → 回答长文
 4. **V2EX**：「分享创造」帖

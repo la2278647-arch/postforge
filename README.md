@@ -36,14 +36,14 @@
 ## ✨ 特性
 
 - 🖥️ **16 个平台**：微信公众号、知乎、掘金、CSDN、语雀、简书、博客园、思否、InfoQ、小红书、Medium、DEV.to、Hashnode、Typecho、WordPress、通用网页
-- 🎨 **6 套主题**：Clean 简洁 / Paper 纸感 / Nord 冷调 / Coffee 咖啡 / Dark 深色 / Midnight 深夜，可自定义
+- 🎨 **11 套主题**：Clean 简洁 / Paper 纸感 / Nord 冷调 / Coffee 咖啡 / Dark 深色 / Midnight 深夜 / One Dark / Solarized / GitHub Light / Solarized Dark / Mint 薄荷，可自定义
 - 🧩 **全内联样式**：粘贴即用，不依赖 `<style>` 与外部 CSS
 - 🔆 **代码高亮**：内置 GitHub 风格高亮，全部转为内联样式
 - 📋 **目录生成**：`--toc` 一键生成文章目录（带锚点）
 - ☑️ **任务清单**：GFM 任务列表渲染为 ☑ / ☐
 - 🧱 **排版模板**：`:::tip` `:::warning` `:::note` `:::danger` `:::quote` 彩色提示卡片，内容支持任意 Markdown
 - ✅ **静态检查**：`postforge check` 发布前校验卡片语法配对 / 本地图片引用 / 重复标题 / 本地链接目标（带行号）
-- 📋 **模板库入口**：`postforge new` 从内置模板一键生成草稿（new list 查看 10 种模板）
+- 📋 **模板库入口**：`postforge new` 从内置模板一键生成草稿（new list 查看 12 种模板）
 - 📷 **图片内联**：`--inline-images` 本地图片转 base64，粘贴公众号自动转存素材
 - 📄 **表格 / 引用 / 图片 / 列表**：完整支持，响应式适配
 - 📦 **可用作库**：`build(markdown, options)` 直接集成到你的工作流
@@ -163,7 +163,7 @@ postforge -h | --help
 选项:
   -p, --platform <id>    目标平台（默认 wechat）
   -o, --output <file>    输出到文件（默认输出到 stdout）
-  -t, --theme <id>       排版主题（clean / paper / nord / coffee / dark / midnight）
+  -t, --theme <id>       排版主题（11 套：clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark / mint）
       --toc              在文章开头生成目录
       --numbered-headings  给 h1/h2/h3 自动加编号（如 1. / 1.1 / 1.1.1）
       --watch              监听输入文件变化自动重建（边写边预览）
@@ -338,7 +338,7 @@ npm install postforge
 | `:::link` | 中性 | 链接卡片（单行语法：`:::link 标题 URL`；🔗 图标 + 域名显示） |
 | `:::code` | 中性 | 代码卡片（`:::code 标题` + \`\`\` 代码 \`\`\` + `:::`；标题栏 + 高亮代码） |
 
-标题可省略：`:::note\n内容\n:::`。卡片配色跟随主题（6 套主题各自适配），实现见 `src/cards.js`。
+标题可省略：`:::note\n内容\n:::`。卡片配色跟随主题（11 套主题各自适配），实现见 `src/cards.js`。
 忘记闭合或写错类型？发布前跑 `postforge check post.md` 会精确定位错误行。
 
 ## 📷 图片尺寸语法
@@ -424,7 +424,7 @@ postforge build post.md -p wechat --inline-images -o wechat.html
 ## 🗺 路线图
 
 - [x] 核心渲染引擎（marked + 内联样式 + 代码高亮）
-- [x] 15 平台适配 + 6 套主题 + 目录生成
+- [x] 16 平台适配 + 11 套主题 + 目录生成
 - [x] MCP Server 集成（AI 直接排版输出）
 - [x] 排版模板（:::tip / :::warning / :::note / :::danger / :::quote）
 - [x] 公众号图片处理（docs/wechat-images.md 专题 + --inline-images）
@@ -452,7 +452,7 @@ git config core.hooksPath .githooks   # 启用 .githooks/pre-commit
 src/
   cli.js        命令行入口（build / check / mcp / list）
   renderer.js   核心渲染引擎（marked 自定义 Renderer）
-  themes.js     排版主题（clean / paper / dark）
+  themes.js     排版主题（11 套：clean / paper / nord / coffee / solarized / github-light / dark / midnight / one-dark / solarized-dark / mint）
   platforms.js  平台适配配置
   cards.js      排版模板扩展（提示卡片，工厂函数绑定主题）
   check.js      静态检查（卡片配对 / 本地图片引用）
