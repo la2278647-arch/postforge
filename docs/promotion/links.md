@@ -21,6 +21,15 @@
 | Hacker News | （Show HN 链接） | 🟡 | 文案见 docs/promotion/hackernews.md |
 | Reddit | （帖子链接） | 🟡 | 文案见 docs/promotion/reddit.md |
 
+## Awesome 列表 PR（替代外部平台发帖的站外宣传）
+
+| 列表 | PR | 状态 |
+| ---- | ---- | ---- |
+| BubuAnabelas/awesome-markdown（Markdown Converters） | https://github.com/BubuAnabelas/awesome-markdown/pull/153 | 🟡 待合并 |
+| mundimark/awesome-markdown（Markdown Libraries & Tools） | https://github.com/mundimark/awesome-markdown/pull/156 | 🟡 待合并 |
+| jakeolschewski/awesome-content-creation（Writing Tools） | https://github.com/jakeolschewski/awesome-content-creation/pull/26 | 🟡 待合并 |
+| punkpeye/awesome-mcp-servers（MCP Developer Tools） | https://github.com/punkpeye/awesome-mcp-servers/pull/14806 | 🟡 待合并 |
+
 ## 下一轮迭代待办
 
 - [ ] 把社区反馈（Issue / Star / 评论）带回来，更新到 CHANGELOG 与 roadmap
