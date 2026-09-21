@@ -9,6 +9,7 @@
 | GitHub Release | https://github.com/la2278647-arch/postforge/releases/tag/v0.6.5 | 🟢 | 已发布至 v0.6.5（Release notes 已完善） |
 | GitHub Pages Demo | https://la2278647-arch.github.io/postforge/demo/ | 🟢 | 在线交互 Demo（16 平台 × 11 主题） |
 | GitHub Discussions | https://github.com/la2278647-arch/postforge/discussions/2 | 🟢 | v0.6.5 发布公告（Announcements） |
+| GitHub Gist 宣传速递 | https://gist.github.com/la2278647-arch/aff2ee73d8e48dbd5a5a5f7a02f0f6d4 | 🟢 | 公开中英介绍，可分享引流 |
 | 微信公众号 | （推送后回填） | 🟡 | 用 docs/case/announce-wechat.html |
 | 知乎 | （回答链接） | 🟡 | 文案见 docs/promotion/zhihu.md |
 | 掘金 | （文章链接） | 🟡 | 文案见 docs/promotion/juejin.md |
